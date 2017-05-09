@@ -21,7 +21,7 @@ void main_data::run()
 	}
 
 }
-
+//teststdts
 //void
 
 void main_data::load_db_file()
@@ -37,4 +37,4 @@ void main_data::load_db_file()
 		}
 	}
 	f.close();
-}
+}//tests
