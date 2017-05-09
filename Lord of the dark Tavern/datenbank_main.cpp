@@ -31,6 +31,7 @@ void main_data::load_db_file()
 	{
 		while (std::getline(f, line)) {
 			std::cout << line << std::endl;
+			//test
 		}
 	}
 	f.close();
