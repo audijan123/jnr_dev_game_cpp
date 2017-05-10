@@ -1,5 +1,6 @@
 VERSION<0.0.1>
-"weapon";"Legende von Taang";"DATA\item\weapon.png";
-"weapon";"Legende von Taang";"DATA\item\weapon.png";
-"weapon";"Legende von Taang";"DATA\item\weapon.png";
-"weapon";"Legende von Taang";"DATA\item\weapon.png"
+"ELSE";"Legende-von-Taang";"DATA\item\weapon.png";"10";"15";"10";"EPISCH";"1001";"1000";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"C_NULL";"C_NULL";"#";
+"WEAPON";"Legende-von-Taang-232";"DATA\item\weapon.png";"10";"15";"10";"EPISCH";"1001";"1000";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"C_NULL";"C_NULL";"#";
+"ELSE";"TEST-Stab";"DATA\item\weapon.png";"10";"15";"10";"EPISCH";"1001";"1000";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"C_NULL";"C_NULL";"#";
+"WEAPON";"Lol_es_geht";"DATA\item\weapon.png";"10";"15";"10";"EPISCH";"1001";"1000";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"C_NULL";"C_NULL";"#";
+"ELSE";"Okay_es_funkt";"DATA\item\weapon.png";"10";"15";"10";"EPISCH";"1001";"1000";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"B_NULL";"C_NULL";"C_NULL";"#"

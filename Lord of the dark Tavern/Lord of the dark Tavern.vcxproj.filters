@@ -42,9 +42,6 @@
     <ClCompile Include="datenbank_main.cpp">
       <Filter>Quelldateien\datenbank</Filter>
     </ClCompile>
-    <ClCompile Include="datenbank_item.cpp">
-      <Filter>Quelldateien\datenbank</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
@@ -63,9 +60,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="datenbank_main.hpp">
-      <Filter>Headerdateien\datenbank</Filter>
-    </ClInclude>
-    <ClInclude Include="datenbank_item.hpp">
       <Filter>Headerdateien\datenbank</Filter>
     </ClInclude>
   </ItemGroup>

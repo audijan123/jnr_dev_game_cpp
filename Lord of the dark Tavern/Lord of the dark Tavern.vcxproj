@@ -131,11 +131,12 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>SFML_DYNAMIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\Programming Lib\boost_1_64_0;D:\Programming Lib\SFML-2.4.2\include;C:\Programming Lib\64bit\SFML-2.4.2\include;C:\Programming Lib\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +148,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="datenbank_item.cpp" />
     <ClCompile Include="datenbank_main.cpp" />
     <ClCompile Include="dungeon_manager.cpp" />
     <ClCompile Include="dungeon_mob.cpp" />
@@ -157,7 +157,6 @@
     <ClCompile Include="resource_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="datenbank_item.hpp" />
     <ClInclude Include="datenbank_main.hpp" />
     <ClInclude Include="dungeon_manager.hpp" />
     <ClInclude Include="dungeon_mob.hpp" />

@@ -18,11 +18,11 @@ enviroment_loader::enviroment_loader(std::string path)
 	enviroment[13] = new sf::Texture;
 
 	pSprite = new sf::Sprite;
-	pSprite->setScale(2.67, 2.85);
+	pSprite->setScale(2.67f, 2.85f);
 	pSky = new sf::Sprite;
-	pSky->setScale(2.67, 2.85);
+	pSky->setScale(2.67f, 2.85f);
 	pClouds = new sf::Sprite;
-	pClouds->setScale(2.67, 2.85);
+	pClouds->setScale(2.67f, 2.85f);
 
 	enviroment[0]->loadFromFile(path + "DATA/dungeon/arena/back.png");
 	enviroment[1]->loadFromFile(path + "DATA/dungeon/cave/back.png");

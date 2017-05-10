@@ -77,12 +77,12 @@ void dungeon_manager::fill_dungeon(const std::vector<sf::Image*> &image)
 		boost::random::mt19937 dev{ static_cast<std::uint32_t>(times) };;
 		mobs_ebene = dev()*(i+1) % 9 + 1;
 
-		for (int u = mobs_ebene; u != 0; u--)
+		for (uint16_t u = mobs_ebene; u != 0; u--)
 		{
 			std::time_t fro = std::time(0);
 			boost::random::mt19937 dev_test{ static_cast<std::uint32_t>(fro) };;
 			//std::cout <<"Vector:" << image.capacity() << std::endl;
-			int rnd = dev_test()*u % (image.capacity()-2);
+			uint16_t rnd = dev_test()*u % (image.capacity()-2);
 			std::cout << rnd << std::endl;
 			mob_ebene_1.push_back(new mob(u-1,*image[rnd], diffculty, 0, pfont, *image[image.capacity()-1]));
 		}

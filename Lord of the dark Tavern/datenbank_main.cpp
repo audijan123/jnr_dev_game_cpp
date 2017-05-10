@@ -52,6 +52,61 @@ void main_data::load_db_file()
 				std::stringstream ss(line);
 				ss >> d_data;
 				d_data = d_data.substr(1, d_data.length() - 2);
+				//std::cout << d_data << std::endl;
+
+				if (d_data == "#")
+				{
+
+					struct item_data item_data_single = {};
+					if (buffer[0] == "WEAPON")
+					{
+						item_data_single.i_class = {WEAPON};
+					}
+					else if (buffer[0] == "USEABLE")
+					{
+						item_data_single.i_class = {USEABLE};
+					}
+					else if (buffer[0] == "CRAFTING")
+					{
+						item_data_single.i_class = { CRAFTING };
+					}
+					else if (buffer[0] == "ARMOR")
+					{
+						item_data_single.i_class = { ARMOR };
+					}
+					else if (buffer[0] == "SCHILD")
+					{
+						item_data_single.i_class = { SCHILD };
+					}
+					else if (buffer[0] == "KOPF")
+					{
+						item_data_single.i_class = { KOPF };
+					}
+					else if (buffer[0] == "FOOT")
+					{
+						item_data_single.i_class = { FOOT };
+					}
+					else if (buffer[0] == "SPECIAL")
+					{
+						item_data_single.i_class = { SPECIAL };
+					}
+
+					item_data_single.i_name = buffer[1];
+					
+					//item_data_single.i_class = { static_cast<item_class>(d_data[0]) };
+					items.push_back(item_data_single);
+					if (items[id].i_class == WEAPON)
+					{
+						std::cout << items[id].i_class << " : " << items[id].i_name << " Leben: " << items[id].i_leben << std::endl;
+					}
+					id++;
+					buffer.clear();
+				}
+				else
+				{
+					buffer.push_back(d_data);
+				}
+
 			}
 		}
 
