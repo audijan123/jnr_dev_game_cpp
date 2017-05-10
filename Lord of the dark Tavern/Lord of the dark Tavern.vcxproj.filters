@@ -62,18 +62,18 @@
     <ClInclude Include="datenbank_main.hpp">
       <Filter>Headerdateien\datenbank</Filter>
     </ClInclude>
+    <ClInclude Include="..\x64\Release\sfml-graphics-2.dll">
+      <Filter>Ressourcendateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\x64\Release\sfml-system-2.dll">
+      <Filter>Ressourcendateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\x64\Release\sfml-window-2.dll">
+      <Filter>Ressourcendateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\x64\Release\DATA\local.db">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="..\x64\Release\sfml-graphics-2.dll">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="..\x64\Release\sfml-system-2.dll">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="..\x64\Release\sfml-window-2.dll">
       <Filter>Ressourcendateien</Filter>
     </None>
   </ItemGroup>
