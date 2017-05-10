@@ -77,13 +77,13 @@ public:
 
 private:
 	void load_db_file();
+	void fill_struct_list();
 
 	bool p_main_run = false;
 	bool first_line = true;
 
 	std::string path;
 
-	short id = 0;
 
 	std::vector<item_data> items;
 

@@ -15,9 +15,9 @@ main_data::~main_data()
 
 void main_data::run()
 {
-	std::cout << "update" << std::endl;
 	while (p_main_run)
 	{
+
 	}
 
 }
@@ -55,51 +55,8 @@ void main_data::load_db_file()
 				//std::cout << d_data << std::endl;
 
 				if (d_data == "#")
-				{
-
-					struct item_data item_data_single = {};
-					if (buffer[0] == "WEAPON")
-					{
-						item_data_single.i_class = {WEAPON};
-					}
-					else if (buffer[0] == "USEABLE")
-					{
-						item_data_single.i_class = {USEABLE};
-					}
-					else if (buffer[0] == "CRAFTING")
-					{
-						item_data_single.i_class = { CRAFTING };
-					}
-					else if (buffer[0] == "ARMOR")
-					{
-						item_data_single.i_class = { ARMOR };
-					}
-					else if (buffer[0] == "SCHILD")
-					{
-						item_data_single.i_class = { SCHILD };
-					}
-					else if (buffer[0] == "KOPF")
-					{
-						item_data_single.i_class = { KOPF };
-					}
-					else if (buffer[0] == "FOOT")
-					{
-						item_data_single.i_class = { FOOT };
-					}
-					else if (buffer[0] == "SPECIAL")
-					{
-						item_data_single.i_class = { SPECIAL };
-					}
-
-					item_data_single.i_name = buffer[1];
-					
-					//item_data_single.i_class = { static_cast<item_class>(d_data[0]) };
-					items.push_back(item_data_single);
-					if (items[id].i_class == WEAPON)
-					{
-						std::cout << items[id].i_class << " : " << items[id].i_name << " Leben: " << items[id].i_leben << std::endl;
-					}
-					id++;
+				{			
+					fill_struct_list();
 					buffer.clear();
 				}
 				else
@@ -114,4 +71,88 @@ void main_data::load_db_file()
 
 	}
 	f.close();
+}
+
+void main_data::fill_struct_list()
+{
+
+
+	struct item_data item_data_single = {};
+	if (buffer[0] == "WEAPON")
+	{
+		item_data_single.i_class = { WEAPON };
+	}
+	else if (buffer[0] == "USEABLE")
+	{
+		item_data_single.i_class = { USEABLE };
+	}
+	else if (buffer[0] == "CRAFTING")
+	{
+		item_data_single.i_class = { CRAFTING };
+	}
+	else if (buffer[0] == "ARMOR")
+	{
+		item_data_single.i_class = { ARMOR };
+	}
+	else if (buffer[0] == "SCHILD")
+	{
+		item_data_single.i_class = { SCHILD };
+	}
+	else if (buffer[0] == "KOPF")
+	{
+		item_data_single.i_class = { KOPF };
+	}
+	else if (buffer[0] == "FOOT")
+	{
+		item_data_single.i_class = { FOOT };
+	}
+	else if (buffer[0] == "SPECIAL")
+	{
+		item_data_single.i_class = { SPECIAL };
+	}
+
+	item_data_single.i_name = buffer[1];
+	item_data_single.i_texture = buffer[2];
+	item_data_single.i_dmg = std::stoi(buffer[3]);
+	item_data_single.i_leben = std::stoi(buffer[4]);
+	item_data_single.i_stufe = static_cast<short>(std::stoi(buffer[5]));
+
+
+	if (buffer[6] == "NORMAL")
+	{
+		item_data_single.i_rare = NORMAL;
+	}
+	else if (buffer[6] == "BESONDERS")
+	{
+		item_data_single.i_rare = BESONDERS;
+	}
+	else if (buffer[6] == "SELTEN")
+	{
+		item_data_single.i_rare = SELTEN;
+	}
+	else if (buffer[6] == "SEHRSELTEN")
+	{
+		item_data_single.i_rare = SEHRSELTEN;
+	}
+	else if (buffer[6] == "EPISCH")
+	{
+		item_data_single.i_rare = EPISCH;
+	}
+	else if (buffer[6] == "LEGENDAER")
+	{
+		item_data_single.i_rare = LEGENDAER;
+	}
+	else if (buffer[6] == "MYSTISCH")
+	{
+		item_data_single.i_rare = MYSTISCH;
+	}
+
+	item_data_single.i_buy_price = std::stoi(buffer[7]);
+	item_data_single.i_sell_price = std::stoi(buffer[8]);
+
+
+
+
+
+	items.push_back(item_data_single);
 }

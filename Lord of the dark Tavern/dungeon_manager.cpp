@@ -81,17 +81,13 @@ void dungeon_manager::fill_dungeon(const std::vector<sf::Image*> &image)
 		{
 			std::time_t fro = std::time(0);
 			boost::random::mt19937 dev_test{ static_cast<std::uint32_t>(fro) };;
-			//std::cout <<"Vector:" << image.capacity() << std::endl;
 			uint16_t rnd = dev_test()*u % (image.capacity()-2);
-			std::cout << rnd << std::endl;
 			mob_ebene_1.push_back(new mob(u-1,*image[rnd], diffculty, 0, pfont, *image[image.capacity()-1]));
 		}
 
 
 
 		mob_per_floor.push_back(mobs_ebene);
-		std::cout << mobs_ebene << " : " << i << " : "  << mob_per_floor[i] << std::endl;
-		//49 173 168 163 84 79
 		
 			
 			
@@ -112,7 +108,6 @@ void dungeon_manager::render(sf::RenderWindow *rw)
 	{
 		for (int i_p = 0; i_p < mob_per_floor[floor_a]; i_p++)
 		{
-			//std::cout << i_p << std::endl;
 			mob_ebene_1[i_p]->render(rw);
 		}
 	}

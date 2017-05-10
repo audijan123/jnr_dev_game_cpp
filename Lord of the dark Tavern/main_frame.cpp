@@ -3,7 +3,6 @@
 main_frame::main_frame(std::string const &path)
 {
 	std::string m_path = path.substr(0, path.length()-27);
-	//std::cout << m_path << std::endl;
 	p_data = new main_data(m_path);
 	pRenderWindow = new sf::RenderWindow(sf::VideoMode(main_x, main_y, 64), "Lord of the dark Travern",sf::Style::Default);
 	pRenderWindow->setFramerateLimit(60);
@@ -39,7 +38,6 @@ main_frame::main_frame(std::string const &path)
 
 	tavern_coords[2] = pImageTavern->getSize().x*2.67 + tavern_coords[0];
 	tavern_coords[3] = pImageTavern->getSize().y*2.85 + tavern_coords[1];
-	std::cout << pImageTavern->getSize().y << " : " << tavern_coords[1] << " : " << tavern_coords[3] << std::endl;
 
 
 
@@ -216,7 +214,6 @@ main_frame::main_frame(std::string const &path)
 
 	pLoader = new re_loader(m_path);
 
-	std::cout << pRenderWindow->getPosition().x << " : " << pRenderWindow->getPosition().y << std::endl;
 
 }
 
@@ -262,7 +259,6 @@ void main_frame::update()
 
 		mouse_x = sf::Mouse::getPosition().x-8-pRenderWindow->getPosition().x;
 		mouse_y = sf::Mouse::getPosition().y-32-pRenderWindow->getPosition().y;
-		//std::cout << mouse_x << " : " << mouse_y << std::endl;
 
 	}
 }
@@ -321,11 +317,7 @@ void main_frame::handleEvents()
 				if (hover_tavern && !m_dungeon)
 				{
 					std::cout << "Tavern Aktiv" << std::endl;
-				}
-				if (hover_portal && !m_dungeon && !m_dungeon_browser)
-				{
-					std::cout << "Portal Aktiv" << std::endl;
-				}
+				}			
 				exit_btn();
 				if (m_dungeon_browser)
 				{
@@ -421,7 +413,7 @@ void main_frame::m_frametime()
 
 void main_frame::tavern_hover()
 {
-	if (mouse_x > tavern_coords[0] && mouse_x <= tavern_coords[2])
+	if (mouse_x > tavern_coords[0] && mouse_x <= tavern_coords[2] && !m_dungeon_browser)
 		{
 		if (mouse_y >= tavern_coords[1] && mouse_y <= tavern_coords[3])
 		{
