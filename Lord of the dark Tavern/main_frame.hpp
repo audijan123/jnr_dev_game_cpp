@@ -8,6 +8,7 @@
 #include <thread>
 #include <chrono>
 #include "datenbank_main.hpp"
+#include "tavern_main.hpp"
 
 class main_frame
 {
@@ -43,6 +44,7 @@ private:
 	void update_diffi();
 	void btn_exit_dungeon();
 	void btn_go_dungeon();
+	void create_dungeon_browser();
 
 
 	float m_frame_time;
@@ -122,11 +124,16 @@ private:
 	re_loader *pLoader;
 
 
+	/// Taverne ///
+	tavern_main *p_tavern;
+
+
 
 	bool m_run = true;
 	bool m_screen = true;
 	bool m_pause = false;
 	bool m_dungeon = false;
+	bool m_tavern = false;
 
 	bool m_dungeon_browser = false;
 

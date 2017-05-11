@@ -19,6 +19,12 @@
     <Filter Include="Quelldateien\datenbank">
       <UniqueIdentifier>{0a12e4b8-ed3f-47b1-acb7-24df09257f7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\tavern">
+      <UniqueIdentifier>{345f17f2-6473-4034-b460-ab38bc4c1915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\tavern">
+      <UniqueIdentifier>{c4d8d1a2-277d-4a40-a47b-756a0c1df1e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="datenbank_main.cpp">
       <Filter>Quelldateien\datenbank</Filter>
+    </ClCompile>
+    <ClCompile Include="tavern_main.cpp">
+      <Filter>Quelldateien\tavern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\x64\Release\sfml-window-2.dll">
       <Filter>Ressourcendateien</Filter>
+    </ClInclude>
+    <ClInclude Include="tavern_main.hpp">
+      <Filter>Headerdateien\tavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
