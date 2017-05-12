@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <iostream>
 #include <SFML\Graphics.hpp>
 
@@ -13,9 +12,11 @@ public:
 	~tavern_main();
 
 
-	void update();
+	void update(float const &m_time);
 
 	void render(sf::RenderWindow *rw);
+
+	void test_func();
 	
 
 private:
@@ -26,13 +27,18 @@ private:
 	sf::Texture *bg_tavern;
 	sf::Texture *floor_tavern;
 	sf::Texture *counter_tavern;
-	sf::Texture *sell_man_t;
-	sf::Texture *mage_t;
+	sf::Texture *sell_man_t[3];
+	sf::Image test_image;
+	sf::Texture *mage_t[4];
 
 	sf::Sprite *p_sell_man;
 	sf::Sprite *p_mage;
 
-	sf::Sprite *main_sprites[3];
 
+	sf::Texture *safe_t[6];
+
+	sf::Sprite *main_sprites[4];
+
+	int test = 0;
 
 };

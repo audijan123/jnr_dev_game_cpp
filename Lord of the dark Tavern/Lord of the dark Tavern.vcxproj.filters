@@ -51,6 +51,9 @@
     <ClCompile Include="tavern_main.cpp">
       <Filter>Quelldateien\tavern</Filter>
     </ClCompile>
+    <ClCompile Include="main_base.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="tavern_main.hpp">
       <Filter>Headerdateien\tavern</Filter>
+    </ClInclude>
+    <ClInclude Include="main_base.hpp">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

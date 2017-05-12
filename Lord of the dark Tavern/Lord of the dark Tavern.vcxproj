@@ -153,6 +153,7 @@
     <ClCompile Include="dungeon_mob.cpp" />
     <ClCompile Include="enviroment_loader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
     <ClCompile Include="resource_loader.cpp" />
     <ClCompile Include="tavern_main.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="dungeon_manager.hpp" />
     <ClInclude Include="dungeon_mob.hpp" />
     <ClInclude Include="enviroment_loader.hpp" />
+    <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="resource_loader.hpp" />
     <ClInclude Include="tavern_main.hpp" />

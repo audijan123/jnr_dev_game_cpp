@@ -4,21 +4,30 @@ main_frame::main_frame(std::string const &path) :
 	main_path(path.substr(0, path.length() - 27))
 {
 	p_data = new main_data(main_path);
+
+	p_memory_allocator = new JNR::main_base(main_path);
+
+	
+	sf::ContextSettings contextSettings;
+	contextSettings.depthBits = 24;
+	contextSettings.antialiasingLevel = 1;
+	contextSettings.majorVersion = 4;
+	contextSettings.minorVersion = 5;
+
 	pRenderWindow = new sf::RenderWindow(sf::VideoMode(main_x, main_y, 64), "Lord of the dark Travern",sf::Style::Default);
 	pRenderWindow->setFramerateLimit(60);
 	pRenderWindow->setVerticalSyncEnabled(true);
 	pMainEvent	  = new sf::Event;
 	pClock        = new sf::Clock;
-
 	pFont = new sf::Font;
 	pFont->loadFromFile(main_path + "DATA/resource/dungeon.ttf");
-
 	pText.setFont(*pFont);
 	pText.setPosition(0, 0);
 	pText.setString("");
 
 	pBackground = new sf::Texture;
-	pBackground->loadFromFile(main_path + "DATA/resource/bg.png");
+	//pBackground->loadFromFile(main_path + "DATA/resource/bg.png");
+	pBackground->loadFromMemory(&p_memory_allocator->get_memory_data("backg")[0], p_memory_allocator->get_memory_data("backg").size());
 	pSprite = new sf::Sprite;
 	pSprite->setTexture(*pBackground);
 	pSprite->setScale(2.67, 2.85);
@@ -132,6 +141,8 @@ main_frame::main_frame(std::string const &path) :
 
 	// Dungeon Browser Menu //
 	create_dungeon_browser();
+
+
 	
 
 	m_scale = 800 / main_x;
@@ -186,8 +197,10 @@ void main_frame::update()
 
 		mouse_x = sf::Mouse::getPosition().x-8-pRenderWindow->getPosition().x;
 		mouse_y = sf::Mouse::getPosition().y-32-pRenderWindow->getPosition().y;
-
+		p_tavern->update(m_frame_time);
 	}
+
+
 }
 void main_frame::handleEvents()
 {
@@ -205,36 +218,13 @@ void main_frame::handleEvents()
 			}
 			else if (pMainEvent->key.code == sf::Keyboard::F1)
 			{
-				pDungeonManager = new dungeon_manager(1, main_path,pLoader->get_mob_data());
-				m_dungeon = true;
-				m_screen = false;
-			}
-			else if (pMainEvent->key.code == sf::Keyboard::F2)
-			{
-				pDungeonManager = new dungeon_manager(2, main_path, pLoader->get_mob_data());
-				m_dungeon = true;
-				m_screen = false;
-			}
-			else if (pMainEvent->key.code == sf::Keyboard::F3)
-			{
-				pDungeonManager = new dungeon_manager(3, main_path, pLoader->get_mob_data());
-					m_dungeon = true;
-					m_screen = false;
-			}
-			else if (pMainEvent->key.code == sf::Keyboard::F4)
-			{
-				pDungeonManager = new dungeon_manager(100, main_path, pLoader->get_mob_data());
-				m_dungeon = true;
-				m_screen = false;
+				p_tavern->test_func();
 			}
 			else if (pMainEvent->key.code == sf::Keyboard::F5)
 			{
 				exit_dungeon();
 			}
-			else if (pMainEvent->key.code == sf::Keyboard::F6)
-			{
-				
-			}
+
 			
 		}
 		if (pMainEvent->type == sf::Event::MouseButtonPressed)
@@ -259,7 +249,6 @@ void main_frame::handleEvents()
 		}
 	}
 }
-
 
 void main_frame::render()
 {

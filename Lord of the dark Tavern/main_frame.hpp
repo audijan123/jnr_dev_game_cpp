@@ -9,6 +9,7 @@
 #include <chrono>
 #include "datenbank_main.hpp"
 #include "tavern_main.hpp"
+#include "main_base.hpp"
 
 class main_frame
 {
@@ -128,6 +129,9 @@ private:
 	tavern_main *p_tavern;
 
 
+	JNR::main_base *p_memory_allocator;
+
+
 
 	bool m_run = true;
 	bool m_screen = true;
@@ -154,6 +158,6 @@ private:
 	bool hover_tavern = false;
 	bool hover_portal = false;
 
-
+	
 
 };
