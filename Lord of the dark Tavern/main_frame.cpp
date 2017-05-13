@@ -507,7 +507,7 @@ void main_frame::btn_go_dungeon()
 		if (mouse_y >= p_Dungeon_Browser[3]->getPosition().y && mouse_y <= p_Dungeon_Browser[3]->getPosition().y + 50)
 		{
 			m_dungeon_browser = false;
-			pDungeonManager = new dungeon_manager(difficulty, main_path, pLoader->get_mob_data());
+			pDungeonManager = new dungeon_manager(difficulty, main_path, p_memory_allocator);
 			m_dungeon = true;
 			m_screen = false;
 		}

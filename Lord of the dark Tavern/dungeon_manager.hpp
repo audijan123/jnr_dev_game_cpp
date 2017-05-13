@@ -9,11 +9,13 @@
 #include <SFML\Graphics.hpp>
 #include "dungeon_mob.hpp"
 #include <Vector>
+#include "main_base.hpp"
 
 
-class dungeon_manager {
+class dungeon_manager
+{
 public:
-	dungeon_manager(const int &m_power, std::string path, const std::vector<sf::Image*> &image);
+	dungeon_manager(const int &m_power,const std::string &path,const JNR::main_base* pbase);
 	~dungeon_manager();
 
 
@@ -21,13 +23,13 @@ public:
 	int enviroment_id() { return enviro_id; };
 
 
-	void render(sf::RenderWindow *rw);
+	void render(sf::RenderWindow *rw) const;
 
 
 private:
 
 
-	void fill_dungeon(const std::vector<sf::Image*> &image);
+	void fill_dungeon();
 	void load_dungeon();
 	
 
@@ -37,12 +39,30 @@ private:
 	int enviro_id = 0;
 	bool dungeon_atkiv = false;
 
-	std::string m_path;
+	JNR::main_base p_memory_allocator;
 
 	sf::Font *pfont;
+	struct mob
+	{
+		sf::Image *image = new sf::Image;
+		sf::Texture *p_texture = new sf::Texture;
+		sf::Sprite *p_sprite = new sf::Sprite;
 
-	std::vector<mob*> mob_ebene_1;
-	std::vector<sf::Image> image;
+		sf::Texture *p_life_t = new sf::Texture;
+		sf::Sprite *p_life = new sf::Sprite;
+
+		sf::Text *text = new sf::Text;
+
+		int life = 10;
+		int dmg = 10;
+	};
+
+	std::string m_path;
+
+	std::time_t now;
+
+	std::vector<struct mob> mob_this_dungeons;
+
 
 	std::vector<int> mob_per_floor;
 
