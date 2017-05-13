@@ -15,8 +15,6 @@ re_loader::re_loader(std::string m_path)
 		}
 	}
 
-
-
 	while (c_ord != 6)
 	{
 		if (c_ord == 0)

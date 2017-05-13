@@ -34,18 +34,15 @@ main_frame::main_frame(std::string const &path) :
 
 	/// Tavern 
 
-	pImageTavern = new sf::Image;
-	pImageTavern->loadFromFile(main_path + "DATA/resource/tavern.png");
-	pImageTavern->createMaskFromColor(sf::Color::White);
 	pTextureTaverne = new sf::Texture;
-	pTextureTaverne->loadFromImage(*pImageTavern);
+	pTextureTaverne->loadFromMemory(&p_memory_allocator->get_memory_data("taver")[0], p_memory_allocator->get_memory_data("taver").size());
 	pTaverne = new sf::Sprite;
 	pTaverne->setTexture(*pTextureTaverne);
 	pTaverne->setPosition(tavern_coords[0], tavern_coords[1]);
 	pTaverne->setScale(2.67, 2.85);
 
-	tavern_coords[2] = pImageTavern->getSize().x*2.67 + tavern_coords[0];
-	tavern_coords[3] = pImageTavern->getSize().y*2.85 + tavern_coords[1];
+	tavern_coords[2] = pTextureTaverne->getSize().x*2.67 + tavern_coords[0];
+	tavern_coords[3] = pTextureTaverne->getSize().y*2.85 + tavern_coords[1];
 
 
 
@@ -70,7 +67,8 @@ main_frame::main_frame(std::string const &path) :
 	pClouds = new sf::Sprite;
 	pClouds2 = new sf::Sprite;
 
-	pSky_Texture->loadFromFile(main_path + "DATA/resource/sky.png");
+	//pSky_Texture->loadFromFile(main_path + "DATA/resource/sky.png");
+	pSky_Texture->loadFromMemory(&p_memory_allocator->get_memory_data("skybb")[0], p_memory_allocator->get_memory_data("skybb").size());
 	pClouds_Texture->loadFromFile(main_path + "DATA/resource/clouds.png");
 
 	pSky->setTexture(*pSky_Texture);

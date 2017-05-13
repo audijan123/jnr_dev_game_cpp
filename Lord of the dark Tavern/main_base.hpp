@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <Windows.h>
 
 namespace JNR
 {
@@ -20,7 +21,14 @@ namespace JNR
 
 	private:
 
+		short sec_integer = 10;
+
+		std::wstring main_base::s2ws(const std::string& s);
+
 		std::string main_path;
+
+		HANDLE fHandle;
+		WIN32_FIND_DATA wfd;
 
 		struct memory_data
 		{
