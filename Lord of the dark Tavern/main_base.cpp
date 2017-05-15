@@ -16,7 +16,7 @@ namespace JNR
 			}
 		}
 
-		std::wstring stemp = s2ws(main_path + "DATA/*");
+		std::wstring stemp = s2ws(main_path + "jnr_data/*");
 		LPCWSTR result = stemp.c_str();
 
 		fHandle = FindFirstFile(result, &wfd);
@@ -34,7 +34,7 @@ namespace JNR
 
 					if (buffer_ending == ".jnr")
 					{
-						std::ifstream texture_file{ path1 + "DATA/" + str_dev, std::ifstream::binary };
+						std::ifstream texture_file{ path1 + "jnr_data/" + str_dev, std::ifstream::binary };
 						std::vector<char> buffer;
 
 						if (texture_file) {
@@ -47,7 +47,7 @@ namespace JNR
 							buffer.resize(length); // reserve space
 
 							texture_file.seekg(0, texture_file.beg);
-
+							
 							auto start = &*buffer.begin();
 							texture_file.read(start, length);
 							texture_file.close();
@@ -69,7 +69,7 @@ namespace JNR
 							{
 							for (short k = sec_integer; k > 0; k--)
 								{
-									if (static_cast<int>(buffer[buffer.size() - (i + k)]) >= 97 && static_cast<int>(buffer[buffer.size() - (i + k)]) <= 122)
+									if (static_cast<int>(buffer[buffer.size() - (i + k)] - 1) >= 97 && static_cast<int>(buffer[buffer.size() - (i + k)] - 1) <= 122 || static_cast<int>(buffer[buffer.size() - (i + k)]-1) >= 48 && static_cast<int>(buffer[buffer.size() - (i + k)]-1) <= 57)
 									{
 										buffer_char[u_k] = buffer[buffer.size() - (i + k)] - 1;
 										u_k++;
@@ -83,7 +83,7 @@ namespace JNR
 							}
 						}
 						std::string dev_buffer(buffer_char);
-						std::cout << dev_buffer << std::endl;
+						std::cout << dev_buffer << ";";
 						d_memory_data.name = dev_buffer;
 						d_data.push_back(d_memory_data);
 						buffer.clear();
@@ -92,13 +92,16 @@ namespace JNR
 			}
 		} while (FindNextFile(fHandle, &wfd));
 		FindClose(fHandle);
+		
+		get_mob_size();
+
 	}
 
 	main_base::~main_base()
 	{
 	}
 
-	std::vector<char> main_base::get_memory_data(std::string name) const
+	std::vector<char> main_base::get_memory_data(const std::string &name) const
 	{
 		for (int i = 0; i < d_data.size(); i++)
 		{
@@ -107,6 +110,22 @@ namespace JNR
 				return d_data[i].t;
 			}
 		}
+		return d_data[0].t;
+	}
+
+	std::vector<char> main_base::get_memory_data(std::string name,int rnd) const
+	{
+		std::string buffer_int = std::to_string(rnd);
+		//name += buffer_int;
+		name += buffer_int.substr(1,buffer_int.length());
+		for (int i = 0; i < d_data.size(); i++)
+		{
+			if (d_data[i].name == name)
+			{
+				return d_data[i].t;
+			}
+		}
+		return d_data[0].t;
 	}
 
 	std::wstring main_base::s2ws(const std::string& s)
@@ -119,5 +138,17 @@ namespace JNR
 		std::wstring r(buf);
 		delete[] buf;
 		return r;
+	}
+
+	void main_base::get_mob_size()
+	{
+		for (auto t = d_data.size(); t != 0; t--)
+		{
+			if (d_data[t-1].name.substr(0, d_data[t-1].name.length() - 2) == "mob")
+			{
+				size_of_mob++;
+			}
+
+		}
 	}
 }

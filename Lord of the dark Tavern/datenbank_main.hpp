@@ -6,12 +6,13 @@
 #include <thread>
 #include <sstream>
 #include <vector>
+#include "main_os_manager.hpp"
 
 
 class main_data
 {
 public:
-	main_data(std::string m_path);
+	main_data(const std::string &m_path);
 	~main_data();
 
 	void run();
@@ -55,7 +56,7 @@ public:
 	{
 		item_class  i_class = NOTDEFINED;
 		std::string i_name = "Leer";
-		std::string i_texture = "DATA\item\standart.png";
+		std::string i_texture = "stand";
 		int         i_dmg = 0;
 		int			i_leben = 0;
 		uint8_t		i_stufe = 0;

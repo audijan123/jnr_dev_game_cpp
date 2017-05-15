@@ -25,6 +25,12 @@
     <Filter Include="Quelldateien\tavern">
       <UniqueIdentifier>{c4d8d1a2-277d-4a40-a47b-756a0c1df1e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\sf::animantion">
+      <UniqueIdentifier>{b87fed57-958d-4974-b1c2-4084d62ecaac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\sf::animation">
+      <UniqueIdentifier>{9e0dd8cf-81e4-4267-af47-c9d70290c134}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,9 +45,6 @@
     <ClCompile Include="enviroment_loader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="dungeon_mob.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="resource_loader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -54,6 +57,15 @@
     <ClCompile Include="main_base.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Quelldateien\sf::animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Quelldateien\sf::animation</Filter>
+    </ClCompile>
+    <ClCompile Include="main_os_manager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
@@ -63,9 +75,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="enviroment_loader.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="dungeon_mob.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="resource_loader.hpp">
@@ -87,6 +96,15 @@
       <Filter>Headerdateien\tavern</Filter>
     </ClInclude>
     <ClInclude Include="main_base.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.hpp">
+      <Filter>Headerdateien\sf::animantion</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Headerdateien\sf::animantion</Filter>
+    </ClInclude>
+    <ClInclude Include="main_os_manager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,8 +14,7 @@
 class main_frame
 {
 public:
-	int main_x = 1280;
-	int main_y = 768;
+	sf::Vector2f main = { 1280.f,768.f };
 
 	main_frame(std::string const &path);
 	~main_frame();
@@ -28,6 +27,7 @@ public:
 private:
 
 	std::string main_path;
+	sf::Vector2f m_pos;
 
 	void quit();
 	void render();
@@ -50,7 +50,7 @@ private:
 
 	float m_frame_time;
 
-	double m_scale = 1;
+	float m_scale = 1;
 
 	int a_frametime;
 
@@ -108,7 +108,7 @@ private:
 
 	/// Dungeon Browser ///
 
-	sf::Texture *p_Dungeon_Browser_T[6];
+	sf::Texture *p_Dungeon_Browser_T[7];
 	sf::Sprite *p_Dungeon_Browser[7];
 
 	sf::Text *p_Dungeon_Browser_Title;
@@ -144,16 +144,12 @@ private:
 
 	bool m_dungeon_hardcore = false;
 
+	float tavern_coords[10] = {0,230};
 
-	int mouse_x;
-	int mouse_y;
-
-	int tavern_coords[10] = {0,230};
-
-	int portal_coords[10] = { 1100, 390 };
+	float portal_coords[10] = { 1100, 390 };
 
 
-	int btn[10] = { main_x - 50,main_x - 100,main_x - 150,0,50 };
+	float btn[10] = { main.x - 50.f,main.x - 100.f,main.x - 150.f,0.f,50.f };
 
 	bool hover_tavern = false;
 	bool hover_portal = false;

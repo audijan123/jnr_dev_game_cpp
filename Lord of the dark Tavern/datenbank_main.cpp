@@ -2,7 +2,7 @@
 
 
 
-main_data::main_data(std::string m_path) :
+main_data::main_data(const std::string &m_path) :
 	path(m_path)
 {
 	p_main_run = true;
@@ -113,9 +113,9 @@ void main_data::fill_struct_list()
 
 	item_data_single.i_name = buffer[1];
 	item_data_single.i_texture = buffer[2];
-	item_data_single.i_dmg = std::stoi(buffer[3]);
-	item_data_single.i_leben = std::stoi(buffer[4]);
-	item_data_single.i_stufe = static_cast<short>(std::stoi(buffer[5]));
+	item_data_single.i_dmg = osm::si(buffer[3]);
+	item_data_single.i_leben = osm::si(buffer[4]);
+	item_data_single.i_stufe = osm::sB(buffer[5]);
 
 
 	if (buffer[6] == "NORMAL")
@@ -147,8 +147,8 @@ void main_data::fill_struct_list()
 		item_data_single.i_rare = MYSTISCH;
 	}
 
-	item_data_single.i_buy_price = std::stoi(buffer[7]);
-	item_data_single.i_sell_price = std::stoi(buffer[8]);
+	item_data_single.i_buy_price = osm::si(buffer[7]);
+	item_data_single.i_sell_price = osm::si(buffer[8]);
 
 
 

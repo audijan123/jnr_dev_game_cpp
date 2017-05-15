@@ -5,9 +5,7 @@
 #include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
-#include <list>
 #include <SFML\Graphics.hpp>
-#include "dungeon_mob.hpp"
 #include <Vector>
 #include "main_base.hpp"
 
@@ -30,7 +28,6 @@ private:
 
 
 	void fill_dungeon();
-	void load_dungeon();
 	
 
 	int diffculty = 1;
@@ -44,11 +41,8 @@ private:
 	sf::Font *pfont;
 	struct mob
 	{
-		sf::Image *image = new sf::Image;
-		sf::Texture *p_texture = new sf::Texture;
 		sf::Sprite *p_sprite = new sf::Sprite;
-
-		sf::Texture *p_life_t = new sf::Texture;
+		sf::Vector2f scale;
 		sf::Sprite *p_life = new sf::Sprite;
 
 		sf::Text *text = new sf::Text;
@@ -60,7 +54,10 @@ private:
 	std::string m_path;
 
 	std::time_t now;
-
+	sf::Texture *p_life_t;
+	sf::Texture *p_texture_t;
+	sf::Image *image;
+	std::vector<sf::Texture*> p_texture;
 	std::vector<struct mob> mob_this_dungeons;
 
 

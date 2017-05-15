@@ -1,6 +1,6 @@
 #include "main_frame.hpp"
 
-main_frame::main_frame(std::string const &path) :
+main_frame::main_frame(const std::string &path) :
 	main_path(path.substr(0, path.length() - 27))
 {
 	p_data = new main_data(main_path);
@@ -14,7 +14,7 @@ main_frame::main_frame(std::string const &path) :
 	contextSettings.majorVersion = 4;
 	contextSettings.minorVersion = 5;
 
-	pRenderWindow = new sf::RenderWindow(sf::VideoMode(main_x, main_y, 64), "Lord of the dark Travern",sf::Style::Default);
+	pRenderWindow = new sf::RenderWindow(sf::VideoMode(main.x,main.y, 64), "Lord of the dark Travern",sf::Style::Default);
 	pRenderWindow->setFramerateLimit(60);
 	pRenderWindow->setVerticalSyncEnabled(true);
 	pMainEvent	  = new sf::Event;
@@ -30,7 +30,7 @@ main_frame::main_frame(std::string const &path) :
 	pBackground->loadFromMemory(&p_memory_allocator->get_memory_data("backg")[0], p_memory_allocator->get_memory_data("backg").size());
 	pSprite = new sf::Sprite;
 	pSprite->setTexture(*pBackground);
-	pSprite->setScale(2.67, 2.85);
+	pSprite->setScale(2.67f, 2.85f);
 
 	/// Tavern 
 
@@ -39,10 +39,10 @@ main_frame::main_frame(std::string const &path) :
 	pTaverne = new sf::Sprite;
 	pTaverne->setTexture(*pTextureTaverne);
 	pTaverne->setPosition(tavern_coords[0], tavern_coords[1]);
-	pTaverne->setScale(2.67, 2.85);
+	pTaverne->setScale(2.67f, 2.85f);
 
-	tavern_coords[2] = pTextureTaverne->getSize().x*2.67 + tavern_coords[0];
-	tavern_coords[3] = pTextureTaverne->getSize().y*2.85 + tavern_coords[1];
+	tavern_coords[2] = pTextureTaverne->getSize().x*2.67f + tavern_coords[0];
+	tavern_coords[3] = pTextureTaverne->getSize().y*2.85f + tavern_coords[1];
 
 
 
@@ -55,8 +55,8 @@ main_frame::main_frame(std::string const &path) :
 	pTextureTaverne_Hover->loadFromImage(*pImageTavern_Hover);
 	pTaverne_Hover = new sf::Sprite;
 	pTaverne_Hover->setTexture(*pTextureTaverne_Hover);
-	pTaverne_Hover->setPosition(tavern_coords[0]+95, tavern_coords[1]+105);
-	pTaverne_Hover->setScale(2.67, 2.85);
+	pTaverne_Hover->setPosition(tavern_coords[0]+95.f, tavern_coords[1]+105.f);
+	pTaverne_Hover->setScale(2.67f, 2.85f);
 	////////////////////////////////////
 
 	//Sky and Clouds
@@ -72,12 +72,12 @@ main_frame::main_frame(std::string const &path) :
 	pClouds_Texture->loadFromFile(main_path + "DATA/resource/clouds.png");
 
 	pSky->setTexture(*pSky_Texture);
-	pSky->setScale(2.67, 2.85);
+	pSky->setScale(2.67f, 2.85f);
 	pClouds->setTexture(*pClouds_Texture);
-	pClouds->setScale(1.5, 1.2);
+	pClouds->setScale(1.5f, 1.2f);
 
 	pClouds2->setTexture(*pClouds_Texture);
-	pClouds2->setScale(1.5, 1.2);
+	pClouds2->setScale(1.5f, 1.2f);
 	pClouds2->setPosition(0-1200,0);
 
 
@@ -93,12 +93,12 @@ main_frame::main_frame(std::string const &path) :
 	pDungeonProtal_T->loadFromFile(main_path + "DATA/resource/portal.png");
 
 	pDungeonPortal->setTexture(*pDungeonProtal_T);
-	pDungeonPortal->setOrigin(pDungeonProtal_T->getSize().x / 2, pDungeonProtal_T->getSize().y / 2);
+	pDungeonPortal->setOrigin(pDungeonProtal_T->getSize().x / 2.f, pDungeonProtal_T->getSize().y / 2.f);
 	pDungeonPortal->setPosition(portal_coords[0], portal_coords[1]);
 	pDungeonPortal->setScale(0.5, 0.5);
 
-	portal_coords[2] = pDungeonProtal_T->getSize().x*0.20 + portal_coords[0];
-	portal_coords[3] = pDungeonProtal_T->getSize().y*0.19 + portal_coords[1];
+	portal_coords[2] = pDungeonProtal_T->getSize().x*0.20f + portal_coords[0];
+	portal_coords[3] = pDungeonProtal_T->getSize().y*0.19f + portal_coords[1];
 
 	// Dungeon Portal Hover //
 
@@ -107,45 +107,26 @@ main_frame::main_frame(std::string const &path) :
 	pPortal_Sky_Hover = new sf::Texture;
 	pPortal_Sky_Hover->loadFromFile(main_path + "DATA/resource/sky_hover.png");
 
-
-
-
 	// Option BTNS
-	pBtn[0] = new sf::Sprite;
-	pBtn[1] = new sf::Sprite;
-	pBtn[2] = new sf::Sprite;
-
-	pBtn_T[0] = new sf::Texture;
-	pBtn_T[1] = new sf::Texture;
-	pBtn_T[2] = new sf::Texture;
-
-
-	pBtn_T[0]->loadFromFile(main_path + "DATA/resource/btn/btn_exit.png");
-	pBtn_T[1]->loadFromFile(main_path + "DATA/resource/btn/btn_settings.png");
-	pBtn_T[2]->loadFromFile(main_path + "DATA/resource/btn/btn_patrons.png");
-
-	pBtn[0]->setTexture(*pBtn_T[0]);
-	pBtn[1]->setTexture(*pBtn_T[1]);
-	pBtn[2]->setTexture(*pBtn_T[2]);
-
-	pBtn[0]->setPosition(btn[0], btn[3]);
-	pBtn[1]->setPosition(btn[1], btn[3]);
-	pBtn[2]->setPosition(btn[2], btn[3]);
-
-	pBtn[0]->setScale(1.7, 1.7);
-	pBtn[1]->setScale(1.7, 1.7);
-	pBtn[2]->setScale(1.7, 1.7);
-
-
+	for (auto i = 0; i < 3; i++)
+	{
+		pBtn[i] = new sf::Sprite;
+		pBtn_T[i] = new sf::Texture;
+		pBtn_T[i]->loadFromMemory(&p_memory_allocator->get_memory_data("btn", i + 100)[0], p_memory_allocator->get_memory_data("btn", i + 100).size());
+		pBtn[i]->setTexture(*pBtn_T[i]);
+		pBtn[i]->setPosition(btn[i], btn[3]);
+		pBtn[i]->setScale(1.7f, 1.7f);
+	}
 	// Dungeon Browser Menu //
 	create_dungeon_browser();
+	/////
 
 
 	
 
-	m_scale = 800 / main_x;
+	m_scale = 800.f / main.x;
 
-	p_tavern = new tavern_main(main_path);
+	p_tavern = new tavern_main(main_path, p_memory_allocator,main);
 
 
 	pLoader = new re_loader(main_path);
@@ -163,12 +144,7 @@ void main_frame::run()
 	while (m_run)
 	{
 		update();
-
-		//enviroment //
 		tavern_hover();
-		//life_clouds();
-		//dungeon_rotate();
-
 		update_diffi();
 
 		handleEvents();
@@ -190,12 +166,12 @@ void main_frame::update()
 {
 	if (m_pause == false)
 	{
-		a_frametime = 1.f / m_frame_time;
+		a_frametime = static_cast<int>(1.f / m_frame_time);
 		pText.setString(std::to_string(a_frametime));
 
-		mouse_x = sf::Mouse::getPosition().x-8-pRenderWindow->getPosition().x;
-		mouse_y = sf::Mouse::getPosition().y-32-pRenderWindow->getPosition().y;
-		p_tavern->update(m_frame_time);
+		m_pos = { sf::Mouse::getPosition().x - 8.f - pRenderWindow->getPosition().x ,sf::Mouse::getPosition().y - 32.f - pRenderWindow->getPosition().y };
+
+		p_tavern->update(m_pos);
 	}
 
 
@@ -210,6 +186,7 @@ void main_frame::handleEvents()
 		}
 		if (pMainEvent->type == sf::Event::KeyPressed && pRenderWindow->hasFocus())
 		{
+			p_tavern->event_get_key(pMainEvent);
 			if (pMainEvent->key.code == sf::Keyboard::A)
 			{
 				std::cout << "event " << std::endl;
@@ -235,14 +212,18 @@ void main_frame::handleEvents()
 					m_dungeon = false;
 					m_screen = false;
 				}			
-				exit_btn();
-				if (m_dungeon_browser && !m_dungeon && !m_tavern)
+				else if (m_dungeon_browser && !m_dungeon && !m_tavern)
 				{
 					hardcore_btn();
 					diffi_btn();
 					btn_exit_dungeon();
 					btn_go_dungeon();
 				}
+				else if (m_tavern)
+				{
+					p_tavern->event();
+				}
+				exit_btn();
 			}
 		}
 	}
@@ -306,9 +287,10 @@ void main_frame::ui_render()
 
 	if (m_dungeon_browser && !m_dungeon && !m_tavern)
 	{
-		pRenderWindow->draw(*p_Dungeon_Browser[6]);
+		pRenderWindow->draw(*p_Dungeon_Browser[5]);
 		pRenderWindow->draw(*p_Dungeon_Browser[2]);
 		pRenderWindow->draw(*p_Dungeon_Browser_Title);
+		//pRenderWindow->draw(*p_Dungeon_Browser[5]);
 		pRenderWindow->draw(*p_Dungeon_Browser[0]);
 		pRenderWindow->draw(*p_Dungeon_Browser[1]);
 		pRenderWindow->draw(*p_Dungeon_Browser[3]);
@@ -328,9 +310,9 @@ void main_frame::m_frametime()
 
 void main_frame::tavern_hover()
 {
-	if (mouse_x > tavern_coords[0] && mouse_x <= tavern_coords[2] && !m_dungeon_browser && !m_tavern)
+	if (m_pos.x > tavern_coords[0] && m_pos.x <= tavern_coords[2] && !m_dungeon_browser && !m_tavern)
 		{
-		if (mouse_y >= tavern_coords[1] && mouse_y <= tavern_coords[3])
+		if (m_pos.y >= tavern_coords[1] && m_pos.y <= tavern_coords[3])
 		{
 			hover_tavern = true;
 		}
@@ -347,19 +329,19 @@ void main_frame::tavern_hover()
 
 void main_frame::life_clouds()
 {
-	if (pClouds->getPosition().x >= main_x)
+	if (pClouds->getPosition().x >= main.x)
 	{
-		pClouds->setPosition(0- main_x, pClouds->getPosition().y);
+		pClouds->setPosition(0- main.x, pClouds->getPosition().y);
 	}
-	else if (pClouds->getPosition().x <  main_x)
+	else if (pClouds->getPosition().x <  main.x)
 	{
 		pClouds->setPosition(pClouds->getPosition().x + 30 * m_frame_time, pClouds->getPosition().y);
 	}
-	if (pClouds2->getPosition().x >= main_x)
+	if (pClouds2->getPosition().x >= main.x)
 	{
-		pClouds2->setPosition(0 - main_x, pClouds2->getPosition().y);
+		pClouds2->setPosition(0 - main.x, pClouds2->getPosition().y);
 	}
-	else if (pClouds2->getPosition().x < main_x)
+	else if (pClouds2->getPosition().x < main.x)
 	{
 		pClouds2->setPosition(pClouds2->getPosition().x + 30 * m_frame_time, pClouds2->getPosition().y);
 	}
@@ -369,9 +351,9 @@ void main_frame::dungeon_rotate()
 {
 	pDungeonPortal->rotate(0.5);
 
-	if (mouse_x > portal_coords[0] - 100 && mouse_x <= portal_coords[2] && !m_tavern || m_dungeon_browser)
+	if (m_pos.x > portal_coords[0] - 100 && m_pos.x <= portal_coords[2] && !m_tavern || m_dungeon_browser)
 	{
-		if (mouse_y >= portal_coords[1] * 1.5 - pDungeonProtal_T->getSize().y / 2 && mouse_y <= portal_coords[3] || m_dungeon_browser)
+		if (m_pos.y >= portal_coords[1] * 1.5 - pDungeonProtal_T->getSize().y / 2 && m_pos.y <= portal_coords[3] || m_dungeon_browser)
 		{
 			hover_portal = true;
 			pSprite->setTexture(*pPortal_T_Hover);
@@ -407,9 +389,9 @@ void main_frame::exit_dungeon()
 
 void main_frame::exit_btn()
 {
-	if (mouse_x > btn[0] && mouse_x <= btn[0] + 50)
+	if (m_pos.x > btn[0] && m_pos.x <= btn[0] + 50)
 	{
-		if (mouse_y >= btn[3] && mouse_y <= btn[3] + 55)
+		if (m_pos.y >= btn[3] && m_pos.y <= btn[3] + 55)
 		{
 			if (m_dungeon)
 			{
@@ -419,7 +401,7 @@ void main_frame::exit_btn()
 			{
 				m_run = false;
 			}
-			else if (m_tavern)
+			else if (m_tavern && !p_tavern->o_menu())
 			{
 				m_tavern = false;
 				m_screen = true;
@@ -430,9 +412,9 @@ void main_frame::exit_btn()
 
 void main_frame::hardcore_btn()
 {
-	if (mouse_x > p_Dungeon_Browser[4]->getPosition().x && mouse_x <= p_Dungeon_Browser[4]->getPosition().x + 50)
+	if (m_pos.x > p_Dungeon_Browser[4]->getPosition().x && m_pos.x <= p_Dungeon_Browser[4]->getPosition().x + 50)
 	{
-		if (mouse_y >= p_Dungeon_Browser[4]->getPosition().y && mouse_y <= p_Dungeon_Browser[4]->getPosition().y + 55)
+		if (m_pos.y >= p_Dungeon_Browser[4]->getPosition().y && m_pos.y <= p_Dungeon_Browser[4]->getPosition().y + 55)
 		{
 			if (m_dungeon_hardcore)
 			{
@@ -452,13 +434,13 @@ void main_frame::diffi_btn()
 {
 	//p_Dungeon_Browser[1]
 
-	if (mouse_x > p_Dungeon_Browser[1]->getPosition().x+10 && mouse_x <= p_Dungeon_Browser[1]->getPosition().x + 130)
+	if (m_pos.x > p_Dungeon_Browser[1]->getPosition().x+10 && m_pos.x <= p_Dungeon_Browser[1]->getPosition().x + 130)
 	{
-		if (mouse_y >= p_Dungeon_Browser[1]->getPosition().y+30 && mouse_y <= p_Dungeon_Browser[1]->getPosition().y + 55 && difficulty > 1)
+		if (m_pos.y >= p_Dungeon_Browser[1]->getPosition().y+30 && m_pos.y <= p_Dungeon_Browser[1]->getPosition().y + 55 && difficulty > 1)
 		{
 			difficulty--;
 		}
-		if (mouse_y <= p_Dungeon_Browser[1]->getPosition().y - 7 && mouse_y >= p_Dungeon_Browser[1]->getPosition().y - 37)
+		if (m_pos.y <= p_Dungeon_Browser[1]->getPosition().y - 7 && m_pos.y >= p_Dungeon_Browser[1]->getPosition().y - 37)
 		{
 			difficulty++;
 		}
@@ -491,9 +473,9 @@ void main_frame::update_diffi()
 
 void main_frame::btn_exit_dungeon()
 {
-	if (mouse_x > p_Dungeon_Browser[2]->getPosition().x&& mouse_x <= p_Dungeon_Browser[2]->getPosition().x + 27)
+	if (m_pos.x > p_Dungeon_Browser[2]->getPosition().x&& m_pos.x <= p_Dungeon_Browser[2]->getPosition().x + 27)
 	{
-		if (mouse_y >= p_Dungeon_Browser[2]->getPosition().y && mouse_y <= p_Dungeon_Browser[2]->getPosition().y + 27)
+		if (m_pos.y >= p_Dungeon_Browser[2]->getPosition().y && m_pos.y <= p_Dungeon_Browser[2]->getPosition().y + 27)
 		{
 			m_dungeon_browser = false;
 		}
@@ -502,9 +484,9 @@ void main_frame::btn_exit_dungeon()
 
 void main_frame::btn_go_dungeon()
 {
-	if (mouse_x > p_Dungeon_Browser[3]->getPosition().x&& mouse_x <= p_Dungeon_Browser[3]->getPosition().x + 168)
+	if (m_pos.x > p_Dungeon_Browser[3]->getPosition().x&& m_pos.x <= p_Dungeon_Browser[3]->getPosition().x + 168)
 	{
-		if (mouse_y >= p_Dungeon_Browser[3]->getPosition().y && mouse_y <= p_Dungeon_Browser[3]->getPosition().y + 50)
+		if (m_pos.y >= p_Dungeon_Browser[3]->getPosition().y && m_pos.y <= p_Dungeon_Browser[3]->getPosition().y + 50)
 		{
 			m_dungeon_browser = false;
 			pDungeonManager = new dungeon_manager(difficulty, main_path, p_memory_allocator);
@@ -516,38 +498,23 @@ void main_frame::btn_go_dungeon()
 
 void main_frame::create_dungeon_browser()
 {
-	p_Dungeon_Browser_T[0] = new sf::Texture;
-	p_Dungeon_Browser_T[1] = new sf::Texture;
-	p_Dungeon_Browser_T[2] = new sf::Texture;
-	p_Dungeon_Browser_T[3] = new sf::Texture;
-	p_Dungeon_Browser_T[4] = new sf::Texture;
-	p_Dungeon_Browser_T[5] = new sf::Texture;
-	p_Dungeon_Browser_T[6] = new sf::Texture;
+	for (auto i_l = 0; i_l < 7; i_l++)
+	{
+		p_Dungeon_Browser_T[i_l] = new sf::Texture;
+		p_Dungeon_Browser_T[i_l]->loadFromMemory(&p_memory_allocator->get_memory_data("dbtn" + std::to_string(i_l + 1))[0], p_memory_allocator->get_memory_data("dbtn" + std::to_string(i_l + 1)).size());
+		p_Dungeon_Browser[i_l] = new sf::Sprite;
+	}
 
-	p_Dungeon_Browser_T[0]->loadFromFile(main_path + "DATA/dungeon/browser/arrow_level_select.png");
-	p_Dungeon_Browser_T[1]->loadFromFile(main_path + "DATA/dungeon/browser/btn_close_small.png");
-	p_Dungeon_Browser_T[2]->loadFromFile(main_path + "DATA/dungeon/browser/btn_go.png");
-	p_Dungeon_Browser_T[3]->loadFromFile(main_path + "DATA/dungeon/browser/check_checked.png");
-	p_Dungeon_Browser_T[4]->loadFromFile(main_path + "DATA/dungeon/browser/check_unchecked.png");
-	p_Dungeon_Browser_T[5]->loadFromFile(main_path + "DATA/dungeon/browser/menu_backing_save_files.png");
-	p_Dungeon_Browser_T[6]->loadFromFile(main_path + "DATA/dungeon/browser/shadow.png");
 
-	p_Dungeon_Browser[0] = new sf::Sprite;
-	p_Dungeon_Browser[1] = new sf::Sprite;
-	p_Dungeon_Browser[2] = new sf::Sprite;
-	p_Dungeon_Browser[3] = new sf::Sprite;
-	p_Dungeon_Browser[4] = new sf::Sprite;
-	p_Dungeon_Browser[6] = new sf::Sprite;
-	p_Dungeon_Browser[5] = new sf::Sprite;
 
 	p_Dungeon_Browser[0]->setTexture(*p_Dungeon_Browser_T[0]); // Diffi Pfeil
 	p_Dungeon_Browser[1]->setTexture(*p_Dungeon_Browser_T[0]); // Diffi Pfeil Andere Reichtung
-	p_Dungeon_Browser[1]->setScale(1.3, -1);
+	p_Dungeon_Browser[1]->setScale(1.3f, -1.f);
 	p_Dungeon_Browser[2]->setTexture(*p_Dungeon_Browser_T[1]); // close btn
 	p_Dungeon_Browser[3]->setTexture(*p_Dungeon_Browser_T[2]); // start btn
 	p_Dungeon_Browser[4]->setTexture(*p_Dungeon_Browser_T[4]); // check true
-	p_Dungeon_Browser[6]->setTexture(*p_Dungeon_Browser_T[5]); //bg
-	p_Dungeon_Browser[5]->setTexture(*p_Dungeon_Browser_T[6]); // bg text
+	p_Dungeon_Browser[5]->setTexture(*p_Dungeon_Browser_T[5]); //bg
+	p_Dungeon_Browser[6]->setTexture(*p_Dungeon_Browser_T[6]); // bg text
 
 
 	p_Dungeon_Browser_Title = new sf::Text;
@@ -561,63 +528,32 @@ void main_frame::create_dungeon_browser()
 	p_Dungeon_Browser_EmpowerdText->setFont(*pFont);
 
 
-	p_Dungeon_Browser[6]->setOrigin(p_Dungeon_Browser_T[5]->getSize().x / 2, p_Dungeon_Browser_T[5]->getSize().y / 2);
-	p_Dungeon_Browser[6]->setPosition(main_x / 2, main_y / 2);
-	p_Dungeon_Browser[6]->setScale(1.5, 1.5);
+	p_Dungeon_Browser[5]->setOrigin(p_Dungeon_Browser_T[5]->getSize().x / 2.f, p_Dungeon_Browser_T[5]->getSize().y / 2.f);
+	p_Dungeon_Browser[5]->setPosition(main.x / 2.f, main.y / 2.f);
+	p_Dungeon_Browser[5]->setScale(1.5f, 1.5f);
 
-	p_Dungeon_Browser_Title->setPosition(p_Dungeon_Browser[6]->getPosition().x - 82, p_Dungeon_Browser[6]->getPosition().y - 130);
+	p_Dungeon_Browser_Title->setPosition(p_Dungeon_Browser[5]->getPosition().x - 82.f, p_Dungeon_Browser[5]->getPosition().y - 130.f);
 	p_Dungeon_Browser_Title->setCharacterSize(21);
 	p_Dungeon_Browser_Title->setString("Dungeon Browser");
 
-	p_Dungeon_Browser_Diffi->setPosition(p_Dungeon_Browser[6]->getPosition().x - 127, p_Dungeon_Browser[6]->getPosition().y - 50);
+	p_Dungeon_Browser_Diffi->setPosition(p_Dungeon_Browser[5]->getPosition().x - 127.f, p_Dungeon_Browser[5]->getPosition().y - 50.f);
 	p_Dungeon_Browser_Diffi->setCharacterSize(21);
 	p_Dungeon_Browser_Diffi->setString("Leicht");
 
-	p_Dungeon_Browser[1]->setPosition(p_Dungeon_Browser[6]->getPosition().x - 167, p_Dungeon_Browser[6]->getPosition().y - 50);
-	p_Dungeon_Browser[0]->setPosition(p_Dungeon_Browser[1]->getPosition().x, p_Dungeon_Browser[1]->getPosition().y + 30);
-	p_Dungeon_Browser[0]->setScale(1.3, 1);
+	p_Dungeon_Browser[1]->setPosition(p_Dungeon_Browser[5]->getPosition().x - 167.f, p_Dungeon_Browser[5]->getPosition().y - 50.f);
+	p_Dungeon_Browser[0]->setPosition(p_Dungeon_Browser[1]->getPosition().x, p_Dungeon_Browser[1]->getPosition().y + 30.f);
+	p_Dungeon_Browser[0]->setScale(1.3f, 1.f);
 
-	p_Dungeon_Browser[2]->setPosition(p_Dungeon_Browser[6]->getPosition().x + 155, p_Dungeon_Browser[6]->getPosition().y - 132);
+	p_Dungeon_Browser[2]->setPosition(p_Dungeon_Browser[5]->getPosition().x + 155.f, p_Dungeon_Browser[5]->getPosition().y - 132.f);
 
-	p_Dungeon_Browser[3]->setPosition(p_Dungeon_Browser[6]->getPosition().x - 75, p_Dungeon_Browser[6]->getPosition().y + 70);
+	p_Dungeon_Browser[3]->setPosition(p_Dungeon_Browser[5]->getPosition().x - 75.f, p_Dungeon_Browser[5]->getPosition().y + 70.f);
 
-	p_Dungeon_Browser_EmpowerdText->setPosition(p_Dungeon_Browser[6]->getPosition().x + 15, p_Dungeon_Browser[6]->getPosition().y - 90);
+	p_Dungeon_Browser_EmpowerdText->setPosition(p_Dungeon_Browser[5]->getPosition().x + 15.f, p_Dungeon_Browser[5]->getPosition().y - 90.f);
 	p_Dungeon_Browser_EmpowerdText->setCharacterSize(21);
 	p_Dungeon_Browser_EmpowerdText->setString("Hardcore Mode");
 
-	p_Dungeon_Browser[4]->setPosition(p_Dungeon_Browser_EmpowerdText->getPosition().x + 50, p_Dungeon_Browser_EmpowerdText->getPosition().y + 30);
+	p_Dungeon_Browser[4]->setPosition(p_Dungeon_Browser_EmpowerdText->getPosition().x + 50.f, p_Dungeon_Browser_EmpowerdText->getPosition().y + 30.f);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -627,7 +563,7 @@ void main_frame::create_dungeon_browser()
 
 void main_frame::enviroment()
 {
-	std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	osm::t_s_ms(20);
 	life_clouds();
 	dungeon_rotate();
 }

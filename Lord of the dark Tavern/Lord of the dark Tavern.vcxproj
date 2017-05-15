@@ -74,6 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Programming Lib\boost_1_64_0;D:\Programming Lib\SFML-2.4.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Programming Lib\boost_1_64_0\stage;D:\Programming Lib\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -103,10 +105,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Programming Lib\boost_1_64_0;D:\Programming Lib\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\Programming Lib\SFML-2.4.2\lib;D:\Programming Lib\boost_1_64_0\stage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,7 +133,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>Full</Optimization>
@@ -137,6 +142,7 @@
       <PreprocessorDefinitions>SFML_DYNAMIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\Programming Lib\boost_1_64_0;D:\Programming Lib\SFML-2.4.2\include;C:\Programming Lib\64bit\SFML-2.4.2\include;C:\Programming Lib\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,23 +154,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="datenbank_main.cpp" />
     <ClCompile Include="dungeon_manager.cpp" />
-    <ClCompile Include="dungeon_mob.cpp" />
     <ClCompile Include="enviroment_loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
+    <ClCompile Include="main_os_manager.cpp" />
     <ClCompile Include="resource_loader.cpp" />
     <ClCompile Include="tavern_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedSprite.hpp" />
+    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="datenbank_main.hpp" />
     <ClInclude Include="dungeon_manager.hpp" />
-    <ClInclude Include="dungeon_mob.hpp" />
     <ClInclude Include="enviroment_loader.hpp" />
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
+    <ClInclude Include="main_os_manager.hpp" />
     <ClInclude Include="resource_loader.hpp" />
     <ClInclude Include="tavern_main.hpp" />
   </ItemGroup>
