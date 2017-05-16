@@ -66,6 +66,9 @@
     <ClCompile Include="main_os_manager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="generate_items.cpp">
+      <Filter>Quelldateien\tavern</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="main_os_manager.hpp">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="generate_items.hpp">
+      <Filter>Headerdateien\tavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

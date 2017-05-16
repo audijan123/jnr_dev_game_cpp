@@ -159,6 +159,7 @@
     <ClCompile Include="datenbank_main.cpp" />
     <ClCompile Include="dungeon_manager.cpp" />
     <ClCompile Include="enviroment_loader.cpp" />
+    <ClCompile Include="generate_items.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="datenbank_main.hpp" />
     <ClInclude Include="dungeon_manager.hpp" />
     <ClInclude Include="enviroment_loader.hpp" />
+    <ClInclude Include="generate_items.hpp" />
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="main_os_manager.hpp" />

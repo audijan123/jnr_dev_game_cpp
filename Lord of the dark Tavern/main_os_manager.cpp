@@ -25,5 +25,8 @@ namespace osm
 		this_thread::sleep_for(chrono::milliseconds(ms));
 	}
 
-
+	bool sprite_pressed(const sf::Sprite *sprite,const sf::Vector2f &m)
+	{
+		return sprite->getGlobalBounds().contains(m);
+	}
 }

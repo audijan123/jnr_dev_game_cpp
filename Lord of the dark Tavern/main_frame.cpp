@@ -159,6 +159,7 @@ void main_frame::quit()
 	if (!m_run)
 	{
 		pRenderWindow->close();
+		exit(0x001996);
 	}
 }
 
@@ -389,61 +390,51 @@ void main_frame::exit_dungeon()
 
 void main_frame::exit_btn()
 {
-	if (m_pos.x > btn[0] && m_pos.x <= btn[0] + 50)
+	if (osm::sprite_pressed(pBtn[0], m_pos))
 	{
-		if (m_pos.y >= btn[3] && m_pos.y <= btn[3] + 55)
+		if (m_dungeon)
 		{
-			if (m_dungeon)
-			{
-				exit_dungeon();
-			}
-			else if (m_screen)
-			{
-				m_run = false;
-			}
-			else if (m_tavern && !p_tavern->o_menu())
-			{
-				m_tavern = false;
-				m_screen = true;
-			}
+			exit_dungeon();
+		}
+		else if (m_screen)
+		{
+			m_run = false;
+		}
+		else if (m_tavern && !p_tavern->o_menu())
+		{
+			m_tavern = false;
+			m_screen = true;
 		}
 	}
 }
 
 void main_frame::hardcore_btn()
 {
-	if (m_pos.x > p_Dungeon_Browser[4]->getPosition().x && m_pos.x <= p_Dungeon_Browser[4]->getPosition().x + 50)
-	{
-		if (m_pos.y >= p_Dungeon_Browser[4]->getPosition().y && m_pos.y <= p_Dungeon_Browser[4]->getPosition().y + 55)
+	if (osm::sprite_pressed(p_Dungeon_Browser[4], m_pos))
 		{
-			if (m_dungeon_hardcore)
-			{
-				m_dungeon_hardcore = false;
-				p_Dungeon_Browser[4]->setTexture(*p_Dungeon_Browser_T[4]);
-			}
-			else if (!m_dungeon_hardcore)
-			{
-				m_dungeon_hardcore = true;
-				p_Dungeon_Browser[4]->setTexture(*p_Dungeon_Browser_T[3]);
-			}
+		if (m_dungeon_hardcore)
+		{
+			m_dungeon_hardcore = false;
+			p_Dungeon_Browser[4]->setTexture(*p_Dungeon_Browser_T[4]);
 		}
-	}
+		else if (!m_dungeon_hardcore)
+		{
+			m_dungeon_hardcore = true;
+			p_Dungeon_Browser[4]->setTexture(*p_Dungeon_Browser_T[3]);
+		}
+		}
 }
 
 void main_frame::diffi_btn()
 {
 	//p_Dungeon_Browser[1]
-
-	if (m_pos.x > p_Dungeon_Browser[1]->getPosition().x+10 && m_pos.x <= p_Dungeon_Browser[1]->getPosition().x + 130)
+	if (osm::sprite_pressed(p_Dungeon_Browser[0],m_pos) && difficulty > 1)
 	{
-		if (m_pos.y >= p_Dungeon_Browser[1]->getPosition().y+30 && m_pos.y <= p_Dungeon_Browser[1]->getPosition().y + 55 && difficulty > 1)
-		{
-			difficulty--;
-		}
-		if (m_pos.y <= p_Dungeon_Browser[1]->getPosition().y - 7 && m_pos.y >= p_Dungeon_Browser[1]->getPosition().y - 37)
-		{
-			difficulty++;
-		}
+		difficulty--;
+	}
+	else if (osm::sprite_pressed(p_Dungeon_Browser[1], m_pos))
+	{
+		difficulty++;
 	}
 }
 
@@ -473,26 +464,20 @@ void main_frame::update_diffi()
 
 void main_frame::btn_exit_dungeon()
 {
-	if (m_pos.x > p_Dungeon_Browser[2]->getPosition().x&& m_pos.x <= p_Dungeon_Browser[2]->getPosition().x + 27)
+	if (osm::sprite_pressed(p_Dungeon_Browser[2], m_pos))
 	{
-		if (m_pos.y >= p_Dungeon_Browser[2]->getPosition().y && m_pos.y <= p_Dungeon_Browser[2]->getPosition().y + 27)
-		{
-			m_dungeon_browser = false;
-		}
+		m_dungeon_browser = false;
 	}
 }
 
 void main_frame::btn_go_dungeon()
 {
-	if (m_pos.x > p_Dungeon_Browser[3]->getPosition().x&& m_pos.x <= p_Dungeon_Browser[3]->getPosition().x + 168)
+	if (osm::sprite_pressed(p_Dungeon_Browser[3], m_pos))
 	{
-		if (m_pos.y >= p_Dungeon_Browser[3]->getPosition().y && m_pos.y <= p_Dungeon_Browser[3]->getPosition().y + 50)
-		{
-			m_dungeon_browser = false;
-			pDungeonManager = new dungeon_manager(difficulty, main_path, p_memory_allocator);
-			m_dungeon = true;
-			m_screen = false;
-		}
+		m_dungeon_browser = false;
+		pDungeonManager = new dungeon_manager(difficulty, main_path, p_memory_allocator);
+		m_dungeon = true;
+		m_screen = false;
 	}
 }
 

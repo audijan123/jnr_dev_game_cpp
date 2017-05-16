@@ -5,6 +5,8 @@
 #include "main_os_manager.hpp"
 #include "main_base.hpp"
 #include "main_os_manager.hpp"
+#include "datenbank_main.hpp"
+#include "generate_items.hpp"
 
 
 class tavern_main
@@ -35,7 +37,44 @@ private:
 		init
 	};
 
+	gen_item *item_gen;
+	std::vector<main_data::item_data> item_list;
+
+
+	uint8_t items_per_site_max = 14;
+	uint8_t site_max = 10;
+
+	struct item_site
+	{
+		uint8_t items_per_site = 0;
+		std::vector<main_data::item_data> items;
+
+	};
+
 	gold_set status = init;
+
+	void create_main();
+	void create_safe();
+
+
+
+
+	void create_sellman();
+	sf::Texture *item_shop_texture[12];
+	sf::Sprite *item_shop_sprites[13];
+	bool item_shop = false;
+	bool bonus_memu = false;
+
+	sf::Text site;
+	int max = 10;
+
+
+	sf::Texture *item_sprite_t[3];
+	sf::Sprite *item_sprite[31];
+
+
+	void create_mage();
+
 
 	void check_mage();
 	void check_sellman();
@@ -56,6 +95,7 @@ private:
 	bool banking = false;
 	bool u_menu = false;
 	bool edit_gold = false;
+	bool cap_menu = false;
 
 	std::string m_path;
 
@@ -79,6 +119,8 @@ private:
 
 	sf::Vector2f scale = { 2.67f,2.85f };
 	JNR::main_base p_memory_allocator;
+
+	sf::RectangleShape rectangle[4];
 
 	short activ_safe = 0;
 
