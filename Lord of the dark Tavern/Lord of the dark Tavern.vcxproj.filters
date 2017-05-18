@@ -45,9 +45,6 @@
     <ClCompile Include="enviroment_loader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="resource_loader.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="datenbank_main.cpp">
       <Filter>Quelldateien\datenbank</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="enviroment_loader.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="resource_loader.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="datenbank_main.hpp">

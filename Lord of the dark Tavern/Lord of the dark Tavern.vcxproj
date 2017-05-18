@@ -164,7 +164,6 @@
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
     <ClCompile Include="main_os_manager.cpp" />
-    <ClCompile Include="resource_loader.cpp" />
     <ClCompile Include="tavern_main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +176,6 @@
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="main_os_manager.hpp" />
-    <ClInclude Include="resource_loader.hpp" />
     <ClInclude Include="tavern_main.hpp" />
   </ItemGroup>
   <ItemGroup>
