@@ -136,5 +136,8 @@
     <None Include="..\x64\Release\DATA\local.db">
       <Filter>Ressourcendateien</Filter>
     </None>
+    <None Include="..\data.zip">
+      <Filter>Ressourcendateien</Filter>
+    </None>
   </ItemGroup>
 </Project>

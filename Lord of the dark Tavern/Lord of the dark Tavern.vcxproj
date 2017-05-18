@@ -183,6 +183,7 @@
     <ClInclude Include="tavern_main.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\data.zip" />
     <None Include="..\x64\Release\DATA\local.db" />
     <ClInclude Include="..\x64\Release\sfml-graphics-2.dll">
       <FileType>Document</FileType>
