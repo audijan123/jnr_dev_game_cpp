@@ -12,7 +12,7 @@
 class tavern_main
 {
 public:
-	tavern_main(std::string const &path, const JNR::main_base* pbase, const sf::Vector2f &main);
+	tavern_main(std::string const &path, const JGE::main_base* pbase, const sf::Vector2f &main);
 	~tavern_main();
 
 
@@ -118,7 +118,7 @@ private:
 	sf::Sprite *main_sprites[4];
 
 	sf::Vector2f scale = { 2.67f,2.85f };
-	JNR::main_base p_memory_allocator;
+	JGE::main_base p_memory_allocator;
 
 	sf::RectangleShape rectangle[4];
 

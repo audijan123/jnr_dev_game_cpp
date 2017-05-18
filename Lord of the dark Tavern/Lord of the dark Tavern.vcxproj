@@ -164,6 +164,8 @@
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
     <ClCompile Include="main_os_manager.cpp" />
+    <ClCompile Include="riftBrowser.cpp" />
+    <ClCompile Include="sfSpriteGen.cpp" />
     <ClCompile Include="tavern_main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +178,8 @@
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="main_os_manager.hpp" />
+    <ClInclude Include="riftBrowser.hpp" />
+    <ClInclude Include="sfSpriteGen.hpp" />
     <ClInclude Include="tavern_main.hpp" />
   </ItemGroup>
   <ItemGroup>

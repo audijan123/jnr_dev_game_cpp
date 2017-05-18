@@ -19,17 +19,29 @@
     <Filter Include="Quelldateien\datenbank">
       <UniqueIdentifier>{0a12e4b8-ed3f-47b1-acb7-24df09257f7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\tavern">
-      <UniqueIdentifier>{345f17f2-6473-4034-b460-ab38bc4c1915}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\tavern">
-      <UniqueIdentifier>{c4d8d1a2-277d-4a40-a47b-756a0c1df1e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\sf::animantion">
       <UniqueIdentifier>{b87fed57-958d-4974-b1c2-4084d62ecaac}</UniqueIdentifier>
     </Filter>
     <Filter Include="Quelldateien\sf::animation">
       <UniqueIdentifier>{9e0dd8cf-81e4-4267-af47-c9d70290c134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Hauptfenster">
+      <UniqueIdentifier>{1056e08a-314d-4b18-80ae-15ee5e9e9dac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Tavernfenster">
+      <UniqueIdentifier>{c4d8d1a2-277d-4a40-a47b-756a0c1df1e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Hauptfenster">
+      <UniqueIdentifier>{f9fc95fa-5515-4530-be22-f401291cf491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Tavernfenster">
+      <UniqueIdentifier>{345f17f2-6473-4034-b460-ab38bc4c1915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Code Funktion">
+      <UniqueIdentifier>{f0c1f841-7518-423a-88d3-4ee222ed5c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Code Funktion">
+      <UniqueIdentifier>{d327dc38-f451-417c-b0c9-0e715fc0af41}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +61,7 @@
       <Filter>Quelldateien\datenbank</Filter>
     </ClCompile>
     <ClCompile Include="tavern_main.cpp">
-      <Filter>Quelldateien\tavern</Filter>
+      <Filter>Quelldateien\Tavernfenster</Filter>
     </ClCompile>
     <ClCompile Include="main_base.cpp">
       <Filter>Quelldateien</Filter>
@@ -64,7 +76,13 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="generate_items.cpp">
-      <Filter>Quelldateien\tavern</Filter>
+      <Filter>Quelldateien\Tavernfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="sfSpriteGen.cpp">
+      <Filter>Quelldateien\Code Funktion</Filter>
+    </ClCompile>
+    <ClCompile Include="riftBrowser.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +108,7 @@
       <Filter>Ressourcendateien</Filter>
     </ClInclude>
     <ClInclude Include="tavern_main.hpp">
-      <Filter>Headerdateien\tavern</Filter>
+      <Filter>Headerdateien\Tavernfenster</Filter>
     </ClInclude>
     <ClInclude Include="main_base.hpp">
       <Filter>Headerdateien</Filter>
@@ -105,7 +123,13 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="generate_items.hpp">
-      <Filter>Headerdateien\tavern</Filter>
+      <Filter>Headerdateien\Tavernfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="sfSpriteGen.hpp">
+      <Filter>Headerdateien\Code Funktion</Filter>
+    </ClInclude>
+    <ClInclude Include="riftBrowser.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
