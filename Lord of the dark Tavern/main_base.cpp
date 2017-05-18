@@ -1,6 +1,6 @@
 #include "main_base.hpp"
 
-namespace JNR
+namespace JGE
 {
 	main_base::main_base(std::string path)
 		: main_path(path)

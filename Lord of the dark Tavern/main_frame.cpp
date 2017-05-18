@@ -4,12 +4,16 @@ main_frame::main_frame(const std::string &pfad)
 	: mainPfad(pfad.substr(0, pfad.length() - 27))
 {
 	pDatenbank					= new main_data(mainPfad); // Erstelle Datenbank Klasse //
-	pResourcenManager			= new JNR::main_base(mainPfad); // Erstelle Resourchen Manager //
+	pResourcenManager			= new JGE::main_base(mainPfad); // Erstelle Resourchen Manager //
+	pSpriteErsteller			= new JGE::SpriteGen(pResourcenManager);
 
 
 	//pHauptFenster erstellen
-	pHauptFenster				= new sf::RenderWindow(sf::VideoMode(main.x,main.y, 64), 
-													   "Lord of the dark Travern",
+	pHauptFenster				= new sf::RenderWindow(sf::VideoMode(
+														static_cast<unsigned int>(main.x),
+														static_cast<unsigned int>(main.y), 
+														64),
+													   sTitel,
 													   sf::Style::Default);
 
 	pHauptFenster->setFramerateLimit(60);
@@ -92,15 +96,7 @@ main_frame::main_frame(const std::string &pfad)
 
 	// Rift Portal und Rift Portal Hover//
 	//Object
-	pRiftPortalTexture			= new sf::Texture;
-	pRiftPortalSprite			= new sf::Sprite;
-
-	pRiftPortalTexture->loadFromFile(mainPfad + "DATA/resource/portal.png");
-	pRiftPortalSprite->setTexture(*pRiftPortalTexture);
-
-	pRiftPortalSprite->setOrigin(pRiftPortalTexture->getSize().x / 2.f, pRiftPortalTexture->getSize().y / 2.f);
-	pRiftPortalSprite->setPosition(1100, 390);
-	pRiftPortalSprite->setScale(0.5, 0.5);
+	pRiftPortalSprite = pSpriteErsteller->erstelle_sprite("porta", true, sf::Vector2f(1100.f, 390.f), sf::Vector2f(0.5f, 0.5f));
 
 	//Hover
 	pRiftPortalTextureHover		= new sf::Texture;
@@ -111,17 +107,10 @@ main_frame::main_frame(const std::string &pfad)
 
 
 	// Menu Button Objecte
-	for (auto i = 0; i < 3; i++)
+	for (uint16_t i = 0; i < 3; i++)
 	{
-		pMenuButtonTexture[i]	= new sf::Texture;
-		pMenuButtonSprite[i]	= new sf::Sprite;
-
-		pMenuButtonTexture[i]->loadFromMemory(&pResourcenManager->get_memory_data("btn", i + 100)[0],
-											 pResourcenManager->get_memory_data("btn", i + 100).size());
-		pMenuButtonSprite[i]->setTexture(*pMenuButtonTexture[i]);
-
-		pMenuButtonSprite[i]->setPosition(btn[i], btn[3]);
-		pMenuButtonSprite[i]->setScale(1.7f, 1.7f);
+		pMenuButtonSprite[i] = pSpriteErsteller->erstelle_sprite("btn", false, sf::Vector2f(main.x - (50 * (i + 1)), 0.f),
+																sf::Vector2f(1.7f, 1.7f), i + 100);
 	}
 
 	// Rift Menu //
@@ -129,13 +118,6 @@ main_frame::main_frame(const std::string &pfad)
 
 	//Laden der Taverne und dessen Funktionen
 	pTaverne = new tavern_main(mainPfad, pResourcenManager, main);
-
-
-	//Fps Anzeige
-	textFps.setFont(*pSchriftArt);
-	textFps.setString("");
-
-	textFps.setPosition(0, 0);
 
 	// Ende Konstruktor
 }
@@ -173,7 +155,7 @@ void main_frame::update()
 {
 	if (bPausenMenu == false)
 	{
-		textFps.setString(std::to_string(static_cast<int>(1.f / m_frame_time)));
+		
 
 		vMousePosition = { sf::Mouse::getPosition().x - 8.f - pHauptFenster->getPosition().x ,
 			sf::Mouse::getPosition().y - 32.f - pHauptFenster->getPosition().y };
@@ -282,7 +264,6 @@ void main_frame::render()
 		pTaverne->render(pHauptFenster);
 	}
 	ui_render();
-	pHauptFenster->draw(textFps);
 	pHauptFenster->display();
 }
 
@@ -336,7 +317,7 @@ void main_frame::life_clouds()
 	}
 	else if (pWolkeSprite->getPosition().x <  main.x)
 	{
-		pWolkeSprite->setPosition(pWolkeSprite->getPosition().x + 30 * m_frame_time, pWolkeSprite->getPosition().y);
+		pWolkeSprite->setPosition(pWolkeSprite->getPosition().x + 60 * m_frame_time, pWolkeSprite->getPosition().y);
 	}
 	if (pWolkeZweiSprite->getPosition().x >= main.x)
 	{
@@ -344,13 +325,13 @@ void main_frame::life_clouds()
 	}
 	else if (pWolkeZweiSprite->getPosition().x < main.x)
 	{
-		pWolkeZweiSprite->setPosition(pWolkeZweiSprite->getPosition().x + 30 * m_frame_time, pWolkeZweiSprite->getPosition().y);
+		pWolkeZweiSprite->setPosition(pWolkeZweiSprite->getPosition().x + 60 * m_frame_time, pWolkeZweiSprite->getPosition().y);
 	}
 }
 
 void main_frame::dungeon_rotate()
 {
-	pRiftPortalSprite->rotate(0.5);
+	pRiftPortalSprite->rotate(1.3f);
 
 	if (pRiftPortalSprite->getGlobalBounds().contains(vMousePosition) && !bTaverne &&
 		pHauptEvent->key.code == sf::Mouse::Button::Left || bRiftBrowser)
@@ -514,16 +495,10 @@ void main_frame::create_dungeon_browser()
 
 
 	// Setze Positions
-	pRiftMenuSprite[5]->setOrigin(pRiftMenuTexture[5]->getSize().x / 2.f,
-								  pRiftMenuTexture[5]->getSize().y / 2.f);
-
 	pRiftMenuSprite[5]->setPosition(main.x / 2.f, main.y / 2.f);
 
-	pRiftMenuTitel->setPosition(pRiftMenuSprite[5]->getPosition().x - 82.f,
-								pRiftMenuSprite[5]->getPosition().y - 130.f);
-
-	pRiftMenuSchwierigkeit->setPosition(pRiftMenuSprite[5]->getPosition().x - 127.f,
-										pRiftMenuSprite[5]->getPosition().y - 50.f);
+	pRiftMenuSprite[5]->setOrigin(pRiftMenuTexture[5]->getSize().x / 2.f,
+								  pRiftMenuTexture[5]->getSize().y / 2.f);
 
 	pRiftMenuSprite[1]->setPosition(pRiftMenuSprite[5]->getPosition().x - 167.f,
 									pRiftMenuSprite[5]->getPosition().y - 50.f);
@@ -542,6 +517,14 @@ void main_frame::create_dungeon_browser()
 
 	pRiftMenuSprite[4]->setPosition(pRiftMenuTextHoch->getPosition().x + 50.f,
 									pRiftMenuTextHoch->getPosition().y + 30.f);
+
+	pRiftMenuTitel->setPosition(pRiftMenuSprite[5]->getPosition().x - 82.f,
+								pRiftMenuSprite[5]->getPosition().y - 130.f);
+
+	pRiftMenuSchwierigkeit->setPosition(pRiftMenuSprite[5]->getPosition().x - 127.f,
+										pRiftMenuSprite[5]->getPosition().y - 50.f);
+
+
 
 	
 	//Setze Skalierungen
@@ -568,7 +551,8 @@ void main_frame::create_dungeon_browser()
 
 void main_frame::enviroment()
 {
-	osm::t_s_ms(20);
+	osm::t_s_ms(60);
+	pHauptFenster->setTitle(sTitel + " FPS: " + std::to_string(static_cast<int>(1.f / m_frame_time)));
 	life_clouds();
 	dungeon_rotate();
 }

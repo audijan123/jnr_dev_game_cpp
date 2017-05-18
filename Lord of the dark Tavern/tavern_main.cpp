@@ -1,7 +1,7 @@
 #include "tavern_main.hpp"
 
 
-tavern_main::tavern_main(std::string const &path, const JNR::main_base* pbase,const sf::Vector2f &main) :
+tavern_main::tavern_main(std::string const &path, const JGE::main_base* pbase,const sf::Vector2f &main) :
 	m_path(path),p_memory_allocator(*pbase),main(main)
 {
 	pfont = new sf::Font;

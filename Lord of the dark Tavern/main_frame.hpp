@@ -7,19 +7,19 @@
 #include "datenbank_main.hpp"
 #include "tavern_main.hpp"
 #include "main_base.hpp"
+#include "sfSpriteGen.hpp"
 
 class main_frame
 {
 public:
 	sf::Vector2f main = { 1280.f,768.f };
+	std::string sTitel = "Lord of the dark Tavern";
 
 	main_frame(std::string const &pfad);
 	~main_frame();
 	void run();
 	void enviroment();
 	void datenbank();
-
-	double get_main_scale() { return m_scale; };
 
 private:
 	// Funktion
@@ -43,7 +43,7 @@ private:
 
 
 	main_data			*pDatenbank;
-	JNR::main_base		*pResourcenManager;
+	JGE::main_base		*pResourcenManager;
 	//Hauptfenster
 	sf::RenderWindow	*pHauptFenster;
 	sf::Texture			*pHintergrundTexture;
@@ -102,20 +102,18 @@ private:
 	//Pointer erschaffung für den Rift Manager
 	dungeon_manager		*pRiftManager;
 
-	// Ende der Pointer Liste
+	//Erschaffung des Sprite genartors
+	JGE::SpriteGen		*pSpriteErsteller;
 
-	//Fps Anzeige
-	sf::Text			textFps;
+	// Ende der Pointer Liste
 
 	//Floats
 	float m_frame_time = 0;
-	float m_scale = 1;
-	float btn[10] = { main.x - 50.f,main.x - 100.f,main.x - 150.f,0.f,50.f };
 
 
 	//ints
 	uint16_t difficulty = 1;
-	uint8_t  iRiftBrowserSchriftGröße = 21;
+	const uint8_t  iRiftBrowserSchriftGröße = 21;
 
 
 	std::string	 mainPfad;

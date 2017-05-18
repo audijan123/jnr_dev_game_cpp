@@ -8,7 +8,7 @@
 #include <Windows.h>
 #include "main_os_manager.hpp"
 
-namespace JNR
+namespace JGE
 {
 	class main_base
 	{

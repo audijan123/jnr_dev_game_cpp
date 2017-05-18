@@ -1,7 +1,7 @@
 #include "dungeon_manager.hpp"
 
 
-dungeon_manager::dungeon_manager(const int &m_power,const std::string &path, const JNR::main_base* pbase) :
+dungeon_manager::dungeon_manager(const int &m_power,const std::string &path, const JGE::main_base* pbase) :
 	p_memory_allocator(*pbase)
 {
 

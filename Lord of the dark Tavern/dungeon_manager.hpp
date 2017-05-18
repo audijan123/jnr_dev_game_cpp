@@ -13,7 +13,7 @@
 class dungeon_manager
 {
 public:
-	dungeon_manager(const int &m_power,const std::string &path,const JNR::main_base* pbase);
+	dungeon_manager(const int &m_power,const std::string &path,const JGE::main_base* pbase);
 	~dungeon_manager();
 
 
@@ -36,7 +36,7 @@ private:
 	int enviro_id = 0;
 	bool dungeon_atkiv = false;
 
-	JNR::main_base p_memory_allocator;
+	JGE::main_base p_memory_allocator;
 
 	sf::Font *pfont;
 	struct mob
