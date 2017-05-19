@@ -6,7 +6,8 @@ main_frame::main_frame(const std::string &pfad)
 	pDatenbank					= new main_data(mainPfad); // Erstelle Datenbank Klasse //
 	pResourcenManager			= new JGE::main_base(mainPfad); // Erstelle Resourchen Manager //
 	pSpriteErsteller			= new JGE::SpriteGen(pResourcenManager);
-	pRiftBrowser = new GMS::riftBrowser(pResourcenManager, main, mainPfad);
+	pRiftBrowser				= new GMS::riftBrowser(pResourcenManager, main, mainPfad);
+	pTavern						= new GMS::taverne(pSpriteErsteller);
 
 
 	//pHauptFenster erstellen
@@ -34,32 +35,6 @@ main_frame::main_frame(const std::string &pfad)
 
 	pHauptEvent					= new sf::Event; //Erstelle pHauptEvent
 	pHauptUhr					= new sf::Clock; // Erstelle Uhr
-
-
-	//Erstellen des "Tavernen" Objectes + zugehöriges Hover effekt
-	//Object
-	pTaverneTexture				= new sf::Texture;
-	pTaverneSprite				= new sf::Sprite;
-
-	pTaverneTexture->loadFromMemory(&pResourcenManager->get_memory_data("taver")[0], 
-									pResourcenManager->get_memory_data("taver").size());
-	pTaverneSprite->setTexture(*pTaverneTexture);
-
-	pTaverneSprite->setPosition(0, 230);
-	pTaverneSprite->setScale(2.67f, 2.85f);
-
-	//Hover
-	pTaverneTextureHover		= new sf::Texture;
-	pTaverneSpriteHover			= new sf::Sprite;
-
-	pTaverneTextureHover->loadFromMemory(&pResourcenManager->get_memory_data("taveh")[0], 
-										 pResourcenManager->get_memory_data("taveh").size());
-	pTaverneSpriteHover->setTexture(*pTaverneTextureHover);
-
-	pTaverneSpriteHover->setPosition(95.f, 335.f);
-	pTaverneSpriteHover->setScale(2.67f, 2.85f);
-
-
 
 	// Himmel Object
 	pHimmelTexture				= new sf::Texture;
@@ -130,7 +105,10 @@ void main_frame::run()
 		}
 
 		pRiftBrowser->update();
-		tavern_hover();
+		if (!pRiftBrowser->getRiftBrowserStatus())
+		{
+			pTavern->update(vMousePosition);
+		}
 
 
 
@@ -177,17 +155,13 @@ void main_frame::handleEvents()
 			{
 				std::cout << "event " << std::endl;
 			}
-			else if (pHauptEvent->key.code == sf::Keyboard::F1)
-			{
-				pTaverne->test_func();
-			}
 		}
 		if (pHauptEvent->type == sf::Event::MouseButtonPressed)
 		{
 			pRiftBrowser->eventRiftBrowser(vMousePosition);
 			if (pHauptEvent->key.code == sf::Mouse::Button::Left)
 			{
-				if (bTavernHover)
+				if (pTavern->getTavernHover())
 				{
 					bTaverne = true;
 					bHauptFenster = false;
@@ -213,12 +187,8 @@ void main_frame::render()
 			pHauptFenster->draw(*pWolkeZweiSprite);
 		}
 		pHauptFenster->draw(*pHintergrundSprite);
-		pHauptFenster->draw(*pTaverneSprite);
 		pHauptFenster->draw(*pRiftPortalSprite);
-		if (bTavernHover)
-		{
-			pHauptFenster->draw(*pTaverneSpriteHover);
-		}
+		pTavern->render(pHauptFenster);
 	}
 	else if (bTaverne)
 	{
@@ -244,20 +214,6 @@ void main_frame::m_frametime()
 {
 	fUpdateZeit = pHauptUhr->getElapsedTime().asSeconds();
 	pHauptUhr->restart();
-}
-
-void main_frame::tavern_hover()
-{
-	if (pTaverneSprite->getGlobalBounds().contains(vMousePosition) &&
-		!pRiftBrowser->getRiftBrowserStatus() && !bTaverne &&
-		!pRiftBrowser->getRiftStatus())
-	{
-		bTavernHover = true;
-	}
-	else
-	{
-		bTavernHover = false;
-	}
 }
 
 void main_frame::life_clouds()

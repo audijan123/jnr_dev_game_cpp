@@ -43,6 +43,12 @@
     <Filter Include="Quelldateien\Code Funktion">
       <UniqueIdentifier>{d327dc38-f451-417c-b0c9-0e715fc0af41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Rift">
+      <UniqueIdentifier>{bf8c8204-0348-41e6-a5ce-077505838ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Rift">
+      <UniqueIdentifier>{c13a9e10-3f9f-4a19-9417-29bbff06d8ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,11 +84,14 @@
     <ClCompile Include="riftBrowser.cpp">
       <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
-    <ClCompile Include="dungeon_manager.cpp">
-      <Filter>Quelldateien\Hauptfenster</Filter>
-    </ClCompile>
     <ClCompile Include="generate_items.cpp">
       <Filter>Quelldateien\Code Funktion</Filter>
+    </ClCompile>
+    <ClCompile Include="dungeon_manager.cpp">
+      <Filter>Quelldateien\Rift</Filter>
+    </ClCompile>
+    <ClCompile Include="taverne.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,11 +134,14 @@
     <ClInclude Include="riftBrowser.hpp">
       <Filter>Headerdateien\Hauptfenster</Filter>
     </ClInclude>
-    <ClInclude Include="dungeon_manager.hpp">
-      <Filter>Headerdateien\Hauptfenster</Filter>
-    </ClInclude>
     <ClInclude Include="generate_items.hpp">
       <Filter>Headerdateien\Code Funktion</Filter>
+    </ClInclude>
+    <ClInclude Include="dungeon_manager.hpp">
+      <Filter>Headerdateien\Rift</Filter>
+    </ClInclude>
+    <ClInclude Include="taverne.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,12 +2,12 @@
 
 #include <iostream>
 #include <SFML\Graphics.hpp>
-#include "dungeon_manager.hpp"
 #include "datenbank_main.hpp"
 #include "tavern_main.hpp"
 #include "main_base.hpp"
 #include "sfSpriteGen.hpp"
 #include "riftBrowser.hpp"
+#include "taverne.hpp"
 
 class main_frame
 {
@@ -27,7 +27,6 @@ private:
 	void render();
 	void update();
 	void handleEvents();
-	void tavern_hover();
 	void ui_render();
 	void m_frametime();
 	void life_clouds();
@@ -44,13 +43,6 @@ private:
 
 	sf::Event			*pHauptEvent; // Haupt event
 	sf::Clock			*pHauptUhr; // Hauptuhr
-
-	// Tavern Object
-	sf::Texture			*pTaverneTexture;
-	sf::Sprite			*pTaverneSprite;
-	// Tavern Hover
-	sf::Texture			*pTaverneTextureHover;
-	sf::Sprite			*pTaverneSpriteHover;
 
 	//Umwelt
 	// Himmel Objecte
@@ -79,6 +71,9 @@ private:
 	//Pointer erschaffung für den Rift Manager
 	//dungeon_manager		*pRiftManager;
 	GMS::riftBrowser    *pRiftBrowser;
+
+	// Erstellung der Taverne
+	GMS::taverne		*pTavern;
 	
 
 	//Erschaffung des Sprite genartors
@@ -100,7 +95,6 @@ private:
 	bool bHauptFenster			= true;
 	bool bPausenMenu			= false;
 	bool bTaverne				= false;
-	bool bTavernHover			= false;
 	bool bPortalHover			= false;
 
 	
