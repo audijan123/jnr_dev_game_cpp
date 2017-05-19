@@ -51,9 +51,6 @@
     <ClCompile Include="main_frame.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="dungeon_manager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="enviroment_loader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -75,21 +72,21 @@
     <ClCompile Include="main_os_manager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="generate_items.cpp">
-      <Filter>Quelldateien\Tavernfenster</Filter>
-    </ClCompile>
     <ClCompile Include="sfSpriteGen.cpp">
       <Filter>Quelldateien\Code Funktion</Filter>
     </ClCompile>
     <ClCompile Include="riftBrowser.cpp">
       <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
+    <ClCompile Include="dungeon_manager.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="generate_items.cpp">
+      <Filter>Quelldateien\Code Funktion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="dungeon_manager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="enviroment_loader.hpp">
@@ -122,14 +119,17 @@
     <ClInclude Include="main_os_manager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="generate_items.hpp">
-      <Filter>Headerdateien\Tavernfenster</Filter>
-    </ClInclude>
     <ClInclude Include="sfSpriteGen.hpp">
       <Filter>Headerdateien\Code Funktion</Filter>
     </ClInclude>
     <ClInclude Include="riftBrowser.hpp">
       <Filter>Headerdateien\Hauptfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="dungeon_manager.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="generate_items.hpp">
+      <Filter>Headerdateien\Code Funktion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

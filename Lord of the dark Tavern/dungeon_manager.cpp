@@ -2,13 +2,15 @@
 
 
 dungeon_manager::dungeon_manager(const int &m_power,const std::string &path, const JGE::main_base* pbase) :
-	p_memory_allocator(*pbase)
+	p_memory_allocator(*pbase) , m_path(path)
 {
 
-	m_path = path;
 	p_life_t = new sf::Texture;
 	p_life_t->loadFromMemory(&p_memory_allocator.get_memory_data("leben")[0], p_memory_allocator.get_memory_data("leben").size());
 
+
+	// Hintergrundbilder Laden ///
+	pHintergrundLader = new enviroment_loader(m_path);
 
 	/// Random Dungeon Generator
 	now = std::time(0);
@@ -161,6 +163,7 @@ void dungeon_manager::render(sf::RenderWindow *rw) const
 {
 	if (dungeon_atkiv)
 	{
+		pHintergrundLader->render_enviro(enviro_id, rw);
 		for (auto i_p = 0; i_p < mob_per_floor[floor_a]; i_p++)
 		{
 			rw->draw(*mob_this_dungeons[i_p].p_sprite);

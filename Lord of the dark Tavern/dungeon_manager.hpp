@@ -8,6 +8,7 @@
 #include <SFML\Graphics.hpp>
 #include <Vector>
 #include "main_base.hpp"
+#include "enviroment_loader.hpp"
 
 
 class dungeon_manager
@@ -37,6 +38,10 @@ private:
 	bool dungeon_atkiv = false;
 
 	JGE::main_base p_memory_allocator;
+
+
+	//Hintergrund Lader
+	enviroment_loader	*pHintergrundLader;
 
 	sf::Font *pfont;
 	struct mob

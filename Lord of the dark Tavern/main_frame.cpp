@@ -6,6 +6,7 @@ main_frame::main_frame(const std::string &pfad)
 	pDatenbank					= new main_data(mainPfad); // Erstelle Datenbank Klasse //
 	pResourcenManager			= new JGE::main_base(mainPfad); // Erstelle Resourchen Manager //
 	pSpriteErsteller			= new JGE::SpriteGen(pResourcenManager);
+	pRiftBrowser = new GMS::riftBrowser(pResourcenManager, main, mainPfad);
 
 
 	//pHauptFenster erstellen
@@ -33,11 +34,6 @@ main_frame::main_frame(const std::string &pfad)
 
 	pHauptEvent					= new sf::Event; //Erstelle pHauptEvent
 	pHauptUhr					= new sf::Clock; // Erstelle Uhr
-
-
-	// Erstelle Schriftart
-	pSchriftArt					= new sf::Font;
-	pSchriftArt->loadFromFile(mainPfad + "DATA/resource/dungeon.ttf");
 
 
 	//Erstellen des "Tavernen" Objectes + zugehöriges Hover effekt
@@ -90,10 +86,6 @@ main_frame::main_frame(const std::string &pfad)
 	pWolkeZweiSprite->setPosition(0 - 1200, 0);
 
 
-	// Hintergrundbilder Laden ///
-	pHintergrundLader			= new enviroment_loader(mainPfad);
-
-
 	// Rift Portal und Rift Portal Hover//
 	//Object
 	pRiftPortalSprite = pSpriteErsteller->erstelle_sprite("porta", true, sf::Vector2f(1100.f, 390.f), sf::Vector2f(0.5f, 0.5f));
@@ -113,8 +105,6 @@ main_frame::main_frame(const std::string &pfad)
 																sf::Vector2f(1.7f, 1.7f), i + 100);
 	}
 
-	// Rift Menu //
-	create_dungeon_browser();
 
 	//Laden der Taverne und dessen Funktionen
 	pTaverne = new tavern_main(mainPfad, pResourcenManager, main);
@@ -131,13 +121,21 @@ void main_frame::run()
 {
 	while (bRun)
 	{
-		update();
+		m_frametime();
+		fUpdateZeitWarte += fUpdateZeit;
+		if (fUpdateZeitWarte >= fUpdateZeitMax)
+		{
+			update();
+			fUpdateZeitWarte = 0.f;
+		}
+
+		pRiftBrowser->update();
 		tavern_hover();
-		update_diffi();
+
+
 
 		handleEvents();
 		render();
-		m_frametime();
 		quit();
 	}
 }
@@ -153,10 +151,9 @@ void main_frame::quit()
 
 void main_frame::update()
 {
+
 	if (bPausenMenu == false)
 	{
-		
-
 		vMousePosition = { sf::Mouse::getPosition().x - 8.f - pHauptFenster->getPosition().x ,
 			sf::Mouse::getPosition().y - 32.f - pHauptFenster->getPosition().y };
 
@@ -184,29 +181,16 @@ void main_frame::handleEvents()
 			{
 				pTaverne->test_func();
 			}
-			else if (pHauptEvent->key.code == sf::Keyboard::F5)
-			{
-				exit_dungeon();
-			}
-
-			
 		}
 		if (pHauptEvent->type == sf::Event::MouseButtonPressed)
 		{
+			pRiftBrowser->eventRiftBrowser(vMousePosition);
 			if (pHauptEvent->key.code == sf::Mouse::Button::Left)
 			{
-				if (bTavernHover && !bRift && !bTaverne)
+				if (bTavernHover)
 				{
 					bTaverne = true;
-					bRift = false;
 					bHauptFenster = false;
-				}			
-				else if (bRiftBrowser && !bRift && !bTaverne)
-				{
-					hardcore_btn();
-					diffi_btn();
-					btn_exit_dungeon();
-					btn_go_dungeon();
 				}
 				else if (bTaverne)
 				{
@@ -221,30 +205,7 @@ void main_frame::handleEvents()
 void main_frame::render()
 {
 	pHauptFenster->clear();
-	if (bRift)
-	{
-		if (!pRiftManager->check_dungeon()) {
-			pHauptFenster->draw(*pHimmelSprite);
-			if (!bPortalHover) {
-				pHauptFenster->draw(*pWolkeSprite);
-				pHauptFenster->draw(*pWolkeZweiSprite);
-			}
-			pHauptFenster->draw(*pHintergrundSprite);
-			pHauptFenster->draw(*pTaverneSprite);
-			pHauptFenster->draw(*pRiftPortalSprite);
-			if (bTavernHover)
-			{
-				pHauptFenster->draw(*pTaverneSpriteHover);
-			}
-		}
-		else if (pRiftManager->check_dungeon())
-		{
-			pHintergrundLader->render_enviro(pRiftManager->enviroment_id(), pHauptFenster);
-			if(!bHauptFenster)
-				pRiftManager->render(pHauptFenster);
-		}
-	}
-	else if (bHauptFenster)
+	if (bHauptFenster)
 	{
 		pHauptFenster->draw(*pHimmelSprite);
 		if (!bPortalHover) {
@@ -269,23 +230,11 @@ void main_frame::render()
 
 void main_frame::ui_render()
 {
+
+	pRiftBrowser->render(pHauptFenster);
 	for (auto i = 0; i < 3; i++)
 	{
 		pHauptFenster->draw(*pMenuButtonSprite[i]);
-	}
-
-
-	if (bRiftBrowser && !bRift && !bTaverne)
-	{
-		pHauptFenster->draw(*pRiftMenuSprite[5]);
-		pHauptFenster->draw(*pRiftMenuSprite[2]);
-		pHauptFenster->draw(*pRiftMenuTitel);
-		pHauptFenster->draw(*pRiftMenuSprite[0]);
-		pHauptFenster->draw(*pRiftMenuSprite[1]);
-		pHauptFenster->draw(*pRiftMenuSprite[3]);
-		pHauptFenster->draw(*pRiftMenuSprite[4]);
-		pHauptFenster->draw(*pRiftMenuSchwierigkeit);
-		pHauptFenster->draw(*pRiftMenuTextHoch);
 	}
 
 
@@ -293,13 +242,15 @@ void main_frame::ui_render()
 
 void main_frame::m_frametime()
 {
-	m_frame_time = pHauptUhr->getElapsedTime().asSeconds();
+	fUpdateZeit = pHauptUhr->getElapsedTime().asSeconds();
 	pHauptUhr->restart();
 }
 
 void main_frame::tavern_hover()
 {
-	if (pTaverneSprite->getGlobalBounds().contains(vMousePosition) && !bRiftBrowser && !bTaverne && !bRift)
+	if (pTaverneSprite->getGlobalBounds().contains(vMousePosition) &&
+		!pRiftBrowser->getRiftBrowserStatus() && !bTaverne &&
+		!pRiftBrowser->getRiftStatus())
 	{
 		bTavernHover = true;
 	}
@@ -317,7 +268,7 @@ void main_frame::life_clouds()
 	}
 	else if (pWolkeSprite->getPosition().x <  main.x)
 	{
-		pWolkeSprite->setPosition(pWolkeSprite->getPosition().x + 60 * m_frame_time, pWolkeSprite->getPosition().y);
+		pWolkeSprite->setPosition(pWolkeSprite->getPosition().x + 60 * fUpdateZeit, pWolkeSprite->getPosition().y);
 	}
 	if (pWolkeZweiSprite->getPosition().x >= main.x)
 	{
@@ -325,7 +276,7 @@ void main_frame::life_clouds()
 	}
 	else if (pWolkeZweiSprite->getPosition().x < main.x)
 	{
-		pWolkeZweiSprite->setPosition(pWolkeZweiSprite->getPosition().x + 60 * m_frame_time, pWolkeZweiSprite->getPosition().y);
+		pWolkeZweiSprite->setPosition(pWolkeZweiSprite->getPosition().x + 60 * fUpdateZeit, pWolkeZweiSprite->getPosition().y);
 	}
 }
 
@@ -334,16 +285,16 @@ void main_frame::dungeon_rotate()
 	pRiftPortalSprite->rotate(1.3f);
 
 	if (pRiftPortalSprite->getGlobalBounds().contains(vMousePosition) && !bTaverne &&
-		pHauptEvent->key.code == sf::Mouse::Button::Left || bRiftBrowser)
+		pHauptEvent->key.code == sf::Mouse::Button::Left && !pRiftBrowser->getRiftBrowserStatus() &&
+		!pRiftBrowser->getRiftStatus())
 	{
 		pHintergrundSprite->setTexture(*pRiftPortalTextureHover);
 		pHimmelSprite->setTexture(*pRiftSkyTextureHover);
 
-
 		bPortalHover = true;
-		bRiftBrowser = true;
+		pRiftBrowser->show();
 	}
-	else
+	else if(!pRiftBrowser->getRiftBrowserStatus())
 	{
 		pHintergrundSprite->setTexture(*pHintergrundTexture);
 		pHimmelSprite->setTexture(*pHimmelTexture);
@@ -354,25 +305,21 @@ void main_frame::dungeon_rotate()
 
 }
 
-void main_frame::exit_dungeon()
-{
-	bRift = false;
-	delete pRiftManager;
-	pRiftManager = nullptr;
-	bHauptFenster = true;
-}
-
 void main_frame::exit_btn()
 {
 	if (osm::sprite_pressed(pMenuButtonSprite[0], vMousePosition))
 	{
-		if (bRift)
+		if (pRiftBrowser->getRiftStatus())
 		{
-			exit_dungeon();
+			pRiftBrowser->deleteRift();
 		}
 		else if (bHauptFenster)
 		{
 			bRun = false;
+		}
+		else if (pRiftBrowser->getRiftBrowserStatus())
+		{
+			pRiftBrowser->hide();
 		}
 		else if (bTaverne && !pTaverne->o_menu())
 		{
@@ -382,186 +329,16 @@ void main_frame::exit_btn()
 	}
 }
 
-void main_frame::hardcore_btn()
-{
-	if (osm::sprite_pressed(pRiftMenuSprite[4], vMousePosition))
-		{
-		if (bRfitBrowserHardcore)
-		{
-			bRfitBrowserHardcore = false;
-			pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[4]);
-		}
-		else if (!bRfitBrowserHardcore)
-		{
-			bRfitBrowserHardcore = true;
-			pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[3]);
-		}
-	}
-}
-
-void main_frame::diffi_btn()
-{
-	//p_Dungeon_Browser[1]
-	if (osm::sprite_pressed(pRiftMenuSprite[0], vMousePosition) && difficulty > 1)
-	{
-		difficulty--;
-	}
-	else if (osm::sprite_pressed(pRiftMenuSprite[1], vMousePosition))
-	{
-		difficulty++;
-	}
-}
-
-void main_frame::update_diffi()
-{
-	if (difficulty == 1)
-	{
-		pRiftMenuSchwierigkeit->setString("Leicht");
-	}
-	else if (difficulty == 2)
-	{
-		pRiftMenuSchwierigkeit->setString("Normal");
-	}
-	else if (difficulty == 3)
-	{
-		pRiftMenuSchwierigkeit->setString("Schwer");
-	}
-	else if (difficulty == 4)
-	{
-		pRiftMenuSchwierigkeit->setString("Mystisch");
-	}
-	else if (difficulty > 4)
-	{
-		pRiftMenuSchwierigkeit->setString("Mystisch " + std::to_string(difficulty-4));
-	}
-}
-
-void main_frame::btn_exit_dungeon()
-{
-	if (osm::sprite_pressed(pRiftMenuSprite[2], vMousePosition))
-	{
-		bRiftBrowser = false;
-	}
-}
-
-void main_frame::btn_go_dungeon()
-{
-	if (osm::sprite_pressed(pRiftMenuSprite[3], vMousePosition))
-	{
-		bRiftBrowser = false;
-		pRiftManager = new dungeon_manager(difficulty, mainPfad, pResourcenManager);
-		bRift = true;
-		bHauptFenster = false;
-	}
-}
-
-void main_frame::create_dungeon_browser()
-{
-	for (auto i_l = 0; i_l < 7; i_l++)
-	{
-		pRiftMenuTexture[i_l]		 = new sf::Texture;
-		pRiftMenuSprite[i_l]		 = new sf::Sprite;
-
-		pRiftMenuTexture[i_l]->loadFromMemory
-		(
-			&pResourcenManager->get_memory_data("dbtn" + std::to_string(i_l + 1))[0],
-			pResourcenManager->get_memory_data("dbtn" + std::to_string(i_l + 1)).size()
-		);
-	}
-
-	pRiftMenuTitel					 = new sf::Text;
-	pRiftMenuSchwierigkeit			 = new sf::Text;
-	pRiftMenuText					 = new sf::Text;
-	pRiftMenuTextHoch				 = new sf::Text;
-
-
-
-
-	// Texturen Setzen
-	pRiftMenuSprite[0]->setTexture(*pRiftMenuTexture[0]); // Diffi Pfeil
-	pRiftMenuSprite[1]->setTexture(*pRiftMenuTexture[0]); // Diffi Pfeil Andere Reichtung
-	pRiftMenuSprite[2]->setTexture(*pRiftMenuTexture[1]); // close btn
-	pRiftMenuSprite[3]->setTexture(*pRiftMenuTexture[2]); // start btn
-	pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[4]); // check true
-	pRiftMenuSprite[5]->setTexture(*pRiftMenuTexture[5]); //bg
-	pRiftMenuSprite[6]->setTexture(*pRiftMenuTexture[6]); // bg text
-
-
-	// Setze Schriftart
-	pRiftMenuTitel->setFont(*pSchriftArt);
-	pRiftMenuSchwierigkeit->setFont(*pSchriftArt);
-	pRiftMenuText->setFont(*pSchriftArt);
-	pRiftMenuTextHoch->setFont(*pSchriftArt);
-
-
-	// Setze Positions
-	pRiftMenuSprite[5]->setPosition(main.x / 2.f, main.y / 2.f);
-
-	pRiftMenuSprite[5]->setOrigin(pRiftMenuTexture[5]->getSize().x / 2.f,
-								  pRiftMenuTexture[5]->getSize().y / 2.f);
-
-	pRiftMenuSprite[1]->setPosition(pRiftMenuSprite[5]->getPosition().x - 167.f,
-									pRiftMenuSprite[5]->getPosition().y - 50.f);
-
-	pRiftMenuSprite[0]->setPosition(pRiftMenuSprite[1]->getPosition().x,
-									pRiftMenuSprite[1]->getPosition().y + 30.f);
-
-	pRiftMenuSprite[2]->setPosition(pRiftMenuSprite[5]->getPosition().x + 155.f,
-									pRiftMenuSprite[5]->getPosition().y - 132.f);
-
-	pRiftMenuSprite[3]->setPosition(pRiftMenuSprite[5]->getPosition().x - 75.f,
-									pRiftMenuSprite[5]->getPosition().y + 70.f);
-
-	pRiftMenuTextHoch->setPosition(pRiftMenuSprite[5]->getPosition().x + 15.f,
-								   pRiftMenuSprite[5]->getPosition().y - 90.f);
-
-	pRiftMenuSprite[4]->setPosition(pRiftMenuTextHoch->getPosition().x + 50.f,
-									pRiftMenuTextHoch->getPosition().y + 30.f);
-
-	pRiftMenuTitel->setPosition(pRiftMenuSprite[5]->getPosition().x - 82.f,
-								pRiftMenuSprite[5]->getPosition().y - 130.f);
-
-	pRiftMenuSchwierigkeit->setPosition(pRiftMenuSprite[5]->getPosition().x - 127.f,
-										pRiftMenuSprite[5]->getPosition().y - 50.f);
-
-
-
-	
-	//Setze Skalierungen
-	pRiftMenuSprite[0]->setScale(1.3f, 1.f);
-	pRiftMenuSprite[1]->setScale(1.3f, -1.f);
-	pRiftMenuSprite[5]->setScale(1.5f, 1.5f);
-
-	//Schriftgröße
-	pRiftMenuTitel->setCharacterSize(iRiftBrowserSchriftGröße);
-	pRiftMenuSchwierigkeit->setCharacterSize(iRiftBrowserSchriftGröße);
-	pRiftMenuTextHoch->setCharacterSize(iRiftBrowserSchriftGröße);
-
-	//Setze Text
-	pRiftMenuTitel->setString("Dungeon Browser");
-	pRiftMenuSchwierigkeit->setString("Leicht");
-	pRiftMenuTextHoch->setString("Hardcore Mode");
-}
-
-
-
-
-
 /////Enviroment SYSTEM Thread 1 //////////
-
 void main_frame::enviroment()
 {
 	osm::t_s_ms(60);
-	pHauptFenster->setTitle(sTitel + " FPS: " + std::to_string(static_cast<int>(1.f / m_frame_time)));
+	pHauptFenster->setTitle(sTitel + " FPS: " + std::to_string(static_cast<int>(1.f / fUpdateZeit)));
 	life_clouds();
 	dungeon_rotate();
 }
 
-
-
 /////DATENBANK SYSTEM Thread 2 //////////
-
-
 void main_frame::datenbank()
 {
 	pDatenbank->run();
