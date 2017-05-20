@@ -75,9 +75,6 @@
     <ClCompile Include="AnimatedSprite.cpp">
       <Filter>Quelldateien\sf::animation</Filter>
     </ClCompile>
-    <ClCompile Include="main_os_manager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="sfSpriteGen.cpp">
       <Filter>Quelldateien\Code Funktion</Filter>
     </ClCompile>
@@ -91,6 +88,18 @@
       <Filter>Quelldateien\Rift</Filter>
     </ClCompile>
     <ClCompile Include="taverne.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="himmel.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="uiElemente.cpp">
+      <Filter>Quelldateien\Hauptfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="main_os_manager.cpp">
+      <Filter>Quelldateien\Code Funktion</Filter>
+    </ClCompile>
+    <ClCompile Include="hintergrund.cpp">
       <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,9 +134,6 @@
     <ClInclude Include="Animation.hpp">
       <Filter>Headerdateien\sf::animantion</Filter>
     </ClInclude>
-    <ClInclude Include="main_os_manager.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="sfSpriteGen.hpp">
       <Filter>Headerdateien\Code Funktion</Filter>
     </ClInclude>
@@ -141,6 +147,18 @@
       <Filter>Headerdateien\Rift</Filter>
     </ClInclude>
     <ClInclude Include="taverne.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="himmel.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="main_os_manager.hpp">
+      <Filter>Headerdateien\Code Funktion</Filter>
+    </ClInclude>
+    <ClInclude Include="uiElemente.hpp">
+      <Filter>Headerdateien\Hauptfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="hintergrund.hpp">
       <Filter>Headerdateien\Hauptfenster</Filter>
     </ClInclude>
   </ItemGroup>

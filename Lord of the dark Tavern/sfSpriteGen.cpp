@@ -86,6 +86,25 @@ namespace JGE
 		return pBufferSprite;
 	}
 
+	sf::Texture SpriteGen::erstelle_texture(const std::string& texture)
+	{
+		//pBufferTexture = new sf::Texture;
+		sf::Texture Buff;
+		//vGelandeneTexturen.push_back(Buff);
+		if (texture.length() > 5)
+		{
+			osm::call("Invaild Texture");
+			exit(0x10);
+		}
+		else {
+			Buff.loadFromMemory(&pResourcenManager->get_memory_data(texture)[0],
+				pResourcenManager->get_memory_data(texture).size());
+		}
+		pBufferTexture = nullptr;
+		return Buff;
+
+	}
+
 
 
 

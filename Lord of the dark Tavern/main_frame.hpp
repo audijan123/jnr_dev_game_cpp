@@ -8,6 +8,9 @@
 #include "sfSpriteGen.hpp"
 #include "riftBrowser.hpp"
 #include "taverne.hpp"
+#include "himmel.hpp"
+#include "uiElemente.hpp"
+#include "hintergrund.hpp"
 
 class main_frame
 {
@@ -27,43 +30,18 @@ private:
 	void render();
 	void update();
 	void handleEvents();
-	void ui_render();
 	void m_frametime();
-	void life_clouds();
-	void dungeon_rotate();
-	void exit_btn();
 
 
 	main_data			*pDatenbank;
 	JGE::main_base		*pResourcenManager;
 	//Hauptfenster
 	sf::RenderWindow	*pHauptFenster;
-	sf::Texture			*pHintergrundTexture;
-	sf::Sprite			*pHintergrundSprite;
+	//Hintergrund
+	GMS::hintergrund	*pHintergrund;
 
 	sf::Event			*pHauptEvent; // Haupt event
 	sf::Clock			*pHauptUhr; // Hauptuhr
-
-	//Umwelt
-	// Himmel Objecte
-	sf::Texture			*pHimmelTexture;
-	sf::Sprite			*pHimmelSprite;
-
-	// Wolken Objecte
-	sf::Texture			*pWolkenTexture;
-	sf::Sprite			*pWolkeSprite;
-	sf::Sprite			*pWolkeZweiSprite;
-
-	//Rift Portal und Hover
-	sf::Texture			*pRiftPortalTexture;
-	sf::Sprite			*pRiftPortalSprite;
-	//Hover
-	sf::Texture			*pRiftPortalTextureHover;
-	sf::Texture			*pRiftSkyTextureHover;
-
-	// Menu Button Objecte
-	sf::Texture			*pMenuButtonTexture[10];
-	sf::Sprite			*pMenuButtonSprite[10];
 
 	// Tavernen Systeme
 	tavern_main			*pTaverne;
@@ -75,9 +53,15 @@ private:
 	// Erstellung der Taverne
 	GMS::taverne		*pTavern;
 	
+	//Himmel erstellung
+	GMS::himmel			*pHimmel;
 
 	//Erschaffung des Sprite genartors
 	JGE::SpriteGen		*pSpriteErsteller;
+
+	//ui erstellung
+	GMS::ui				*pUi;
+
 
 	// Ende der Pointer Liste
 
@@ -95,7 +79,6 @@ private:
 	bool bHauptFenster			= true;
 	bool bPausenMenu			= false;
 	bool bTaverne				= false;
-	bool bPortalHover			= false;
 
 	
 

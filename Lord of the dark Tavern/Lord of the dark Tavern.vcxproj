@@ -160,6 +160,8 @@
     <ClCompile Include="dungeon_manager.cpp" />
     <ClCompile Include="enviroment_loader.cpp" />
     <ClCompile Include="generate_items.cpp" />
+    <ClCompile Include="himmel.cpp" />
+    <ClCompile Include="hintergrund.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="sfSpriteGen.cpp" />
     <ClCompile Include="taverne.cpp" />
     <ClCompile Include="tavern_main.cpp" />
+    <ClCompile Include="uiElemente.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.hpp" />
@@ -176,6 +179,8 @@
     <ClInclude Include="dungeon_manager.hpp" />
     <ClInclude Include="enviroment_loader.hpp" />
     <ClInclude Include="generate_items.hpp" />
+    <ClInclude Include="himmel.hpp" />
+    <ClInclude Include="hintergrund.hpp" />
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="main_os_manager.hpp" />
@@ -183,6 +188,7 @@
     <ClInclude Include="sfSpriteGen.hpp" />
     <ClInclude Include="taverne.hpp" />
     <ClInclude Include="tavern_main.hpp" />
+    <ClInclude Include="uiElemente.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\data.zip" />

@@ -4,11 +4,24 @@ main_frame::main_frame(const std::string &pfad)
 	: mainPfad(pfad.substr(0, pfad.length() - 27))
 {
 	pDatenbank					= new main_data(mainPfad); // Erstelle Datenbank Klasse //
+
 	pResourcenManager			= new JGE::main_base(mainPfad); // Erstelle Resourchen Manager //
 	pSpriteErsteller			= new JGE::SpriteGen(pResourcenManager);
+
 	pRiftBrowser				= new GMS::riftBrowser(pResourcenManager, main, mainPfad);
 	pTavern						= new GMS::taverne(pSpriteErsteller);
+	pHimmel						= new GMS::himmel(pSpriteErsteller, main);
+	pHintergrund				= new GMS::hintergrund(pSpriteErsteller, pRiftBrowser, pHimmel);
 
+
+	pHauptEvent = new sf::Event; //Erstelle pHauptEvent
+	pHauptUhr = new sf::Clock; // Erstelle Uhr
+
+	//Laden der Taverne und dessen Funktionen
+	pTaverne					= new tavern_main(mainPfad, pResourcenManager, main);
+
+
+	pUi							= new GMS::ui(pSpriteErsteller, pRiftBrowser, pTaverne, main);
 
 	//pHauptFenster erstellen
 	pHauptFenster				= new sf::RenderWindow(sf::VideoMode(
@@ -21,68 +34,6 @@ main_frame::main_frame(const std::string &pfad)
 	pHauptFenster->setFramerateLimit(60);
 	pHauptFenster->setVerticalSyncEnabled(true);
 
-
-	//Hintergrund für das pHauptFenster erstellen und einen sf::Sprite zuordnen
-	pHintergrundTexture			= new sf::Texture;
-	pHintergrundSprite			= new sf::Sprite;
-
-	pHintergrundTexture->loadFromMemory(&pResourcenManager->get_memory_data("backg")[0],
-										pResourcenManager->get_memory_data("backg").size());
-	pHintergrundSprite->setTexture(*pHintergrundTexture);
-
-	pHintergrundSprite->setScale(2.67f, 2.85f);
-
-
-	pHauptEvent					= new sf::Event; //Erstelle pHauptEvent
-	pHauptUhr					= new sf::Clock; // Erstelle Uhr
-
-	// Himmel Object
-	pHimmelTexture				= new sf::Texture;
-	pHimmelSprite				= new sf::Sprite;
-
-	pHimmelTexture->loadFromMemory(&pResourcenManager->get_memory_data("skybb")[0], 
-									pResourcenManager->get_memory_data("skybb").size());
-	pHimmelSprite->setTexture(*pHimmelTexture);
-
-	pHimmelSprite->setScale(2.67f, 2.85f);
-
-
-	// Wolken Objecte
-	pWolkenTexture				= new sf::Texture;
-	pWolkeSprite				= new sf::Sprite;
-	pWolkeZweiSprite			= new sf::Sprite;
-
-	pWolkenTexture->loadFromFile(mainPfad + "DATA/resource/clouds.png");
-	pWolkeSprite->setTexture(*pWolkenTexture);
-	pWolkeZweiSprite->setTexture(*pWolkenTexture);
-
-	pWolkeSprite->setScale(1.5f, 1.2f);
-	pWolkeZweiSprite->setScale(1.5f, 1.2f);
-	pWolkeZweiSprite->setPosition(0 - 1200, 0);
-
-
-	// Rift Portal und Rift Portal Hover//
-	//Object
-	pRiftPortalSprite = pSpriteErsteller->erstelle_sprite("porta", true, sf::Vector2f(1100.f, 390.f), sf::Vector2f(0.5f, 0.5f));
-
-	//Hover
-	pRiftPortalTextureHover		= new sf::Texture;
-	pRiftSkyTextureHover		= new sf::Texture;
-
-	pRiftPortalTextureHover->loadFromFile(mainPfad + "DATA/resource/portal_hover.png");
-	pRiftSkyTextureHover->loadFromFile(mainPfad + "DATA/resource/sky_hover.png");
-
-
-	// Menu Button Objecte
-	for (uint16_t i = 0; i < 3; i++)
-	{
-		pMenuButtonSprite[i] = pSpriteErsteller->erstelle_sprite("btn", false, sf::Vector2f(main.x - (50 * (i + 1)), 0.f),
-																sf::Vector2f(1.7f, 1.7f), i + 100);
-	}
-
-
-	//Laden der Taverne und dessen Funktionen
-	pTaverne = new tavern_main(mainPfad, pResourcenManager, main);
 
 	// Ende Konstruktor
 }
@@ -110,8 +61,6 @@ void main_frame::run()
 			pTavern->update(vMousePosition);
 		}
 
-
-
 		handleEvents();
 		render();
 		quit();
@@ -120,7 +69,7 @@ void main_frame::run()
 
 void main_frame::quit()
 {
-	if (!bRun)
+	if (!bRun || !pUi->getbRun())
 	{
 		pHauptFenster->close();
 		exit(0x001996);
@@ -130,12 +79,13 @@ void main_frame::quit()
 void main_frame::update()
 {
 
-	if (bPausenMenu == false)
+	if (!bPausenMenu)
 	{
 		vMousePosition = { sf::Mouse::getPosition().x - 8.f - pHauptFenster->getPosition().x ,
 			sf::Mouse::getPosition().y - 32.f - pHauptFenster->getPosition().y };
 
 		pTaverne->update(vMousePosition);
+
 	}
 
 
@@ -161,7 +111,14 @@ void main_frame::handleEvents()
 			pRiftBrowser->eventRiftBrowser(vMousePosition);
 			if (pHauptEvent->key.code == sf::Mouse::Button::Left)
 			{
-				if (pTavern->getTavernHover())
+				pUi->update(vMousePosition, bHauptFenster, bTaverne);
+				
+				if (!pUi->getTavernStatus() && bTaverne)
+				{
+					bTaverne = false;
+					bHauptFenster = true;
+				}
+				else if (pTavern->getTavernHover() && bHauptFenster)
 				{
 					bTaverne = true;
 					bHauptFenster = false;
@@ -170,7 +127,7 @@ void main_frame::handleEvents()
 				{
 					pTaverne->event();
 				}
-				exit_btn();
+
 			}
 		}
 	}
@@ -181,33 +138,16 @@ void main_frame::render()
 	pHauptFenster->clear();
 	if (bHauptFenster)
 	{
-		pHauptFenster->draw(*pHimmelSprite);
-		if (!bPortalHover) {
-			pHauptFenster->draw(*pWolkeSprite);
-			pHauptFenster->draw(*pWolkeZweiSprite);
-		}
-		pHauptFenster->draw(*pHintergrundSprite);
-		pHauptFenster->draw(*pRiftPortalSprite);
+		pHintergrund->render(pHauptFenster);
 		pTavern->render(pHauptFenster);
 	}
 	else if (bTaverne)
 	{
 		pTaverne->render(pHauptFenster);
 	}
-	ui_render();
-	pHauptFenster->display();
-}
-
-void main_frame::ui_render()
-{
-
 	pRiftBrowser->render(pHauptFenster);
-	for (auto i = 0; i < 3; i++)
-	{
-		pHauptFenster->draw(*pMenuButtonSprite[i]);
-	}
-
-
+	pUi->render(pHauptFenster);
+	pHauptFenster->display();
 }
 
 void main_frame::m_frametime()
@@ -216,82 +156,13 @@ void main_frame::m_frametime()
 	pHauptUhr->restart();
 }
 
-void main_frame::life_clouds()
-{
-	if (pWolkeSprite->getPosition().x >= main.x)
-	{
-		pWolkeSprite->setPosition(0- main.x, pWolkeSprite->getPosition().y);
-	}
-	else if (pWolkeSprite->getPosition().x <  main.x)
-	{
-		pWolkeSprite->setPosition(pWolkeSprite->getPosition().x + 60 * fUpdateZeit, pWolkeSprite->getPosition().y);
-	}
-	if (pWolkeZweiSprite->getPosition().x >= main.x)
-	{
-		pWolkeZweiSprite->setPosition(0 - main.x, pWolkeZweiSprite->getPosition().y);
-	}
-	else if (pWolkeZweiSprite->getPosition().x < main.x)
-	{
-		pWolkeZweiSprite->setPosition(pWolkeZweiSprite->getPosition().x + 60 * fUpdateZeit, pWolkeZweiSprite->getPosition().y);
-	}
-}
-
-void main_frame::dungeon_rotate()
-{
-	pRiftPortalSprite->rotate(1.3f);
-
-	if (pRiftPortalSprite->getGlobalBounds().contains(vMousePosition) && !bTaverne &&
-		pHauptEvent->key.code == sf::Mouse::Button::Left && !pRiftBrowser->getRiftBrowserStatus() &&
-		!pRiftBrowser->getRiftStatus())
-	{
-		pHintergrundSprite->setTexture(*pRiftPortalTextureHover);
-		pHimmelSprite->setTexture(*pRiftSkyTextureHover);
-
-		bPortalHover = true;
-		pRiftBrowser->show();
-	}
-	else if(!pRiftBrowser->getRiftBrowserStatus())
-	{
-		pHintergrundSprite->setTexture(*pHintergrundTexture);
-		pHimmelSprite->setTexture(*pHimmelTexture);
-
-		bPortalHover = false;
-	}
-	
-
-}
-
-void main_frame::exit_btn()
-{
-	if (osm::sprite_pressed(pMenuButtonSprite[0], vMousePosition))
-	{
-		if (pRiftBrowser->getRiftStatus())
-		{
-			pRiftBrowser->deleteRift();
-		}
-		else if (bHauptFenster)
-		{
-			bRun = false;
-		}
-		else if (pRiftBrowser->getRiftBrowserStatus())
-		{
-			pRiftBrowser->hide();
-		}
-		else if (bTaverne && !pTaverne->o_menu())
-		{
-			bTaverne = false;
-			bHauptFenster = true;
-		}
-	}
-}
-
 /////Enviroment SYSTEM Thread 1 //////////
 void main_frame::enviroment()
 {
 	osm::t_s_ms(60);
 	pHauptFenster->setTitle(sTitel + " FPS: " + std::to_string(static_cast<int>(1.f / fUpdateZeit)));
-	life_clouds();
-	dungeon_rotate();
+	pHintergrund->update(vMousePosition, bTaverne, pHauptEvent, fUpdateZeit);
+
 }
 
 /////DATENBANK SYSTEM Thread 2 //////////

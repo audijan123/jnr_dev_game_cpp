@@ -23,6 +23,8 @@ namespace JGE
 									const sf::Vector2f& scale ,
 									const uint16_t& number);
 
+		sf::Texture erstelle_texture(const std::string& texture);
+
 
 	private:
 
