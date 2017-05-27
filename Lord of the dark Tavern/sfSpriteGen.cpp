@@ -105,6 +105,17 @@ namespace JGE
 
 	}
 
+	sf::Texture SpriteGen::erstelle_texture_mob(const int& mob_size)
+	{
+		sf::Image image;
+		image.loadFromMemory(&pResourcenManager->get_memory_data("mob", mob_size + 99)[0],
+							pResourcenManager->get_memory_data("mob", mob_size + 99).size());
+		sf::Texture buff;
+		buff.loadFromImage(image, sf::IntRect(0, 0, image.getSize().x / 2, image.getSize().y));
+		return buff;
+
+	}
+
 
 
 

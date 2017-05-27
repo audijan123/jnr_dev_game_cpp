@@ -2,33 +2,30 @@
 #include <SFML\Graphics.hpp>
 #include <thread>  
 #include "main_frame.hpp"
-std::string test;
-void enviroment();
-void datenbank();
+void enviroment_t1();
+void datenbank_t2();
 main_frame *frm;
 
 int main(int argc, char* argv[])
 {
-	test = *argv;
-	std::cin;
-	frm = new main_frame(test);
-	std::thread t_1(enviroment);
-	std::thread t_2(datenbank);
+	frm = new main_frame(*argv);
+	std::thread t_1(enviroment_t1);
+	std::thread t_2(datenbank_t2);
 	frm->run();
 	t_1.join();
 	t_2.join();
 }
 
 
-void enviroment()
+void enviroment_t1()
 {
 	while (true)
 	{
-		frm->enviroment();
+		frm->enviroment_t();
 	}
 }
 
-void datenbank()
+void datenbank_t2()
 {
-	frm->datenbank();
+	frm->datenbank_t();
 }

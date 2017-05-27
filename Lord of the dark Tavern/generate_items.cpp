@@ -8,7 +8,7 @@ gen_item::~gen_item()
 {
 }
 
-std::vector<main_data::item_data> gen_item::items(main_data::item_class t)
+std::vector<GAMESTRUCTS::item_data> gen_item::items(GAMESTRUCTS::item_class t)
 {
 	std::time_t times = std::time(0);
 	boost::random::mt19937 dev{ static_cast<std::uint32_t>(times) };;
@@ -17,7 +17,7 @@ std::vector<main_data::item_data> gen_item::items(main_data::item_class t)
 	for (auto i = 0; i < t_rnd; i++)
 	{
 
-		main_data::item_data buff = {};
+		GAMESTRUCTS::item_data buff = {};
 
 		buff.i_rare = get_rare();
 		buff.i_class = t;
@@ -60,38 +60,38 @@ int gen_item::get_rnd_number()
 
 }
 
-main_data::item_rare gen_item::get_rare()
+GAMESTRUCTS::item_rare gen_item::get_rare()
 {
 	std::time_t times = std::time(0);
 	boost::random::mt19937 dev{ static_cast<std::uint32_t>(times) };;
 	uint8_t int_buffer = dev() % 7;
 	if (int_buffer == 0)
 	{
-		return main_data::item_rare::NORMAL;
+		return GAMESTRUCTS::item_rare::NORMAL;
 	}
 	else if (int_buffer == 1)
 	{
-		return main_data::item_rare::BESONDERS;
+		return GAMESTRUCTS::item_rare::BESONDERS;
 	}
 	else if (int_buffer == 2)
 	{
-		return main_data::item_rare::SELTEN;
+		return GAMESTRUCTS::item_rare::SELTEN;
 	}
 	else if (int_buffer == 3)
 	{
-		return main_data::item_rare::SEHRSELTEN;
+		return GAMESTRUCTS::item_rare::SEHRSELTEN;
 	}
 	else if (int_buffer == 4)
 	{
-		return main_data::item_rare::EPISCH;
+		return GAMESTRUCTS::item_rare::EPISCH;
 	}
 	else if (int_buffer == 5)
 	{
-		return main_data::item_rare::LEGENDAER;
+		return GAMESTRUCTS::item_rare::LEGENDAER;
 	}
 	else if (int_buffer == 6)
 	{
-		return main_data::item_rare::MYSTISCH;
+		return GAMESTRUCTS::item_rare::MYSTISCH;
 	}
-	return main_data::item_rare::NORMAL;
+	return GAMESTRUCTS::item_rare::NORMAL;
 }

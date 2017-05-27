@@ -1,24 +1,19 @@
 #include "riftBrowser.hpp"
 
+extern sf::Vector2f	vMain;
+extern sf::Font	*pFont;
+extern JGE::SpriteGen *pSpriteErsteller;
+extern JGE::mainStateManager *pState;
+
 namespace GMS
 {
-	riftBrowser::riftBrowser(JGE::main_base *s,const sf::Vector2f& main, const std::string& mainPfad)
-		: pResourcenManager(s), mainPfad(mainPfad)
+	riftBrowser::riftBrowser(const uint16_t& iMobS)
 	{
-		// Erstelle Schriftart
-		pSchriftArt = new sf::Font;
-		pSchriftArt->loadFromFile(mainPfad + "DATA/resource/dungeon.ttf");
 
 		for (auto i_l = 0; i_l < 7; i_l++)
 		{
-			pRiftMenuTexture[i_l] = new sf::Texture;
 			pRiftMenuSprite[i_l] = new sf::Sprite;
-
-			pRiftMenuTexture[i_l]->loadFromMemory
-			(
-				&pResourcenManager->get_memory_data("dbtn" + std::to_string(i_l + 1))[0],
-				pResourcenManager->get_memory_data("dbtn" + std::to_string(i_l + 1)).size()
-			);
+			pRiftMenuTexture[i_l] = pSpriteErsteller->erstelle_texture("dbtn" + std::to_string(i_l + 1));
 		}
 
 		pRiftMenuTitel = new sf::Text;
@@ -28,27 +23,27 @@ namespace GMS
 
 
 		// Texturen Setzen
-		pRiftMenuSprite[0]->setTexture(*pRiftMenuTexture[0]); // Diffi Pfeil
-		pRiftMenuSprite[1]->setTexture(*pRiftMenuTexture[0]); // Diffi Pfeil Andere Reichtung
-		pRiftMenuSprite[2]->setTexture(*pRiftMenuTexture[1]); // close btn
-		pRiftMenuSprite[3]->setTexture(*pRiftMenuTexture[2]); // start btn
-		pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[4]); // check true
-		pRiftMenuSprite[5]->setTexture(*pRiftMenuTexture[5]); //bg
-		pRiftMenuSprite[6]->setTexture(*pRiftMenuTexture[6]); // bg text
+		pRiftMenuSprite[0]->setTexture(pRiftMenuTexture[0]); // Diffi Pfeil
+		pRiftMenuSprite[1]->setTexture(pRiftMenuTexture[0]); // Diffi Pfeil Andere Reichtung
+		pRiftMenuSprite[2]->setTexture(pRiftMenuTexture[1]); // close btn
+		pRiftMenuSprite[3]->setTexture(pRiftMenuTexture[2]); // start btn
+		pRiftMenuSprite[4]->setTexture(pRiftMenuTexture[4]); // check true
+		pRiftMenuSprite[5]->setTexture(pRiftMenuTexture[5]); //bg
+		pRiftMenuSprite[6]->setTexture(pRiftMenuTexture[6]); // bg text
 
 
 		// Setze Schriftart
-		pRiftMenuTitel->setFont(*pSchriftArt);
-		pRiftMenuSchwierigkeit->setFont(*pSchriftArt);
-		pRiftMenuText->setFont(*pSchriftArt);
-		pRiftMenuTextHoch->setFont(*pSchriftArt);
+		pRiftMenuTitel->setFont(*pFont);
+		pRiftMenuSchwierigkeit->setFont(*pFont);
+		pRiftMenuText->setFont(*pFont);
+		pRiftMenuTextHoch->setFont(*pFont);
 
 
 		// Setze Positions
-		pRiftMenuSprite[5]->setPosition(main.x / 2.f, main.y / 2.f);
+		pRiftMenuSprite[5]->setPosition(vMain.x / 2.f, vMain.y / 2.f);
 
-		pRiftMenuSprite[5]->setOrigin(pRiftMenuTexture[5]->getSize().x / 2.f,
-			pRiftMenuTexture[5]->getSize().y / 2.f);
+		pRiftMenuSprite[5]->setOrigin(pRiftMenuTexture[5].getSize().x / 2.f,
+			pRiftMenuTexture[5].getSize().y / 2.f);
 
 		pRiftMenuSprite[1]->setPosition(pRiftMenuSprite[5]->getPosition().x - 167.f,
 			pRiftMenuSprite[5]->getPosition().y - 50.f);
@@ -91,7 +86,10 @@ namespace GMS
 		pRiftMenuTextHoch->setString("Hardcore Mode");
 
 
-
+		for (auto m = iMobS; m != 0; m--)
+		{
+			p_texture.push_back(pSpriteErsteller->erstelle_texture_mob(m));
+		}
 	}
 
 	riftBrowser::~riftBrowser()
@@ -124,21 +122,21 @@ namespace GMS
 
 
 	}
-	void riftBrowser::eventRiftBrowser(sf::Vector2f vMousePosition)
+	void riftBrowser::eventRiftBrowser(const sf::Vector2f& vMousePosition)
 	{
-		if (bRiftBrowser && !bRift)
+		if (pState->getRiftBrowserStatus() && !pState->getRiftStatus())
 		{
 			if (osm::sprite_pressed(pRiftMenuSprite[4], vMousePosition))
 			{
 				if (bRfitBrowserHardcore)
 				{
 					bRfitBrowserHardcore = false;
-					pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[4]);
+					pRiftMenuSprite[4]->setTexture(pRiftMenuTexture[4]);
 				}
 				else if (!bRfitBrowserHardcore)
 				{
 					bRfitBrowserHardcore = true;
-					pRiftMenuSprite[4]->setTexture(*pRiftMenuTexture[3]);
+					pRiftMenuSprite[4]->setTexture(pRiftMenuTexture[3]);
 				}
 			}
 			else if (osm::sprite_pressed(pRiftMenuSprite[0], vMousePosition) && difficulty > 1)
@@ -155,16 +153,16 @@ namespace GMS
 			}
 			else if (osm::sprite_pressed(pRiftMenuSprite[3], vMousePosition))
 			{
-				bRiftBrowser = false;
-				pRiftManager = new dungeon_manager(difficulty, mainPfad, pResourcenManager);
-				bRift = true;
+				pState->setRiftBrowserStatus(false);
+				pRiftManager = new dungeon_manager(difficulty, p_texture);
+				pState->setRiftStatus(true);
 			}
 		}
 
 	}
 	void riftBrowser::render(sf::RenderWindow *rw)
 	{
-		if (bRiftBrowser)
+		if (pState->getRiftBrowserStatus())
 		{
 			rw->draw(*pRiftMenuSprite[5]);
 			rw->draw(*pRiftMenuSprite[2]);
@@ -176,7 +174,7 @@ namespace GMS
 			rw->draw(*pRiftMenuSchwierigkeit);
 			rw->draw(*pRiftMenuTextHoch);
 		}
-		else if (bRift)
+		else if (pState->getRiftStatus())
 		{
 			pRiftManager->render(rw);
 		}
@@ -184,9 +182,9 @@ namespace GMS
 
 	void  riftBrowser::deleteRift()
 	{
-		if (bRift)
+		if (pState->getRiftStatus())
 		{
-			bRift = false;
+			pState->setRiftStatus(false);
 			delete pRiftManager;
 			pRiftManager = nullptr;
 		}
@@ -198,11 +196,11 @@ namespace GMS
 
 	void  riftBrowser::show()
 	{
-		bRiftBrowser = true;
+		pState->setRiftBrowserStatus(true);
 	}
 	void  riftBrowser::hide()
 	{
-		bRiftBrowser = false;
+		pState->setRiftBrowserStatus(false);
 	}
 
 

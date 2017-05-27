@@ -1,22 +1,25 @@
 #include "main_base.hpp"
 
+extern std::string sPfad;
+
+
 namespace JGE
 {
-	main_base::main_base(std::string path)
-		: main_path(path)
+	main_base::main_base()
 	{
-		std::string path1 = path;
+		std::cout << sPfad << std::endl;
+		std::string path1 = sPfad;
 		std::string dev2 = "/";
 		std::string dev1 = "\\";
-		for (int i = 0; i < main_path.length(); i++)
+		for (int i = 0; i < path1.length(); i++)
 		{
-			if (main_path[i] == dev1[0])
+			if (path1[i] == dev1[0])
 			{
-				main_path[i] = dev2[0];
+				path1[i] = dev2[0];
 			}
 		}
 
-		std::wstring stemp = s2ws(main_path + "jnr_data/*");
+		std::wstring stemp = s2ws(path1 + "jnr_data/*");
 		LPCWSTR result = stemp.c_str();
 
 		fHandle = FindFirstFile(result, &wfd);
@@ -101,7 +104,7 @@ namespace JGE
 	{
 	}
 
-	std::vector<char> main_base::get_memory_data(const std::string &name) const
+	std::vector<char> main_base::get_memory_data(const std::string& name) const
 	{
 		for (int i = 0; i < d_data.size(); i++)
 		{
@@ -113,7 +116,7 @@ namespace JGE
 		return d_data[0].t;
 	}
 
-	std::vector<char> main_base::get_memory_data(std::string name,int rnd) const
+	std::vector<char> main_base::get_memory_data(std::string name,const int& rnd) const
 	{
 		std::string buffer_int = std::to_string(rnd);
 		//name += buffer_int;

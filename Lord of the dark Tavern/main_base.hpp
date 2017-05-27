@@ -13,13 +13,13 @@ namespace JGE
 	class main_base
 	{
 	public:
-		main_base(std::string path);
+		main_base();
 		~main_base();
 
 
 
-		std::vector<char> get_memory_data(const std::string &name) const;
-		std::vector<char> get_memory_data(std::string name,int rnd) const;
+		std::vector<char> get_memory_data(const std::string& name) const;
+		std::vector<char> get_memory_data(std::string name,const int& rnd) const;
 
 		short get_mob_size_short() { return size_of_mob; };
 
@@ -29,8 +29,6 @@ namespace JGE
 
 		std::wstring main_base::s2ws(const std::string& s);
 		void get_mob_size();
-
-		std::string main_path;
 
 		HANDLE fHandle;
 		WIN32_FIND_DATA wfd;

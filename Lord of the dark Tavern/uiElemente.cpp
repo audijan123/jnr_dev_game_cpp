@@ -1,14 +1,21 @@
 #include "uiElemente.hpp"
 
+extern sf::Vector2f vMain;
+extern sf::Vector2f vMousePosition;
+extern JGE::SpriteGen *pSpriteErsteller;
+extern JGE::mainStateManager *pState;
+
+
+
 namespace GMS 
 {
-	ui::ui(JGE::SpriteGen *pSpriteErsteller, GMS::riftBrowser *rB, tavern_main *t, const sf::Vector2f& main)
-		: pRiftBrowser(rB), pTaverne(t)
+	ui::ui(GMS::riftBrowser *rB)
+		: pRiftBrowser(rB)
 	{
 		// Menu Button Objecte
 		for (uint16_t i = 0; i < 3; i++)
 		{
-			pMenuButtonSprite[i] = pSpriteErsteller->erstelle_sprite("btn", false, sf::Vector2f(main.x - (50 * (i + 1)), 0.f),
+			pMenuButtonSprite[i] = pSpriteErsteller->erstelle_sprite("btn", false, sf::Vector2f(vMain.x - (50 * (i + 1)), 0.f),
 				sf::Vector2f(1.7f, 1.7f), i + 100);
 		}
 
@@ -18,26 +25,26 @@ namespace GMS
 	{
 	}
 
-	void ui::update(const sf::Vector2f& vMousePosition, const bool& bHauptfensterAk,  bool bTaverneAk)
+	void ui::update()
 	{
-		bTavern = bTaverneAk;
 		if (osm::sprite_pressed(pMenuButtonSprite[0], vMousePosition))
 		{
-			if (pRiftBrowser->getRiftStatus())
+			if (pState->getRiftStatus())
 			{
 				pRiftBrowser->deleteRift();
 			}
-			else if (bHauptfensterAk)
+			else if (pState->getHauptFensterStatus())
 			{
-				bRun = false;
+				pState->setProgrammStatus(false);
 			}
-			else if (pRiftBrowser->getRiftBrowserStatus())
+			else if (pState->getRiftBrowserStatus())
 			{
 				pRiftBrowser->hide();
 			}
-			else if (bTavern && !pTaverne->o_menu())
+			else if (pState->getTavernStatus()) // tavern under menu
 			{
-				bTavern = false;
+				pState->setTavernStatus(false);
+				pState->setHauptFensterStatus(true);
 			}
 		}
 	}

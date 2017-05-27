@@ -156,42 +156,51 @@
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="datenbank_main.cpp" />
+    <ClCompile Include="datenbank.cpp" />
     <ClCompile Include="dungeon_manager.cpp" />
     <ClCompile Include="enviroment_loader.cpp" />
     <ClCompile Include="generate_items.cpp" />
     <ClCompile Include="himmel.cpp" />
     <ClCompile Include="hintergrund.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainStateManager.cpp" />
     <ClCompile Include="main_base.cpp" />
     <ClCompile Include="main_frame.cpp" />
     <ClCompile Include="main_os_manager.cpp" />
     <ClCompile Include="riftBrowser.cpp" />
     <ClCompile Include="sfSpriteGen.cpp" />
     <ClCompile Include="taverne.cpp" />
-    <ClCompile Include="tavern_main.cpp" />
+    <ClCompile Include="tavernSystem.cpp" />
+    <ClCompile Include="tavernSystemBank.cpp" />
+    <ClCompile Include="tavernSystemMagier.cpp" />
+    <ClCompile Include="tavernSystemVerkäufer.cpp" />
     <ClCompile Include="uiElemente.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.hpp" />
     <ClInclude Include="Animation.hpp" />
-    <ClInclude Include="datenbank_main.hpp" />
+    <ClInclude Include="datenbank.hpp" />
     <ClInclude Include="dungeon_manager.hpp" />
+    <ClInclude Include="enumStructs.hpp" />
     <ClInclude Include="enviroment_loader.hpp" />
     <ClInclude Include="generate_items.hpp" />
     <ClInclude Include="himmel.hpp" />
     <ClInclude Include="hintergrund.hpp" />
+    <ClInclude Include="mainStateManager.hpp" />
     <ClInclude Include="main_base.hpp" />
     <ClInclude Include="main_frame.hpp" />
     <ClInclude Include="main_os_manager.hpp" />
     <ClInclude Include="riftBrowser.hpp" />
     <ClInclude Include="sfSpriteGen.hpp" />
     <ClInclude Include="taverne.hpp" />
-    <ClInclude Include="tavern_main.hpp" />
+    <ClInclude Include="tavernSystem.hpp" />
+    <ClInclude Include="tavernSystemBank.hpp" />
+    <ClInclude Include="tavernSystemMagier.hpp" />
+    <ClInclude Include="tavernSystemVerkäufer.hpp" />
     <ClInclude Include="uiElemente.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\data.zip" />
+    <None Include="..\Data.rar" />
     <None Include="..\x64\Release\DATA\local.db" />
     <ClInclude Include="..\x64\Release\sfml-graphics-2.dll">
       <FileType>Document</FileType>

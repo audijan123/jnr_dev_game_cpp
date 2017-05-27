@@ -2,27 +2,29 @@
 
 #include <SFML\Graphics.hpp>
 #include "sfSpriteGen.hpp"
+#include "mainStateManager.hpp"
+#include "tavernSystem.hpp"
 
 namespace GMS
 {
 	class taverne
 	{
 	public:
-		taverne(JGE::SpriteGen *pSpriteErsteller);
+		taverne();
 		~taverne();
 
-		void update(sf::Vector2f vMousePosition);
+		void update();
 		void eventTaverne();
+		void keyEvent(sf::Event *e);
 		void render(sf::RenderWindow *rw);
-
-		bool getTavernHover()  { return bTavernHoverStatus; };
 
 
 	private:
+	// Tavernen Systeme
+	GT::tavernSystem		*pTavernSystem;
 
-	sf::Sprite			*pTaverneSprite;
-	sf::Sprite			*pTaverneSpriteHover;
-	bool bTavernHoverStatus = false;
+	sf::Sprite				*pTaverneSprite;
+	sf::Sprite				*pTaverneSpriteHover;
 
 
 

@@ -57,15 +57,6 @@
     <ClCompile Include="main_frame.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="enviroment_loader.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="datenbank_main.cpp">
-      <Filter>Quelldateien\datenbank</Filter>
-    </ClCompile>
-    <ClCompile Include="tavern_main.cpp">
-      <Filter>Quelldateien\Tavernfenster</Filter>
-    </ClCompile>
     <ClCompile Include="main_base.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -102,16 +93,31 @@
     <ClCompile Include="hintergrund.cpp">
       <Filter>Quelldateien\Hauptfenster</Filter>
     </ClCompile>
+    <ClCompile Include="enviroment_loader.cpp">
+      <Filter>Quelldateien\Rift</Filter>
+    </ClCompile>
+    <ClCompile Include="datenbank.cpp">
+      <Filter>Quelldateien\datenbank</Filter>
+    </ClCompile>
+    <ClCompile Include="mainStateManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="tavernSystem.cpp">
+      <Filter>Quelldateien\Tavernfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="tavernSystemVerkäufer.cpp">
+      <Filter>Quelldateien\Tavernfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="tavernSystemMagier.cpp">
+      <Filter>Quelldateien\Tavernfenster</Filter>
+    </ClCompile>
+    <ClCompile Include="tavernSystemBank.cpp">
+      <Filter>Quelldateien\Tavernfenster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.hpp">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="enviroment_loader.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="datenbank_main.hpp">
-      <Filter>Headerdateien\datenbank</Filter>
     </ClInclude>
     <ClInclude Include="..\x64\Release\sfml-graphics-2.dll">
       <Filter>Ressourcendateien</Filter>
@@ -121,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="..\x64\Release\sfml-window-2.dll">
       <Filter>Ressourcendateien</Filter>
-    </ClInclude>
-    <ClInclude Include="tavern_main.hpp">
-      <Filter>Headerdateien\Tavernfenster</Filter>
     </ClInclude>
     <ClInclude Include="main_base.hpp">
       <Filter>Headerdateien</Filter>
@@ -161,12 +164,36 @@
     <ClInclude Include="hintergrund.hpp">
       <Filter>Headerdateien\Hauptfenster</Filter>
     </ClInclude>
+    <ClInclude Include="enviroment_loader.hpp">
+      <Filter>Headerdateien\Rift</Filter>
+    </ClInclude>
+    <ClInclude Include="enumStructs.hpp">
+      <Filter>Headerdateien\datenbank</Filter>
+    </ClInclude>
+    <ClInclude Include="datenbank.hpp">
+      <Filter>Headerdateien\datenbank</Filter>
+    </ClInclude>
+    <ClInclude Include="mainStateManager.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="tavernSystem.hpp">
+      <Filter>Headerdateien\Tavernfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="tavernSystemMagier.hpp">
+      <Filter>Headerdateien\Tavernfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="tavernSystemVerkäufer.hpp">
+      <Filter>Headerdateien\Tavernfenster</Filter>
+    </ClInclude>
+    <ClInclude Include="tavernSystemBank.hpp">
+      <Filter>Headerdateien\Tavernfenster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\x64\Release\DATA\local.db">
       <Filter>Ressourcendateien</Filter>
     </None>
-    <None Include="..\data.zip">
+    <None Include="..\Data.rar">
       <Filter>Ressourcendateien</Filter>
     </None>
   </ItemGroup>

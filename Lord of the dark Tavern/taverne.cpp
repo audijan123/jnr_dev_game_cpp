@@ -1,11 +1,16 @@
 #include "taverne.hpp"
 
+extern sf::Vector2f				vMousePosition;
+extern JGE::SpriteGen			*pSpriteErsteller;
+extern JGE::mainStateManager	*pState;
 
 namespace GMS
 {
 
-	taverne::taverne(JGE::SpriteGen *pSpriteErsteller)
+	taverne::taverne()
 	{
+		//Laden der Taverne und dessen Funktionen
+		pTavernSystem = new GT::tavernSystem();
 		//Erstellen des "Tavernen" Objectes + zugehöriges Hover effekt
 		//Object
 		pTaverneSprite = pSpriteErsteller->erstelle_sprite("taver", false, sf::Vector2f(0.f, 230.f),
@@ -20,28 +25,53 @@ namespace GMS
 	}
 
 
-	void taverne::update(sf::Vector2f vMousePosiiton)
+	void taverne::update()
 	{
-		if (pTaverneSprite->getGlobalBounds().contains(vMousePosiiton))
+		if (pTaverneSprite->getGlobalBounds().contains(vMousePosition) && !pState->getTavernStatus())
 		{
-			bTavernHoverStatus = true;
+			pState->setTavernHoverStatus(true);
 		}
 		else
 		{
-			bTavernHoverStatus = false;
+			pState->setTavernHoverStatus(false);
+		}
+
+		if (pState->getTavernStatus())
+		{
+			pTavernSystem->update();
 		}
 		
 	}
 	void taverne::eventTaverne()
 	{
-
+		if (pState->getTavernHoverStatus() && pState->getHauptFensterStatus() && !pState->getRiftStatus())
+		{
+			pState->setTavernStatus(true);
+			pState->setHauptFensterStatus(false);
+		}
+		else if (pState->getTavernStatus())
+		{
+			pTavernSystem->event();
+		}
+	}
+	void taverne::keyEvent(sf::Event *e)
+	{
+		pTavernSystem->keyEvent(e);
 	}
 	void taverne::render(sf::RenderWindow *rw)
 	{
-		rw->draw(*pTaverneSprite);
-		if (bTavernHoverStatus)
+
+		if (!pState->getTavernStatus())
+		{
+			rw->draw(*pTaverneSprite);
+		}
+		if (pState->getTavernHoverStatus())
 		{
 			rw->draw(*pTaverneSpriteHover);
+		}
+		if (pState->getTavernStatus())
+		{
+			pTavernSystem->render(rw);
 		}
 	}
 

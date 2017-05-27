@@ -25,6 +25,8 @@ namespace JGE
 
 		sf::Texture erstelle_texture(const std::string& texture);
 
+		sf::Texture erstelle_texture_mob(const int& mob_size);
+
 
 	private:
 

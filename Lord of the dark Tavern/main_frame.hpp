@@ -2,8 +2,7 @@
 
 #include <iostream>
 #include <SFML\Graphics.hpp>
-#include "datenbank_main.hpp"
-#include "tavern_main.hpp"
+#include "datenbank.hpp"
 #include "main_base.hpp"
 #include "sfSpriteGen.hpp"
 #include "riftBrowser.hpp"
@@ -11,18 +10,19 @@
 #include "himmel.hpp"
 #include "uiElemente.hpp"
 #include "hintergrund.hpp"
+#include "mainStateManager.hpp"
 
 class main_frame
 {
 public:
-	sf::Vector2f main = { 1280.f,768.f };
-	std::string sTitel = "Lord of the dark Tavern";
+	const std::string sTitel = "Lord of the dark Tavern";
+	
 
 	main_frame(std::string const &pfad);
 	~main_frame();
 	void run();
-	void enviroment();
-	void datenbank();
+	void enviroment_t();
+	void datenbank_t();
 
 private:
 	// Funktion
@@ -33,34 +33,26 @@ private:
 	void m_frametime();
 
 
-	main_data			*pDatenbank;
-	JGE::main_base		*pResourcenManager;
-	//Hauptfenster
-	sf::RenderWindow	*pHauptFenster;
+	JGE::main_base			*pResourcenManager;
+
 	//Hintergrund
-	GMS::hintergrund	*pHintergrund;
+	GMS::hintergrund		*pHintergrund;
 
-	sf::Event			*pHauptEvent; // Haupt event
-	sf::Clock			*pHauptUhr; // Hauptuhr
+	sf::Clock				*pHauptUhr; // Hauptuhr
 
-	// Tavernen Systeme
-	tavern_main			*pTaverne;
 
 	//Pointer erschaffung für den Rift Manager
 	//dungeon_manager		*pRiftManager;
-	GMS::riftBrowser    *pRiftBrowser;
+	GMS::riftBrowser		*pRiftBrowser;
 
 	// Erstellung der Taverne
-	GMS::taverne		*pTavern;
+	GMS::taverne			*pTavern;
 	
 	//Himmel erstellung
-	GMS::himmel			*pHimmel;
-
-	//Erschaffung des Sprite genartors
-	JGE::SpriteGen		*pSpriteErsteller;
+	GMS::himmel				*pHimmel;
 
 	//ui erstellung
-	GMS::ui				*pUi;
+	GMS::ui					*pUi;
 
 
 	// Ende der Pointer Liste
@@ -70,15 +62,6 @@ private:
 	float fUpdateZeitWarte		= 0;
 	float fUpdateZeitMax		= 1.0f/60.f;
 
-
-	std::string	 mainPfad;
-	sf::Vector2f vMousePosition;
-
-	// Bools
-	bool bRun					= true;
-	bool bHauptFenster			= true;
-	bool bPausenMenu			= false;
-	bool bTaverne				= false;
 
 	
 

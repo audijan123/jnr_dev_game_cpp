@@ -1,28 +1,24 @@
 #pragma once
 
-#include "SFML\Graphics.hpp"
-#include <iostream>
-#include <string>
+#include <SFML\Graphics.hpp>
+#include "sfSpriteGen.hpp"
 
 class enviroment_loader {
 public:
-	enviroment_loader(std::string path);
+	enviroment_loader();
 	~enviroment_loader();
-
-
-
-	sf::Texture get_texture(int id);
-
 
 	void render_enviro(int id , sf::RenderWindow *render);
 
 private:
 
-	sf::Texture *enviroment[20];
-	sf::Sprite	*pSprite;
+	sf::Texture HintergrundTexturen[14];
+	sf::Sprite	*pHintergrund;
 
 
-	sf::Sprite	*pSky;
-	sf::Sprite	*pClouds;
+	sf::Sprite	*pHimmel;
+	sf::Sprite	*pWolken;
+
+	sf::Vector2f scale = { 2.67f, 2.85f };
 
 };

@@ -2,10 +2,11 @@
 
 #include <iostream>
 #include "main_os_manager.hpp"
-#include "datenbank_main.hpp"
+#include "datenbank.hpp"
 #include <string>
 #include <boost/random.hpp>
 #include <ctime>
+#include "enumStructs.hpp"
 
 class gen_item
 {
@@ -13,14 +14,14 @@ public:
 	gen_item();
 	~gen_item();
 
-	std::vector<main_data::item_data> gen_item::items(main_data::item_class t);
+	std::vector<GAMESTRUCTS::item_data> gen_item::items(GAMESTRUCTS::item_class t);
 
 private:
-	main_data::item_rare gen_item::get_rare();
+	GAMESTRUCTS::item_rare gen_item::get_rare();
 	std::string gen_item::get_out_list();
 	int gen_item::get_rnd_number();
 
 
-	std::vector<main_data::item_data> item_list;
+	std::vector<GAMESTRUCTS::item_data> item_list;
 
 };

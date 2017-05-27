@@ -1,9 +1,13 @@
 #include "hintergrund.hpp"
 
+extern sf::Vector2f vMousePosition;
+extern JGE::SpriteGen *pSpriteErsteller;
+extern JGE::mainStateManager *pState;
+
 namespace GMS
 {
-	hintergrund::hintergrund(JGE::SpriteGen *pSpriteErsteller, GMS::riftBrowser *rB, GMS::himmel *h)
-		: pRiftBrowser(rB) , pHimmel(h)
+	hintergrund::hintergrund(GMS::himmel *h, GMS::riftBrowser *rb)
+		: pHimmel(h), pRiftBrowser(rb)
 	{
 		//Hintergrund für das pHauptFenster erstellen und einen sf::Sprite zuordnen
 		HintergrundTexture = pSpriteErsteller->erstelle_texture("backg");
@@ -36,31 +40,31 @@ namespace GMS
 	}
 
 
-	void  hintergrund::update(const sf::Vector2f& vMousePosition,const bool& bTaverne,
-							  sf::Event *pHauptEvent,const float& fUpdateZeit)
+	void  hintergrund::update(const float& fUpdateZeit)
 	{
 		pRiftPortalSprite->rotate(1.3f);
-		//pRiftPortalSprite->getGlobalBounds().contains(vMousePosition)
-		if (osm::sprite_pressed(pRiftPortalSprite,vMousePosition) && !bTaverne &&
-			pHauptEvent->key.code == sf::Mouse::Button::Left && !pRiftBrowser->getRiftBrowserStatus() &&
-			!pRiftBrowser->getRiftStatus())
-		{
-			pHintergrundSprite->setTexture(RiftPortalTextureHover);
-			pHimmelSprite->setTexture(RiftSkyTextureHover);
-
-			bPortalHover = true;
-			pRiftBrowser->show();
-		}
-		else if (!pRiftBrowser->getRiftBrowserStatus())
+		if (!pState->getRiftBrowserStatus())
 		{
 			pHintergrundSprite->setTexture(HintergrundTexture);
 			pHimmelSprite->setTexture(HimmelTexture);
 
-			bPortalHover = false;
+			pState->setPortalHoverStatus(false);
 		}
 
-		if (!bPortalHover && !pRiftBrowser->getRiftStatus() && !pRiftBrowser->getRiftBrowserStatus()) {
+		if (!pState->getPortalHoverStatus()) {
 			pHimmel->update(fUpdateZeit);
+		}
+	}
+
+	void hintergrund::event()
+	{
+		if (osm::sprite_pressed(pRiftPortalSprite, vMousePosition) && pState->getHauptFensterStatus())
+		{
+			pHintergrundSprite->setTexture(RiftPortalTextureHover);
+			pHimmelSprite->setTexture(RiftSkyTextureHover);
+
+			pState->setPortalHoverStatus(true);
+			pRiftBrowser->show();
 		}
 	}
 
@@ -69,7 +73,7 @@ namespace GMS
 	void hintergrund::render(sf::RenderWindow *rw)
 	{
 		rw->draw(*pHimmelSprite);
-		if (!bPortalHover && !pRiftBrowser->getRiftStatus() && !pRiftBrowser->getRiftBrowserStatus()) {
+		if (!pState->getPortalHoverStatus() && !pState->getRiftStatus() && !pState->getRiftBrowserStatus()) {
 			pHimmel->render(rw);
 		}
 		rw->draw(*pHintergrundSprite);
