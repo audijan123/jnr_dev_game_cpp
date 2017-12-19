@@ -3,6 +3,7 @@
 #include <string>
 #include "dungeon_manager.hpp"
 #include "mainStateManager.hpp"
+#include "const.hpp"
 
 namespace GMS
 {
@@ -12,7 +13,7 @@ namespace GMS
 		riftBrowser(const uint16_t& iMobS);
 		~riftBrowser();
 
-		void eventRiftBrowser(const sf::Vector2f& vMousePosition);
+		void eventRiftBrowser();
 		void render(sf::RenderWindow *rw);
 		void update();
 
@@ -35,20 +36,11 @@ namespace GMS
 		sf::Text				*pRiftMenuText;
 		sf::Text				*pRiftMenuTextHoch;
 
-		const uint8_t			iRiftBrowserSchriftGröße = 21;
-
 		std::vector<sf::Texture> p_texture;
 
 		bool bRfitBrowserHardcore = false;
 
-		uint16_t iMobSize = 0;
-
 		uint16_t difficulty = 1;
-
-
-
-
-
 
 	};
 

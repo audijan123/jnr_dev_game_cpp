@@ -12,8 +12,6 @@ namespace GT
 	{
 		item_gen = new gen_item();
 
-		item_list = item_gen->items(GAMESTRUCTS::item_class::WEAPON);
-		std::cout << "TEST: " << item_list[2].i_texture << " SIZE OF VECTOR " << item_list.size() << std::endl;
 		//Grundgerüst
 		for (auto k = 0; k < 3; k++)
 		{
@@ -56,6 +54,9 @@ namespace GT
 			ItemShopItemTexture[i] = pSpriteErsteller->erstelle_texture("item" + std::to_string(i));
 		}
 
+		sf::Texture ItemShopSpriteTexture;
+		ItemShopSpriteTexture.create(33, 35);
+
 		for (auto i = 0; i < 30; i++)
 		{
 			pItemShopItemSprites[i] = new sf::Sprite;
@@ -65,7 +66,7 @@ namespace GT
 			}
 			else
 			{
-				pItemShopItemSprites[i]->setTexture(ItemShopItemTexture[2]);
+				pItemShopItemSprites[i]->setTexture(ItemShopSpriteTexture);
 			}
 		}
 
@@ -113,8 +114,8 @@ namespace GT
 
 			pItemShopItemSprites[i]->setOrigin(ItemShopItemTexture[0].getSize().x / 2.f,
 											   ItemShopItemTexture[0].getSize().y / 2.f);
-			pItemShopItemSprites[i + 15]->setOrigin(ItemShopItemTexture[2].getSize().x / 2.f,
-													ItemShopItemTexture[2].getSize().y / 2.f);
+			pItemShopItemSprites[i + 15]->setOrigin(ItemShopSpriteTexture.getSize().x / 2.f,
+													ItemShopSpriteTexture.getSize().y / 2.f);
 			pItemShopItemSprites[i + 15]->setPosition(pItemShopItemSprites[i]->getPosition());
 		}
 
@@ -125,8 +126,8 @@ namespace GT
 		pItemShopItemSprites[30]->setScale(1.2f, 1.7f);
 
 		pVorschauBildSprite = new sf::Sprite;
-		pVorschauBildSprite->setTexture(ItemShopItemTexture[2]);
-		pVorschauBildSprite->setPosition(645, 235);
+		pVorschauBildSprite->setTexture(ItemShopSpriteTexture);
+		pVorschauBildSprite->setPosition(640, 235);
 
 		const GAMESTRUCTS::sRectangle sBuffercords{};
 
@@ -146,10 +147,42 @@ namespace GT
 		pItemShopSprites[6]->setScale(pItemShopSprites[5]->getScale());
 
 
-		site.setFont(*pFont);
-		site.setPosition(pItemShopSprites[5]->getPosition().x + 50, pItemShopSprites[5]->getPosition().y + 3);
-		site.setCharacterSize(25);
-		site.setString("Seite 1 von " + std::to_string(max));
+		SeitenText.setFont(*pFont);
+		SeitenText.setPosition(pItemShopSprites[5]->getPosition().x + 50, pItemShopSprites[5]->getPosition().y + 3);
+		SeitenText.setCharacterSize(25);
+		SeitenText.setString("Seite 1 von 1");
+
+
+		DamageText.setFont(*pFont);
+		LebensPunkteText.setFont(*pFont);
+		MagiePunkteText.setFont(*pFont);
+		ItemNameText.setFont(*pFont);
+
+		DamageText.setString("");
+		LebensPunkteText.setString("");
+		MagiePunkteText.setString("");
+		ItemNameText.setString("");
+
+		DamageText.setCharacterSize(iItemShopSchriftGröße);
+		LebensPunkteText.setCharacterSize(iItemShopSchriftGröße);
+		MagiePunkteText.setCharacterSize(iItemShopSchriftGröße);
+		ItemNameText.setCharacterSize(iItemShopSchriftGröße);
+
+
+		DamageText.setPosition(pItemShopSprites[1]->getPosition().x + 450, pItemShopSprites[1]->getPosition().y +77);
+		LebensPunkteText.setPosition(DamageText.getPosition().x + 90, DamageText.getPosition().y);
+		MagiePunkteText.setPosition(DamageText.getPosition().x + 180, DamageText.getPosition().y);
+		ItemNameText.setPosition(pItemShopSprites[1]->getPosition().x + 415, pItemShopSprites[1]->getPosition().y+45);
+
+		KlarTexture.create(40,40);
+		pVorschauBildSprite->setTexture(KlarTexture);
+
+
+		fülleSeitenMitItems();
+		aktiv_seite = 1;
+		ItemShopSeiteNeuErstellen();
+
+
 	}
 
 	verkäufer::~verkäufer()
@@ -158,23 +191,103 @@ namespace GT
 
 	void verkäufer::update()
 	{
+		if (iAktivItemShopHintergrund == 1 && aktiv_seite-1 <= vItemShopSeitenDatenRüstung.size())
+		{
+			iCheckSprite = vItemShopSeitenDatenRüstung[aktiv_seite - 1].items_per_site;
+			for (auto i = 0; i < vItemShopSeitenDatenRüstung[aktiv_seite-1].items_per_site; i++)
+			{
+				pItemShopItemSprites[i + 15]->setTexture(vItemShopSeitenDatenRüstung[aktiv_seite-1].items[i].ItemTexture);
+			}
+		}
+		else if (iAktivItemShopHintergrund == 2 && aktiv_seite - 1 <= vItemShopSeitenDatenWeapon.size())
+		{
+
+			iCheckSprite = vItemShopSeitenDatenWeapon[aktiv_seite - 1].items_per_site;
+			for (auto i = 0; i < vItemShopSeitenDatenWeapon[aktiv_seite - 1].items_per_site; i++)
+			{
+				pItemShopItemSprites[i + 15]->setTexture(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].ItemTexture);
+			}
+		}
+		else if (iAktivItemShopHintergrund == 3 && aktiv_seite - 1 <= vItemShopSeitenDatenSchild.size())
+		{
+
+			iCheckSprite = vItemShopSeitenDatenSchild[aktiv_seite - 1].items_per_site;
+			for (auto i = 0; i < vItemShopSeitenDatenSchild[aktiv_seite - 1].items_per_site; i++)
+			{
+				pItemShopItemSprites[i + 15]->setTexture(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].ItemTexture);
+			}
+		}
+		else if (iAktivItemShopHintergrund == 4 && aktiv_seite - 1 <= vItemShopSeitenDatenSpezial.size())
+		{
+
+			iCheckSprite = vItemShopSeitenDatenSpezial[aktiv_seite - 1].items_per_site;
+			for (auto i = 0; i < vItemShopSeitenDatenSpezial[aktiv_seite - 1].items_per_site; i++)
+			{
+				pItemShopItemSprites[i + 15]->setTexture(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].ItemTexture);
+			}
+		}
 
 	}
 	void verkäufer::event()
 	{
-		if (osm::sprite_pressed(pVerkäuferSprite, vMousePosition) && !pState->getTavernBankStatus() && !pState->getItemShopStatus())
+		if (osm::sprite_pressed(pVerkäuferSprite, vMousePosition) && !pState->getTavernBankStatus() 
+			&& !pState->getItemShopStatus())
 		{
 			// sellman to do
 			pState->setItemShopStatus(true);
 		}
 		else if (pState->getItemShopStatus())
 		{
-			for (auto i = 0; i < 15; i++)
+			for (auto i = 0; i < iCheckSprite; i++)
 			{
 				if (osm::sprite_pressed(pItemShopItemSprites[i], vMousePosition))
 				{
 					pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[i]->getPosition());
 					pVorschauBildSprite->setTexture(*pItemShopItemSprites[i + 15]->getTexture());
+					switch (iAktivItemShopHintergrund)
+					{
+					case 1:
+						ItemNameText.setColor(vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].cItemColor);
+						ItemNameText.setString(osm::convertEnumToString(vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].i_rare) +
+							vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].i_name);
+
+						DamageText.setString(std::to_string(vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].i_dmg));
+						LebensPunkteText.setString(std::to_string(vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].i_leben));
+						MagiePunkteText.setString(std::to_string(vItemShopSeitenDatenRüstung[aktiv_seite - 1].items[i].i_magie));
+						break;
+					case 2:
+						ItemNameText.setColor(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].cItemColor);
+						ItemNameText.setString(osm::convertEnumToString(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].i_rare) +
+												vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].i_name);
+						
+						DamageText.setString(std::to_string(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].i_dmg));
+						LebensPunkteText.setString(std::to_string(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].i_leben));
+						MagiePunkteText.setString(std::to_string(vItemShopSeitenDatenWeapon[aktiv_seite - 1].items[i].i_magie));
+						break;
+					case 3:
+						ItemNameText.setColor(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].cItemColor);
+						ItemNameText.setString(osm::convertEnumToString(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].i_rare) +
+							vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].i_name);
+
+						DamageText.setString(std::to_string(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].i_dmg));
+						LebensPunkteText.setString(std::to_string(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].i_leben));
+						MagiePunkteText.setString(std::to_string(vItemShopSeitenDatenSchild[aktiv_seite - 1].items[i].i_magie));
+						break;
+					case 4:
+						ItemNameText.setColor(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].cItemColor);
+						ItemNameText.setString(osm::convertEnumToString(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].i_rare) +
+							vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].i_name);
+
+						DamageText.setString(std::to_string(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].i_dmg));
+						LebensPunkteText.setString(std::to_string(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].i_leben));
+						MagiePunkteText.setString(std::to_string(vItemShopSeitenDatenSpezial[aktiv_seite - 1].items[i].i_magie));
+						break;
+					default:
+						ItemNameText.setString("Error");
+						break;
+					}
+					ItemShopHover = true;
+
 				}
 			}
 
@@ -185,12 +298,14 @@ namespace GT
 					if (!pState->getItemShopCapMenuStatus())
 					{
 						iAktivItemShopHintergrund = i+1;
-						pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+						aktiv_seite = 1;
+						ItemShopSeiteNeuErstellen();
 					}
 					else if (pState->getItemShopCapMenuStatus())
 					{
 						iAktivItemShopHintergrund = i+1;
-						pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+						aktiv_seite = 1;
+						ItemShopSeiteNeuErstellen();
 					}
 				}
 			}
@@ -198,13 +313,15 @@ namespace GT
 			if (pItemShopSprites[8]->getGlobalBounds().contains(vMousePosition) && !pState->getItemShopCapMenuStatus())
 			{
 				iAktivItemShopHintergrund = 1;
-				pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+				aktiv_seite = 1;
+				ItemShopSeiteNeuErstellen();
 				pState->setItemShopCapMenuStatus(true);
 			}
 			else if (pItemShopSprites[8]->getGlobalBounds().contains(vMousePosition) && pState->getItemShopCapMenuStatus())
 			{
 				iAktivItemShopHintergrund = 1;
-				pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+				aktiv_seite = 1;
+				ItemShopSeiteNeuErstellen();
 				pState->setItemShopCapMenuStatus(false);
 			}
 			else if (pItemShopSprites[11]->getGlobalBounds().contains(vMousePosition))
@@ -225,8 +342,111 @@ namespace GT
 				}
 			}
 
+			if (osm::sprite_pressed(pItemShopSprites[5], vMousePosition) && aktiv_seite >= 2)
+			{
+				aktiv_seite--;
+				pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+				ItemShopSeiteNeuErstellen();
+			}
+			else if (osm::sprite_pressed(pItemShopSprites[6], vMousePosition) && seiten[iAktivItemShopHintergrund] > aktiv_seite)
+			{
+				aktiv_seite++;
+				pItemShopItemSprites[30]->setPosition(pItemShopItemSprites[0]->getPosition());
+				ItemShopSeiteNeuErstellen();
+			}
 		}
 	}
+	
+	void verkäufer::fülleSeitenMitItems()
+	{
+		int iSchleifenBuffer = 1;
+		while (iSchleifenBuffer < 5)
+		{
+			switch (iSchleifenBuffer)
+			{
+			case 1:
+				vItemShopDaten = item_gen->items(GAMESTRUCTS::item_class::ARMOR);
+				break;
+			case 2:
+				vItemShopDaten = item_gen->items(GAMESTRUCTS::item_class::WEAPON);
+				break;
+			case 3:
+				vItemShopDaten = item_gen->items(GAMESTRUCTS::item_class::SCHILD);
+				break;
+			case 4:
+				vItemShopDaten = item_gen->items(GAMESTRUCTS::item_class::SPECIAL);
+				break;
+			default:
+				vItemShopDaten = item_gen->items(GAMESTRUCTS::item_class::ARMOR);
+				break;
+			}
+
+			std::cout << "TEST:  SIZE OF VECTOR " << vItemShopDaten.size() << std::endl;
+			int size = vItemShopDaten.size() - 1;
+			seiten[iSchleifenBuffer] = size / iItemShopMaxItemProSeite + 1;
+
+			if (vItemShopDaten[0].i_texture == vItemShopDaten[1].i_texture && vItemShopDaten[0].i_texture == vItemShopDaten[2].i_texture && vItemShopDaten[0].i_texture == vItemShopDaten[3].i_texture)
+			{
+				osm::call("Error");
+			}
+#ifdef TEST_MODUS
+			for (int n = 0; n<vItemShopDaten.size()-1; n++) {
+				for (int m = n + 1; m<vItemShopDaten.size(); m++) {
+					if (vItemShopDaten[n].i_texture == vItemShopDaten[m].i_texture) {
+						std::swap(vItemShopDaten[n].i_texture, vItemShopDaten[m].i_texture);
+					}
+				}
+			}
+#endif // TEST_MODUS
+
+			for (auto i = 0; i < seiten[iSchleifenBuffer]; i++)
+			{
+				GAMESTRUCTS::item_site buffer = {};
+				if (size >= iItemShopMaxItemProSeite)
+				{
+					buffer.items_per_site = iItemShopMaxItemProSeite;
+					for (auto i = 0; i < iItemShopMaxItemProSeite; i++)
+					{
+						buffer.items.push_back(vItemShopDaten[vItemShopDaten.size() - 1]);
+						vItemShopDaten.pop_back();
+					}
+					size -= iItemShopMaxItemProSeite;
+				}
+				else
+				{
+					buffer.items_per_site = size;
+					for (auto i = 0; i < size; i++)
+					{
+						buffer.items.push_back(vItemShopDaten[vItemShopDaten.size() - 1]);
+						vItemShopDaten.pop_back();
+					}
+				}
+				switch (iSchleifenBuffer)
+				{
+				case 1:
+					vItemShopSeitenDatenRüstung.push_back(buffer);
+					break;
+				case 2:
+					vItemShopSeitenDatenWeapon.push_back(buffer);
+					break;
+				case 3:
+					vItemShopSeitenDatenSchild.push_back(buffer);
+					break;
+				case 4:
+					vItemShopSeitenDatenSpezial.push_back(buffer);
+					break;
+				default:
+					vItemShopSeitenDatenRüstung.push_back(buffer);
+					break;
+				}
+			}
+			size = 0;
+			vItemShopDaten.clear();
+			item_gen->deleteItemList();
+			iSchleifenBuffer++;
+		}
+	}
+
 	void verkäufer::render(sf::RenderWindow *rw)
 	{
 		rw->draw(*pVerkäuferSprite);
@@ -255,14 +475,63 @@ namespace GT
 
 			rw->draw(*pItemShopSprites[5]);
 			rw->draw(*pItemShopSprites[6]);
-			rw->draw(site);
+			rw->draw(SeitenText);
+			rw->draw(DamageText);
+			rw->draw(LebensPunkteText);
+			rw->draw(MagiePunkteText);
+			rw->draw(ItemNameText);
 
 			rw->draw(*pVorschauBildSprite);
 
-			for (auto i = 0; i < 31; i++)
+
+			switch (iAktivItemShopHintergrund)
 			{
-				rw->draw(*pItemShopItemSprites[i]);
+			case 1:
+				for (auto i = 0; i < vItemShopSeitenDatenRüstung[aktiv_seite-1].items_per_site; i++)
+				{
+					rw->draw(*pItemShopItemSprites[i]);
+					rw->draw(*pItemShopItemSprites[i + 15]);
+				}
+				break;
+			case 2:
+				for (auto i = 0; i < vItemShopSeitenDatenWeapon[aktiv_seite - 1].items_per_site; i++)
+				{
+					rw->draw(*pItemShopItemSprites[i]);
+					rw->draw(*pItemShopItemSprites[i + 15]);
+				}
+				break;
+			case 3:
+				for (auto i = 0; i < vItemShopSeitenDatenSchild[aktiv_seite - 1].items_per_site; i++)
+				{
+					rw->draw(*pItemShopItemSprites[i]);
+					rw->draw(*pItemShopItemSprites[i + 15]);
+				}
+				break;
+			case 4:
+				for (auto i = 0; i < vItemShopSeitenDatenSpezial[aktiv_seite - 1].items_per_site; i++)
+				{
+					rw->draw(*pItemShopItemSprites[i]);
+					rw->draw(*pItemShopItemSprites[i + 15]);
+				}
+				break;
+			default:
+				break;
+			}
+			if (ItemShopHover)
+			{
+				rw->draw(*pItemShopItemSprites[30]);
 			}
 		}
+	}
+
+	void verkäufer::ItemShopSeiteNeuErstellen()
+	{
+		SeitenText.setString("Seite " + std::to_string(aktiv_seite) + " von " + std::to_string(seiten[iAktivItemShopHintergrund]));
+		pVorschauBildSprite->setTexture(KlarTexture);
+		DamageText.setString("");
+		LebensPunkteText.setString("");
+		MagiePunkteText.setString("");
+		ItemNameText.setString("");
+		ItemShopHover = false;
 	}
 }

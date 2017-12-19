@@ -1,12 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include "enumStructs.hpp"
 #include <stdio.h>
 #include <vector>
 #include <fstream>
-#include <string>
 #include <Windows.h>
 #include "main_os_manager.hpp"
+#include "typedefs.hpp"
+#include "const.hpp"
+#include <boost\filesystem\path.hpp>
 
 namespace JGE
 {
@@ -16,32 +19,23 @@ namespace JGE
 		main_base();
 		~main_base();
 
-
-
 		std::vector<char> get_memory_data(const std::string& name) const;
 		std::vector<char> get_memory_data(std::string name,const int& rnd) const;
 
-		short get_mob_size_short() { return size_of_mob; };
+		JGE::types::uEinByte get_mob_size_short() { return iSizeOfMobData; };
 
 	private:
 
-		short sec_integer = 10;
-
-		std::wstring main_base::s2ws(const std::string& s);
-		void get_mob_size();
+		inline void vSetSizeOfMobData();
 
 		HANDLE fHandle;
 		WIN32_FIND_DATA wfd;
 
-		struct memory_data
-		{
-			std::vector<char> t;
-			std::string name;
-		};
 
-		short size_of_mob = 0;
+		JGE::types::uEinByte iSizeOfMobData = 0;
+		JGE::types::EinBit found = false;
 
-		std::vector<struct memory_data> d_data;
+		std::vector<GAMESTRUCTS::memory_data> d_data;
 
 	};
 

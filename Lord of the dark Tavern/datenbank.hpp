@@ -7,6 +7,8 @@
 #include <sstream>
 #include "main_os_manager.hpp"
 #include "enumStructs.hpp"
+#include "mainStateManager.hpp"
+#include "const.hpp"
 
 namespace GDB
 {
@@ -22,12 +24,9 @@ namespace GDB
 
 		void sortiereListeinVector();
 	
-		bool p_main_run = false;
 		bool first_line = true;
 
 		std::vector<GAMESTRUCTS::item_data>	 vitems;
-		std::vector<std::string> vbuffer;
-
-		const std::string version = "VERSION<0.0.1>";
+		std::vector<std::string>			 vbuffer;
 	};
 }

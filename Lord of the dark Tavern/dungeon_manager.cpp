@@ -10,30 +10,25 @@ dungeon_manager::dungeon_manager(const int &iPower,const std::vector<sf::Texture
 	// Hintergrundbilder Laden ///
 	pHintergrundLader = new enviroment_loader();
 
-	/// Random Dungeon Generator
-	now = std::time(0);
-	boost::random::mt19937 rng{ static_cast<std::uint32_t>(now) };;
-
 	/// Dungeon Range Floor länge für LevelGrad
 	switch (iPower)
 	{
 	case 1:
-		floors = rng() % 20 + 10; ////  10 - 30
+		floors = osm::genZufallsZahl(10, 30,1); /// 10- 30
 		break;
 	case 2:
-		floors = rng() % 50 + 30; //// 30 - 80
+		floors = osm::genZufallsZahl(30, 80, 1);// 30 - 80
 		break;
 	case 3:
-		floors = rng() % 120 + 60; //// 60 - 180
+		floors = osm::genZufallsZahl(60, 180, 1);//// 60 - 180
 		break;
 	default:
-		floors = rng() % 120 + 60 + 30 * (iPower - 2); //// 60 - 180
+		floors = osm::genZufallsZahl(60*(iPower-2), 180* (iPower - 2), 1); //// 60 - 180
 		break;
 	}
 
 	/// Enviroment Auswürfeln und setzen 
-
-	enviro_id = rng() % 12;
+	enviro_id = osm::genZufallsZahl(0,12, 1);
 	fill_dungeon();
 }
 
@@ -63,54 +58,48 @@ void dungeon_manager::fill_dungeon()
 	int mobs_ebene = 0;
 	for (auto i = 0; i <= floors; i++)
 	{
-		std::time_t times = std::time(0);
-		boost::random::mt19937 dev{ static_cast<std::uint32_t>(times) };;
-		mobs_ebene = dev()*(i+1) % 9 + 1;
-
+		mobs_ebene = osm::genZufallsZahl(1, 10, i + 1);
 		for (auto u = mobs_ebene; u != 0; u--)
 		{
-			now = std::time(0);
-			boost::random::mt19937 dev_test{ static_cast<std::uint32_t>(now) };;
-			uint16_t rnd = (dev_test()*u) % (static_cast<uint16_t>(p_texture.size())-1);
+			uint16_t rnd = osm::genZufallsZahl(0, static_cast<int>(p_texture.size()) - 1,u);
 			GAMESTRUCTS::mob dev_s = {};
 			dev_s.p_sprite->setTexture(p_texture[rnd]);
 			dev_s.scale = { 50.f / (p_texture[rnd].getSize().x / 2),50.f / (p_texture[rnd].getSize().y / 2) };
 			dev_s.life *= diffculty;
-			if (u == 1)
+
+			switch (u)
 			{
+			case 1:
 				dev_s.p_sprite->setPosition(650, 280);
-			}
-			else if (u == 2)
-			{
+				break;
+			case 2:
 				dev_s.p_sprite->setPosition(650, 440);
-			}
-			else if (u == 3)
-			{
+				break;
+			case 3:
 				dev_s.p_sprite->setPosition(650, 600);
-			}
-			else if (u == 4)
-			{
+				break;
+			case 4:
 				dev_s.p_sprite->setPosition(790, 280);
-			}
-			else if (u == 5)
-			{
+				break;
+			case 5:
 				dev_s.p_sprite->setPosition(790, 440);
-			}
-			else if (u == 6)
-			{
+				break;
+			case 6:
 				dev_s.p_sprite->setPosition(790, 600);
-			}
-			else if (u == 7)
-			{
+				break;
+			case 7:
 				dev_s.p_sprite->setPosition(930, 280);
-			}
-			else if (u == 8)
-			{
+				break;
+			case 8:
 				dev_s.p_sprite->setPosition(930, 440);
-			}
-			else if (u == 9)
-			{
+				break;
+			case 9:
 				dev_s.p_sprite->setPosition(930, 600);
+				break;
+			default:
+				dev_s.p_sprite->setPosition(930, 600);
+				osm::call("Error Mob Position");
+				break;
 			}
 
 			dev_s.p_life->setTexture(p_life_t);

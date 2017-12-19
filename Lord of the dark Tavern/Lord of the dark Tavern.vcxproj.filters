@@ -188,6 +188,12 @@
     <ClInclude Include="tavernSystemBank.hpp">
       <Filter>Headerdateien\Tavernfenster</Filter>
     </ClInclude>
+    <ClInclude Include="const.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="typedefs.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\x64\Release\DATA\local.db">

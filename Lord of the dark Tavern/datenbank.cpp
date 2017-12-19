@@ -1,6 +1,7 @@
 #include "datenbank.hpp"
 
 extern std::string sPfad;
+extern JGE::mainStateManager *pState;
 
 namespace GDB
 {
@@ -51,7 +52,6 @@ namespace GDB
 
 		}
 		f.close();
-		p_main_run = true;
 	}
 
 	datenbank::~datenbank()
@@ -60,7 +60,7 @@ namespace GDB
 
 	void datenbank::run()
 	{
-		while (p_main_run)
+		while (pState->getProgrammStatus())
 		{
 
 		}

@@ -4,6 +4,7 @@ extern sf::Vector2f	vMain;
 extern sf::Font	*pFont;
 extern JGE::SpriteGen *pSpriteErsteller;
 extern JGE::mainStateManager *pState;
+extern sf::Vector2f vMousePosition;
 
 namespace GMS
 {
@@ -122,9 +123,9 @@ namespace GMS
 
 
 	}
-	void riftBrowser::eventRiftBrowser(const sf::Vector2f& vMousePosition)
+	void riftBrowser::eventRiftBrowser()
 	{
-		if (pState->getRiftBrowserStatus() && !pState->getRiftStatus())
+		if (pState->getRiftBrowserStatus())
 		{
 			if (osm::sprite_pressed(pRiftMenuSprite[4], vMousePosition))
 			{
@@ -156,6 +157,7 @@ namespace GMS
 				pState->setRiftBrowserStatus(false);
 				pRiftManager = new dungeon_manager(difficulty, p_texture);
 				pState->setRiftStatus(true);
+				pState->setHauptFensterStatus(false);
 			}
 		}
 
@@ -185,6 +187,7 @@ namespace GMS
 		if (pState->getRiftStatus())
 		{
 			pState->setRiftStatus(false);
+			pState->setHauptFensterStatus(true);
 			delete pRiftManager;
 			pRiftManager = nullptr;
 		}

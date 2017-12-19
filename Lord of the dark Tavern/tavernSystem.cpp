@@ -33,6 +33,10 @@ namespace GT
 		{
 			pTavernBank->update();
 		}
+		else if (pState->getItemShopStatus())
+		{
+			pTaverVerkäufer->update();
+		}
 
 
 

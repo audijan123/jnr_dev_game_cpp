@@ -179,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.hpp" />
     <ClInclude Include="Animation.hpp" />
+    <ClInclude Include="const.hpp" />
     <ClInclude Include="datenbank.hpp" />
     <ClInclude Include="dungeon_manager.hpp" />
     <ClInclude Include="enumStructs.hpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="tavernSystemBank.hpp" />
     <ClInclude Include="tavernSystemMagier.hpp" />
     <ClInclude Include="tavernSystemVerkäufer.hpp" />
+    <ClInclude Include="typedefs.hpp" />
     <ClInclude Include="uiElemente.hpp" />
   </ItemGroup>
   <ItemGroup>

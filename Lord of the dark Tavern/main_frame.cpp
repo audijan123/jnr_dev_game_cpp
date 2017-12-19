@@ -115,7 +115,7 @@ void main_frame::handleEvents()
 		else if (pHauptEvent->type == sf::Event::MouseButtonPressed && pHauptFenster->hasFocus() 
 			&& pHauptEvent->key.code == sf::Mouse::Button::Left)
 		{
-			pRiftBrowser->eventRiftBrowser(vMousePosition);
+			pRiftBrowser->eventRiftBrowser();
 			pUi->update();
 			pTavern->eventTaverne();
 			pHintergrund->event();

@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "typedefs.hpp"
+
 
 namespace GAMESTRUCTS
 {
@@ -40,24 +42,27 @@ namespace GAMESTRUCTS
 
 	struct item_data
 	{
-		item_class  i_class = NOTDEFINED;
-		std::string i_name = "Leer";
-		std::string i_texture = "stand";
-		int         i_dmg = 0;
-		int			i_leben = 0;
-		uint8_t		i_stufe = 0;
-		item_rare	i_rare = NORMAL;
-		int			i_buy_price = 1000;
-		int			i_sell_price = 0;
-		item_bouns_flags i_bonus_one = B_NULL;
-		item_bouns_flags i_bonus_two = B_NULL;
-		item_bouns_flags i_bonus_three = B_NULL;
-		item_bouns_flags i_bonus_four = B_NULL;
-		item_bouns_flags i_bonus_five = B_NULL;
-		item_bouns_flags i_bonus_six = B_NULL;
-		item_bouns_flags i_bonus_seven = B_NULL;
-		item_cap_flags	 i_cap_one = C_NULL;
-		item_cap_flags	 i_cap_two = C_NULL;
+		item_class					i_class = NOTDEFINED;
+		JGE::types::SpielString		i_name = "Leer";
+		JGE::types::SpielString		i_texture = "stand";
+		JGE::types::SpielTexture	ItemTexture;
+		sf::Color					cItemColor = { 0,0,0,255 };
+		JGE::types::uVierByte		i_dmg = 0;
+		JGE::types::uVierByte		i_leben = 0;
+		JGE::types::uVierByte		i_magie = 0;
+		JGE::types::uEinByte		i_stufe = 0;
+		item_rare					i_rare = NORMAL;
+		JGE::types::SpielShopInt	i_buy_price = 1000;
+		JGE::types::SpielShopInt	i_sell_price = 0;
+		item_bouns_flags			i_bonus_one = B_NULL;
+		item_bouns_flags			i_bonus_two = B_NULL;
+		item_bouns_flags			i_bonus_three = B_NULL;
+		item_bouns_flags			i_bonus_four = B_NULL;
+		item_bouns_flags			i_bonus_five = B_NULL;
+		item_bouns_flags			i_bonus_six = B_NULL;
+		item_bouns_flags			i_bonus_seven = B_NULL;
+		item_cap_flags				i_cap_one = C_NULL;
+		item_cap_flags				i_cap_two = C_NULL;
 	};
 
 	enum gold_set
@@ -87,4 +92,38 @@ namespace GAMESTRUCTS
 		const sf::Vector2f special = { 516, 200 };
 		const sf::Vector2f size = { 50,45 };
 	};
+
+	struct item_site
+	{
+		uint8_t items_per_site = 0;
+		std::vector<GAMESTRUCTS::item_data> items;
+
+	};
+	struct ItemNameColor
+	{
+		sf::Color Weiﬂ		= { 255,255,255,255 };
+		sf::Color hBlau		= { 0,	255,255,255 };
+		sf::Color dBlau		= { 0,	183,255,255 };
+		sf::Color Rot		= { 214,  0,  0,255 };
+		sf::Color Orange	= { 214,138,  0,255 };
+		sf::Color Gr¸n		= { 113,240, 87,255 };
+		sf::Color hPink		= { 214,  0,190,255 };
+	};
+
+
+	const struct ItemTextureBereichsGroeﬂe
+	{
+		const uint8_t iR¸stungsGroeﬂe	= 21;
+		const uint8_t iWaffenGroeﬂe		= 33;
+		const uint8_t iSchildGroeﬂe		= 23;
+		const uint8_t iSpezialGroeﬂe	= 41;
+		const uint8_t iDefault			= 0;
+	};
+	
+	struct memory_data
+	{
+		std::vector<char> t;
+		std::string name;
+	};
+
 }

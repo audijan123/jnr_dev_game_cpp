@@ -1,25 +1,22 @@
 #include "main_base.hpp"
 
-extern std::string sPfad;
+extern JGE::types::SpielString sPfad;
 
 
 namespace JGE
 {
 	main_base::main_base()
 	{
-		std::cout << sPfad << std::endl;
-		std::string path1 = sPfad;
-		std::string dev2 = "/";
-		std::string dev1 = "\\";
+		JGE::types::SpielString path1 = sPfad;
 		for (int i = 0; i < path1.length(); i++)
 		{
-			if (path1[i] == dev1[0])
+			if (path1[i] == boost::filesystem::path::preferred_separator)
 			{
-				path1[i] = dev2[0];
+				path1[i] = boost::filesystem::path::separator;
 			}
 		}
 
-		std::wstring stemp = s2ws(path1 + "jnr_data/*");
+		JGE::types::SpielWString stemp = osm::s2ws(path1 + "jnr_data/*");
 		LPCWSTR result = stemp.c_str();
 
 		fHandle = FindFirstFile(result, &wfd);
@@ -28,16 +25,14 @@ namespace JGE
 		{
 			if (!((wfd.cFileName[0] == '.') && ((wfd.cFileName[1] == '.' && wfd.cFileName[2] == 0) || wfd.cFileName[1] == 0)))
 			{
-				std::wstring ws(wfd.cFileName);
-				std::string str_dev(ws.begin(), ws.end());
+				JGE::types::SpielWString ws(wfd.cFileName);
+				JGE::types::SpielString str_dev(ws.begin(), ws.end());
 
 				if (str_dev.length() > 4)
 				{
-					std::string buffer_ending = str_dev.substr(str_dev.length() - 4, str_dev.length());
-
-					if (buffer_ending == ".jnr")
+					if (str_dev.substr(str_dev.length() - 4, str_dev.length()) == ".jnr")
 					{
-						std::ifstream texture_file{ path1 + "jnr_data/" + str_dev, std::ifstream::binary };
+						JGE::types::DatenInputStream texture_file{ path1 + "jnr_data/" + str_dev, JGE::types::DatenInputStream::binary };
 						std::vector<char> buffer;
 
 						if (texture_file) {
@@ -59,20 +54,20 @@ namespace JGE
 							std::cerr << "Could not open texture file" << std::endl;
 						}
 
-						struct memory_data d_memory_data;
+						GAMESTRUCTS::memory_data d_memory_data = {};
 						buffer.erase(buffer.begin());
 						d_memory_data.t = buffer;
-						char buffer_char[5] = {};
-						bool found = false;
-						short i = 0;
-						short u_k = 0;
+						JGE::types::sEinByteChar buffer_char[5] = {};
+						found = false;
+						JGE::types::uEinByte i = 0;
+						JGE::types::uEinByte u_k = 0;
 						while (!found)
 						{
 							if (buffer[buffer.size() - i] == '#')
 							{
-							for (short k = sec_integer; k > 0; k--)
+							for (short k = iMaxCheckRadius; k > 0; k--)
 								{
-									if (static_cast<int>(buffer[buffer.size() - (i + k)] - 1) >= 97 && static_cast<int>(buffer[buffer.size() - (i + k)] - 1) <= 122 || static_cast<int>(buffer[buffer.size() - (i + k)]-1) >= 48 && static_cast<int>(buffer[buffer.size() - (i + k)]-1) <= 57)
+									if (static_cast<int>(buffer[buffer.size() - (i + k)] - 1) >= ASCII::iCharA && static_cast<int>(buffer[buffer.size() - (i + k)] - 1) <= ASCII::iCharZ || static_cast<int>(buffer[buffer.size() - (i + k)]-1) >= ASCII::iChar0 && static_cast<int>(buffer[buffer.size() - (i + k)]-1) <= ASCII::iChar9)
 									{
 										buffer_char[u_k] = buffer[buffer.size() - (i + k)] - 1;
 										u_k++;
@@ -86,7 +81,6 @@ namespace JGE
 							}
 						}
 						std::string dev_buffer(buffer_char);
-						std::cout << dev_buffer << ";";
 						d_memory_data.name = dev_buffer;
 						d_data.push_back(d_memory_data);
 						buffer.clear();
@@ -96,7 +90,7 @@ namespace JGE
 		} while (FindNextFile(fHandle, &wfd));
 		FindClose(fHandle);
 		
-		get_mob_size();
+		vSetSizeOfMobData();
 
 	}
 
@@ -118,8 +112,7 @@ namespace JGE
 
 	std::vector<char> main_base::get_memory_data(std::string name,const int& rnd) const
 	{
-		std::string buffer_int = std::to_string(rnd);
-		//name += buffer_int;
+		JGE::types::SpielString buffer_int = std::to_string(rnd);
 		name += buffer_int.substr(1,buffer_int.length());
 		for (int i = 0; i < d_data.size(); i++)
 		{
@@ -131,25 +124,13 @@ namespace JGE
 		return d_data[0].t;
 	}
 
-	std::wstring main_base::s2ws(const std::string& s)
-	{
-		int len;
-		int slength = (int)s.length() + 1;
-		len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-		wchar_t* buf = new wchar_t[len];
-		MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-		std::wstring r(buf);
-		delete[] buf;
-		return r;
-	}
-
-	void main_base::get_mob_size()
+	inline void main_base::vSetSizeOfMobData()
 	{
 		for (auto t = d_data.size(); t != 0; t--)
 		{
 			if (d_data[t-1].name.substr(0, d_data[t-1].name.length() - 2) == "mob")
 			{
-				size_of_mob++;
+				iSizeOfMobData++;
 			}
 
 		}

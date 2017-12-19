@@ -4,6 +4,7 @@
 #include "sfSpriteGen.hpp"
 #include "generate_items.hpp"
 #include "mainStateManager.hpp"
+#include "const.hpp"
 
 namespace GT
 {
@@ -20,6 +21,9 @@ namespace GT
 
 	private:
 
+		void verkäufer::fülleSeitenMitItems();
+		void verkäufer::ItemShopSeiteNeuErstellen();
+
 		gen_item					*item_gen;
 		//Grundgerüst
 		sf::Texture					VerkäuferTexturen[3];
@@ -35,28 +39,31 @@ namespace GT
 
 		sf::RectangleShape			rectangle[4];
 
-		sf::Text					site;
+		sf::Text					SeitenText;
 
 
-		 uint8_t iAktivItemShopHintergrund = 1;
+		sf::Text					DamageText;
+		sf::Text					LebensPunkteText;
+		sf::Text					MagiePunkteText;
+		sf::Text					ItemNameText;
+
+		sf::Texture					KlarTexture;
 
 
+		uint8_t iAktivItemShopHintergrund = 1;
 
-		int max = 10;
+		int iCheckSprite = 0;
+		int seiten[4] = {};
+		int aktiv_seite = 1;
 
-		uint8_t items_per_site_max = 14;
-		uint8_t site_max = 10;
+		bool ItemShopHover = false;
 
+		std::vector<GAMESTRUCTS::item_site> vItemShopSeitenDatenRüstung;
+		std::vector<GAMESTRUCTS::item_site> vItemShopSeitenDatenWeapon;
+		std::vector<GAMESTRUCTS::item_site> vItemShopSeitenDatenSchild;
+		std::vector<GAMESTRUCTS::item_site> vItemShopSeitenDatenSpezial;
 
-
-		std::vector<GAMESTRUCTS::item_data> item_list;
-
-		struct item_site
-		{
-			uint8_t items_per_site = 0;
-			std::vector<GAMESTRUCTS::item_data> items;
-
-		};
+		std::vector<GAMESTRUCTS::item_data> vItemShopDaten;
 
 	};
 
